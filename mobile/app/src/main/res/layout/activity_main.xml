@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center" >
+
+    <EditText
+        android:id="@+id/txtLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="0dp"
+        android:gravity="center"
+        android:inputType="textPersonName"
+        android:textSize="@dimen/textSize1"
+        android:textColor="@color/colorPrimary"
+        android:hint="@string/login" />
+
+    <EditText
+        android:id="@+id/txtPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp"
+        android:gravity="center"
+        android:inputType="textPassword"
+        android:textSize="@dimen/textSize1"
+        android:textColor="@color/colorPrimary"
+        android:hint="@string/password" />
+
+    <Button
+        android:id="@+id/btnConnection"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:text="@string/connection"
+        android:textSize="@dimen/textSize3"
+        android:textColor="@color/colorPrimary"
+        android:textAllCaps="false" />
+
+</LinearLayout>

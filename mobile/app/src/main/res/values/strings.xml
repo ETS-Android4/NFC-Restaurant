@@ -1,0 +1,8 @@
+<resources>
+    <string name="app">Resto</string>
+    <string name="login">Identifiant</string>
+    <string name="password">Mot de passe</string>
+    <string name="connection">Se connecter</string>
+    <string name="errLogin">Veuillez rentrer un identifiant</string>
+    <string name="errPassword">Veuillez rentrer un mot de passe</string>
+</resources>
