@@ -26,31 +26,33 @@ public class Plats {
 		this.description = description;
 		this.prix = prix;
 	}
-
 	
-	
-	public static void GetPlats() throws SQLException{
+	public static ArrayList<Plats> GetAllPlats() throws SQLException{
         Connection cn = null;
         Statement st = null;
+        ArrayList<Plats> listPlats = new ArrayList<Plats>();
         try {
         	System.out.println( "Connexion à la base de données..." );
         	cn = BddConnexion.getConnection();
-			st = (Statement) cn.createStatement();
+        	st = (Statement) cn.createStatement();
 			// La requete pour recuperer le nom , description , prix des plats
 			// SELECT nom,description,prix FROM nfc_resto.plats,nfc_resto.tarif WHERE idType_Plat ='2' and T_idTarif = idtarif;		
 			ResultSet result = cn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 	                ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT nom,description,prix FROM nfc_resto.plats,nfc_resto.tarif WHERE idType_Plat ='2' and T_idTarif = idtarif");
 			while (result.next()) {
 				Plats plats = new Plats(result.getString("nom"),result.getString("description"),result.getFloat("prix"));
-				System.out.println(result.getString("nom"));
-				System.out.println(result.getString("description"));
-				System.out.println(result.getFloat("prix"));
+				listPlats.add(plats);
+				System.out.println(plats.getNom());
+				System.out.println(plats.getDescription());
+				System.out.println(plats.getPrix());
+				System.out.println(listPlats.get(0).getNom());
 			}
         } catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
+	return listPlats;
 	}
 	
 	// La requete pour recuperer le nom , description , prix des entrée
@@ -88,7 +90,7 @@ public class Plats {
 	
 	public static void main(String[] args){
 	try {
-		Plats.GetPlats();
+		GetAllPlats();
 	} catch (SQLException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
