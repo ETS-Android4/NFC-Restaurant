@@ -18,7 +18,7 @@ public class BddConnexion {
     
     private static Connection con;
     
-    private BddConnexion() throws ClassNotFoundException{
+    public BddConnexion() throws ClassNotFoundException{
     	try{
     		Class.forName(driver);
     		con = DriverManager.getConnection(url, user, pwd);
