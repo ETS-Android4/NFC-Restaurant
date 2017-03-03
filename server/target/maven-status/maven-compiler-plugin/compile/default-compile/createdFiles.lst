@@ -1,8 +1,0 @@
-fr\unice\iut\restaurant\database\BddConnexion.class
-fr\unice\iut\restaurant\provider\Entree.class
-fr\unice\iut\restaurant\provider\Dessert.class
-fr\unice\iut\restaurant\services\MenuImpl.class
-fr\unice\iut\restaurant\services\MenuService.class
-fr\unice\iut\restaurant\provider\Boisson.class
-fr\unice\iut\restaurant\provider\Plats.class
-fr\unice\iut\restaurant\provider\Menu.class

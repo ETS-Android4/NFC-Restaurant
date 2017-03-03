@@ -62,6 +62,8 @@ local.properties
 .settings/
 .loadpath
 .recommenders
+.DS_Store
+target/
 
 # Eclipse Core
 .project
