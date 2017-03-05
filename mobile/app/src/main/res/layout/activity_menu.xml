@@ -5,6 +5,61 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:gravity="center" >
+    android:gravity="center">
+
+    <Button
+        android:id="@+id/btnEntry"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/entry"
+        android:textSize="@dimen/textSize1"
+        android:textColor="@color/colorPrimaryDark"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/btnDish"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/dish"
+        android:textSize="@dimen/textSize1"
+        android:textColor="@color/colorPrimaryDark"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/btnDessert"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/dessert"
+        android:textSize="@dimen/textSize1"
+        android:textColor="@color/colorPrimaryDark"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/btnDrink"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/drink"
+        android:textSize="@dimen/textSize1"
+        android:textColor="@color/colorPrimaryDark"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/btnValidate"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/validate"
+        android:textSize="@dimen/textSize2"
+        android:textColor="@color/colorPrimaryDark"
+        android:textAllCaps="false" />
 
 </LinearLayout>

@@ -11,7 +11,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -22,14 +21,17 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 EditText login = (EditText) findViewById(R.id.txtLogin);
                 EditText password = (EditText) findViewById(R.id.txtPassword);
+
                 if (login.getText().toString().isEmpty()) {
                     login.setError(getResources().getString(R.string.errLogin));
                     return;
                 }
+
                 if (password.getText().toString().isEmpty()) {
                     password.setError(getResources().getString(R.string.errPassword));
                     return;
                 }
+
                 startActivity(new Intent(MainActivity.this, MenuActivity.class));
             }
         });

@@ -5,4 +5,10 @@
     <string name="connection">Se connecter</string>
     <string name="errLogin">Veuillez rentrer un identifiant</string>
     <string name="errPassword">Veuillez rentrer un mot de passe</string>
+    <string name="entry">Entrée</string>
+    <string name="dish">Plats</string>
+    <string name="dessert">Desserts</string>
+    <string name="drink">Boissons</string>
+    <string name="validate">Valider</string>
+    <string name="back">Retour</string>
 </resources>

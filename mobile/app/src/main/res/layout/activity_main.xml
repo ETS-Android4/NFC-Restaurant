@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="fill_parent"
@@ -9,11 +10,9 @@
 
     <ImageView
         android:id="@+id/imgApp"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_weight="4"
-        android:layout_marginTop="0dp"
-        android:layout_marginBottom="0dp"
+        android:layout_weight="1"
         android:contentDescription="@string/app"
         app:srcCompat="@drawable/app" />
 
@@ -21,9 +20,7 @@
         android:id="@+id/txtLogin"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_weight="2"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="0dp"
+        android:layout_weight="1"
         android:gravity="center"
         android:inputType="textPersonName"
         android:textSize="@dimen/textSize1"
@@ -34,9 +31,7 @@
         android:id="@+id/txtPassword"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_weight="2"
-        android:layout_marginTop="0dp"
-        android:layout_marginBottom="0dp"
+        android:layout_weight="1"
         android:gravity="center"
         android:inputType="textPassword"
         android:textSize="@dimen/textSize1"
@@ -48,11 +43,9 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:layout_marginTop="0dp"
-        android:layout_marginBottom="20dp"
         android:gravity="center"
         android:text="@string/connection"
-        android:textSize="@dimen/textSize3"
+        android:textSize="@dimen/textSize2"
         android:textColor="@color/colorPrimary"
         android:textAllCaps="false" />
 

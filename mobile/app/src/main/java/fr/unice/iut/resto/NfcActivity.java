@@ -2,7 +2,6 @@ package fr.unice.iut.resto;
 
 import android.app.PendingIntent;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
@@ -15,35 +14,32 @@ import android.support.v7.app.AppCompatActivity;
 public class NfcActivity extends AppCompatActivity {
 
     NfcAdapter nfcAdapter;
-    PendingIntent pendingIntent;
-    IntentFilter[] intentFiltersArray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nfc);
-
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
-        pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, getClass())
-                .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
     }
 
+    @Override
     public void onResume() {
         super.onResume();
-        nfcAdapter.enableForegroundDispatch(this, pendingIntent, intentFiltersArray, null);
+        PendingIntent pendInt = PendingIntent.getActivity(this, 0,
+                new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
+        nfcAdapter.enableForegroundDispatch(this, pendInt, null, null);
     }
 
+    @Override
     public void onPause() {
         super.onPause();
         nfcAdapter.disableForegroundDispatch(this);
     }
 
+    @Override
     public void onNewIntent(Intent intent) {
         String action = intent.getAction();
-        if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(action) ||
-                NfcAdapter.ACTION_NDEF_DISCOVERED.equals(action) ||
-                NfcAdapter.ACTION_TECH_DISCOVERED.equals(action)) {
+        if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(action)) {
             resolveIntent(intent);
         }
     }
