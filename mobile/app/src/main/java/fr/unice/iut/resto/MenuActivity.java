@@ -17,6 +17,7 @@ public class MenuActivity extends AppCompatActivity {
         Button dish = (Button) findViewById(R.id.btnDish);
         Button dessert = (Button) findViewById(R.id.btnDessert);
         Button drink = (Button) findViewById(R.id.btnDrink);
+        Button validate = (Button) findViewById(R.id.btnValidate);
 
         entry.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,6 +44,14 @@ public class MenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 teleport();
+            }
+        });
+
+        validate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+                startActivity(new Intent(MenuActivity.this, OrderActivity.class));
             }
         });
     }
