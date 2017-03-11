@@ -67,7 +67,16 @@ public class MenuImpl implements MenuService{
 		try {
 		System.out.println("à table");
 		// Boucle 
-		return Response.ok("{\"Boisson\":[{\"Nom\":\"" + Boisson.GetAllBoisson().get(0).getNom() + "\",\"Description\":\""+Boisson.GetAllBoisson().get(0).getDescription()+"\", \"Prix\":\""+Boisson.GetAllBoisson().get(0).getPrix()+"\"}]}").build();
+		String json="";
+		for(int i = 0; i<Boisson.GetAllBoisson().size(); i++){
+			if(i == Boisson.GetAllBoisson().size()){
+			json += "{\"Nom\":\"" + Boisson.GetAllBoisson().get(i).getNom() + "\",\"Description\":\""+Boisson.GetAllBoisson().get(i).getDescription()+"\", \"Prix\":\""+Boisson.GetAllBoisson().get(i).getPrix()+"\"}";	
+				break;
+			}
+			json +="{\"Nom\":\"" + Boisson.GetAllBoisson().get(i).getNom() + "\",\"Description\":\""+Boisson.GetAllBoisson().get(i).getDescription()+"\", \"Prix\":\""+Boisson.GetAllBoisson().get(i).getPrix()+"\"},";
+		}
+		// Boisson.GetAllBoisson().size()<
+		return Response.ok("{\"Boisson\":["+json+"]}").build();
         } catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
