@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class DishActivity extends AppCompatActivity {
 
     ArrayList<String> list = new ArrayList<>();
-    String choice = null;
+    String[] choice = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -31,6 +31,8 @@
         </activity>
 
         <activity android:name=".DishActivity" />
+        <activity android:name=".MenuActivity" />
+        <activity android:name=".OrderActivity" />
     </application>
 
 </manifest>
