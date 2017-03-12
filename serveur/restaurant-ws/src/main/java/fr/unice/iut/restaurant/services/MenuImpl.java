@@ -69,11 +69,12 @@ public class MenuImpl implements MenuService{
 		// Boucle 
 		String json="";
 		for(int i = 0; i<Boisson.GetAllBoisson().size(); i++){
-			if(i == Boisson.GetAllBoisson().size()){
-			json += "{\"Nom\":\"" + Boisson.GetAllBoisson().get(i).getNom() + "\",\"Description\":\""+Boisson.GetAllBoisson().get(i).getDescription()+"\", \"Prix\":\""+Boisson.GetAllBoisson().get(i).getPrix()+"\"}";	
+			if(i == Boisson.GetAllBoisson().size()-1){
+				json += "{\"Nom\":\"" + Boisson.GetAllBoisson().get(i).getNom() + "\",\"Description\":\""+Boisson.GetAllBoisson().get(i).getDescription()+"\", \"Prix\":\""+Boisson.GetAllBoisson().get(i).getPrix()+"\"}";	
 				break;
 			}
 			json +="{\"Nom\":\"" + Boisson.GetAllBoisson().get(i).getNom() + "\",\"Description\":\""+Boisson.GetAllBoisson().get(i).getDescription()+"\", \"Prix\":\""+Boisson.GetAllBoisson().get(i).getPrix()+"\"},";
+			
 		}
 		// Boisson.GetAllBoisson().size()<
 		return Response.ok("{\"Boisson\":["+json+"]}").build();

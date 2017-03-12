@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import fr.unice.iut.restaurant.database.BddConnexion;
 
@@ -28,31 +29,31 @@ public class Boisson {
 		this.prix = prix;
 	}	
 		
-		public static ArrayList<Boisson> GetAllBoisson() throws SQLException{
+	public static ArrayList<Boisson> GetAllBoisson() throws SQLException{
         Connection cn = null;
         Statement st = null;
-        ArrayList<Boisson> listBoissons = new ArrayList<Boisson>();
+		ArrayList<Boisson> listBoissons = new ArrayList<Boisson>();
         try {
-        	System.out.println( "Connexion à la base de données..." );
         	cn = BddConnexion.getConnection();
         	st = (Statement) cn.createStatement();
-	
-			ResultSet result = cn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
-	                ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT nom,description,prix FROM nfc_resto.plats,nfc_resto.tarif WHERE idType_Plat ='4' and T_idTarif = idtarif;");
+			ResultSet result = st.executeQuery("SELECT nom,description,prix FROM nfc_resto.plats,nfc_resto.tarif WHERE idType_Plat ='4' and T_idTarif = idtarif;");
 			while (result.next()) {
 				Boisson boissons = new Boisson(result.getString("nom"),result.getString("description"),result.getFloat("prix"));
-				listBoissons.add(boissons);
 				System.out.println(boissons.getNom());
-				System.out.println(boissons.getDescription());
-				System.out.println(boissons.getPrix());
-				System.out.println(listBoissons.get(0).getNom());
 			}
+		
         } catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	System.out.println(listBoissons.size());
-	return listBoissons;
+		
+		// Test
+		for(Iterator<Boisson> i = listBoissons.iterator(); i.hasNext(); ) {
+			Boisson item = i.next();
+			System.out.println(item.getNom());
+		}
+
+		return listBoissons;
 	}
 		
 	public static String getNom() {
