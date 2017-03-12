@@ -10,6 +10,7 @@ public class MenuActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
@@ -25,21 +26,18 @@ public class MenuActivity extends AppCompatActivity {
                 teleport();
             }
         });
-
         dish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 teleport();
             }
         });
-
         dessert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 teleport();
             }
         });
-
         drink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -50,14 +48,12 @@ public class MenuActivity extends AppCompatActivity {
         validate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
                 startActivity(new Intent(MenuActivity.this, OrderActivity.class));
             }
         });
     }
 
     public void teleport() {
-        finish();
         startActivity(new Intent(MenuActivity.this, DishActivity.class));
     }
 }

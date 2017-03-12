@@ -39,7 +39,7 @@ public class Boisson {
 			ResultSet result = st.executeQuery("SELECT nom,description,prix FROM nfc_resto.plats,nfc_resto.tarif WHERE idType_Plat ='4' and T_idTarif = idtarif;");
 			while (result.next()) {
 				Boisson boissons = new Boisson(result.getString("nom"),result.getString("description"),result.getFloat("prix"));
-				System.out.println(boissons.getNom());
+				listBoissons.add(boissons);
 			}
 		
         } catch (ClassNotFoundException e) {
