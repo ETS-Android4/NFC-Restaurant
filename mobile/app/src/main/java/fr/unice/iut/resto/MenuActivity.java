@@ -8,6 +8,8 @@ import android.widget.Button;
 
 public class MenuActivity extends AppCompatActivity {
 
+    private static final String TAG = "MenuActivity";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -23,25 +25,36 @@ public class MenuActivity extends AppCompatActivity {
         entry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                teleport();
+                Intent i = new Intent(MenuActivity.this, SelectActivity.class);
+                i.putExtra("target","entree");
+                startActivity(i);
             }
         });
+
         dish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                teleport();
+                Intent i = new Intent(MenuActivity.this, SelectActivity.class);
+                i.putExtra("target","plat");
+                startActivity(i);
             }
         });
+
         dessert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                teleport();
+                Intent i = new Intent(MenuActivity.this, SelectActivity.class);
+                i.putExtra("target","dessert");
+                startActivity(i);
             }
         });
+
         drink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                teleport();
+                Intent i = new Intent(MenuActivity.this, SelectActivity.class);
+                i.putExtra("target","boisson");
+                startActivity(i);
             }
         });
 
@@ -51,9 +64,5 @@ public class MenuActivity extends AppCompatActivity {
                 startActivity(new Intent(MenuActivity.this, OrderActivity.class));
             }
         });
-    }
-
-    public void teleport() {
-        startActivity(new Intent(MenuActivity.this, DishActivity.class));
     }
 }

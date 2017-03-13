@@ -3,6 +3,7 @@ package fr.unice.iut.resto;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,6 +20,7 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = "MainActivity";
     private static final String URL_POST = "";
 
     RequestVolley queue = RequestVolley.getInstance();
@@ -32,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Button connect = (Button) findViewById(R.id.btnConnection);
+
         connect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -45,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
                     password.setError(getResources().getString(R.string.errPassword));
                     return;
                 }
-                startActivity(new Intent(MainActivity.this, MenuActivity.class));
+                postRequest();
             }
         });
     }
@@ -54,11 +57,16 @@ public class MainActivity extends AppCompatActivity {
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, URL_POST, null,
                 new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(JSONObject response) {}
+                    public void onResponse(JSONObject response) {
+                        startActivity(new Intent(MainActivity.this, MenuActivity.class));
+                        finish();
+                    }
                 },
                 new Response.ErrorListener() {
                     @Override
-                    public void onErrorResponse(VolleyError error) {}
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e(TAG, error.toString());
+                    }
                 }
         ) {
             @Override

@@ -31,9 +31,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".DishActivity" />
         <activity android:name=".MenuActivity" />
         <activity android:name=".OrderActivity" />
+        <activity android:name=".SelectActivity" />
     </application>
 
 </manifest>

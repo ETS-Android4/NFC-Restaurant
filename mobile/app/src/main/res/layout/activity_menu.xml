@@ -15,7 +15,7 @@
         android:gravity="center"
         android:text="@string/entry"
         android:textSize="@dimen/textSize1"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/colorPrimary"
         android:textAllCaps="false" />
 
     <Button
@@ -26,7 +26,7 @@
         android:gravity="center"
         android:text="@string/dish"
         android:textSize="@dimen/textSize1"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/colorPrimary"
         android:textAllCaps="false" />
 
     <Button
@@ -37,7 +37,7 @@
         android:gravity="center"
         android:text="@string/dessert"
         android:textSize="@dimen/textSize1"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/colorPrimary"
         android:textAllCaps="false" />
 
     <Button
@@ -48,7 +48,7 @@
         android:gravity="center"
         android:text="@string/drink"
         android:textSize="@dimen/textSize1"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/colorPrimary"
         android:textAllCaps="false" />
 
     <Button
@@ -59,7 +59,7 @@
         android:gravity="center"
         android:text="@string/validate"
         android:textSize="@dimen/textSize2"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/colorPrimary"
         android:textAllCaps="false" />
 
 </LinearLayout>
