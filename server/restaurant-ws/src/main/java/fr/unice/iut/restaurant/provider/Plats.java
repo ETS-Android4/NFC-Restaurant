@@ -15,19 +15,21 @@ import fr.unice.iut.restaurant.database.BddConnexion;
  */
 public class Plats {
 
-	private static String nom;
-	private static String description;
-	private static float prix;
-	private static File monimage = new File("chemin");
+	private   String nom;
+	private   String description;
+	private   float prix;
+	private   File monimage = new File("chemin");
 	// FileOutputStream ostreamImage = new FileOutputStream(monimage);
 	
-	private Plats(String nom,String description,float prix) throws ClassNotFoundException {
+	public Plats(String nom,String description,float prix) throws ClassNotFoundException {
 		this.nom = nom;
 		this.description = description;
 		this.prix = prix;
 	}
 	
-	public static ArrayList<Plats> GetAllPlats() throws SQLException{
+	public Plats(){}
+	
+	public  ArrayList<Plats> GetAllPlats() throws SQLException{
         Connection cn = null;
         Statement st = null;
         ArrayList<Plats> listPlats = new ArrayList<Plats>();
@@ -60,31 +62,31 @@ public class Plats {
 	// La requete pour recuperer le nom , description , prix des boissons
 	// SELECT nom,description,prix FROM nfc_resto.plats,nfc_resto.tarif WHERE idType_Plat ='4' and T_idTarif = idtarif;
 	
-	public static String getNom() {
+	public   String getNom() {
 		return nom;
 	}
 
-	public static void setNom(String nom) {
-		Plats.nom = nom;
+	public   void setNom(String nom) {
+		this.nom = nom;
 	}
 
-	public static String getDescription() {
+	public   String getDescription() {
 		return description;
 	}
 
-	public static void setDescription(String description) {
-		Plats.description = description;
+	public   void setDescription(String description) {
+		this.description = description;
 	}
 
-	public static float getPrix() {
+	public   float getPrix() {
 		return prix;
 	}
 
-	public static void setPrix(float prix) {
-		Plats.prix = prix;
+	public   void setPrix(float prix) {
+		this.prix = prix;
 	}
 	
-	public static void main(String[] args){
+	public   void main(String[] args){
 	try {
 		GetAllPlats();
 	} catch (SQLException e) {

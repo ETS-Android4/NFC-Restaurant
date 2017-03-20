@@ -23,9 +23,18 @@ public class MenuImpl implements MenuService{
  public Response sendPlat() throws SQLException{
 		try {
 		System.out.println("à table");
-		System.out.println(Plats.GetAllPlats().get(0).getNom());
 		// Boucle 
-		return Response.ok("{\"Plats\":[{\"Nom\":\"" + Plats.GetAllPlats().get(0).getNom() + "\",\"Description\":\""+Plats.GetAllPlats().get(0).getDescription()+"\", \"Prix\":\""+Plats.GetAllPlats().get(0).getPrix()+"\"}]}").build();
+		String json="";
+		Plats objPlat = new Plats();
+		for(int i = 0; i < objPlat.GetAllPlats().size(); i++){
+			if(i == objPlat.GetAllPlats().size()-1){
+				json += "{\"Nom\":\"" + objPlat.GetAllPlats().get(i).getNom() + "\",\"Description\":\""+objPlat.GetAllPlats().get(i).getDescription()+"\", \"Prix\":\""+objPlat.GetAllPlats().get(i).getPrix()+"\"}";	
+				break;
+			}
+			json +="{\"Nom\":\"" + objPlat.GetAllPlats().get(i).getNom() + "\",\"Description\":\""+objPlat.GetAllPlats().get(i).getDescription()+"\", \"Prix\":\""+objPlat.GetAllPlats().get(i).getPrix()+"\"},";			
+		}
+		// Plat.GetAllPlats().size()<
+		return Response.ok("{\"Plat\":["+json+"]}").build();
         } catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -39,7 +48,17 @@ public class MenuImpl implements MenuService{
 		try {
 		System.out.println("à table");
 		// Boucle 
-		return Response.ok("{\"Entree\":[{\"Nom\":\"" + Entree.GetAllEntree().get(0).getNom() + "\",\"Description\":\""+Entree.GetAllEntree().get(0).getDescription()+"\", \"Prix\":\""+Entree.GetAllEntree().get(0).getPrix()+"\"}]}").build();
+		String json="";
+		Entree objEntree = new Entree();
+		for(int i = 0; i < objEntree.GetAllEntree().size(); i++){
+			if(i == objEntree.GetAllEntree().size()-1){
+				json += "{\"Nom\":\"" + objEntree.GetAllEntree().get(i).getNom() + "\",\"Description\":\""+objEntree.GetAllEntree().get(i).getDescription()+"\", \"Prix\":\""+objEntree.GetAllEntree().get(i).getPrix()+"\"}";	
+				break;
+			}
+			json +="{\"Nom\":\"" + objEntree.GetAllEntree().get(i).getNom() + "\",\"Description\":\""+objEntree.GetAllEntree().get(i).getDescription()+"\", \"Prix\":\""+objEntree.GetAllEntree().get(i).getPrix()+"\"},";			
+		}
+		// Entree.GetAllEntree().size()<
+		return Response.ok("{\"Entree\":["+json+"]}").build();
         } catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -53,14 +72,24 @@ public class MenuImpl implements MenuService{
 		try {
 		System.out.println("à table");
 		// Boucle 
-		return Response.ok("{\"Dessert\":[{\"Nom\":\"" + Dessert.GetAllDessert().get(0).getNom() + "\",\"Description\":\""+Dessert.GetAllDessert().get(0).getDescription()+"\", \"Prix\":\""+Dessert.GetAllDessert().get(0).getPrix()+"\"}]}").build();
+		String json="";
+		Dessert objDessert = new Dessert();
+		for(int i = 0; i < objDessert.GetAllDessert().size(); i++){
+			if(i == objDessert.GetAllDessert().size()-1){
+				json += "{\"Nom\":\"" + objDessert.GetAllDessert().get(i).getNom() + "\",\"Description\":\""+objDessert.GetAllDessert().get(i).getDescription()+"\", \"Prix\":\""+objDessert.GetAllDessert().get(i).getPrix()+"\"}";	
+				break;
+			}
+			json +="{\"Nom\":\"" + objDessert.GetAllDessert().get(i).getNom() + "\",\"Description\":\""+objDessert.GetAllDessert().get(i).getDescription()+"\", \"Prix\":\""+objDessert.GetAllDessert().get(i).getPrix()+"\"},";			
+		}
+		// Dessert.GetAllDessert().size()<
+		return Response.ok("{\"Dessert\":["+json+"]}").build();
         } catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return Response.status(500).build();
 		}
 		
-	}
+}
 	
 	@Override
  public Response sendBoisson() throws SQLException{
@@ -68,12 +97,15 @@ public class MenuImpl implements MenuService{
 		System.out.println("à table");
 		// Boucle 
 		String json="";
-		for(int i = 0; i<Boisson.GetAllBoisson().size(); i++){
-			if(i == Boisson.GetAllBoisson().size()-1){
-				json += "{\"Nom\":\"" + Boisson.GetAllBoisson().get(i).getNom() + "\",\"Description\":\""+Boisson.GetAllBoisson().get(i).getDescription()+"\", \"Prix\":\""+Boisson.GetAllBoisson().get(i).getPrix()+"\"}";	
+		Boisson objBoisson = new Boisson();
+		// Boisson.GetAllBoisson().size();
+		// JSONObject jo = new JSONObject();
+		for(int i = 0; i < objBoisson.GetAllBoisson().size(); i++){
+			if(i == objBoisson.GetAllBoisson().size()-1){
+				json += "{\"Nom\":\"" + objBoisson.GetAllBoisson().get(i).getNom() + "\",\"Description\":\""+objBoisson.GetAllBoisson().get(i).getDescription()+"\", \"Prix\":\""+objBoisson.GetAllBoisson().get(i).getPrix()+"\"}";	
 				break;
 			}
-			json +="{\"Nom\":\"" + Boisson.GetAllBoisson().get(i).getNom() + "\",\"Description\":\""+Boisson.GetAllBoisson().get(i).getDescription()+"\", \"Prix\":\""+Boisson.GetAllBoisson().get(i).getPrix()+"\"},";
+			json +="{\"Nom\":\"" + objBoisson.GetAllBoisson().get(i).getNom() + "\",\"Description\":\""+objBoisson.GetAllBoisson().get(i).getDescription()+"\", \"Prix\":\""+objBoisson.GetAllBoisson().get(i).getPrix()+"\"},";
 			
 		}
 		// Boisson.GetAllBoisson().size()<

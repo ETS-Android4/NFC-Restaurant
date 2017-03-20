@@ -14,19 +14,21 @@ import fr.unice.iut.restaurant.database.BddConnexion;
  */
 public class Dessert {
 	
-	public static String nomDessert;
-	public static String descriptionDessert;
-	public static float prixDessert;
+	public   String nomDessert;
+	public   String descriptionDessert;
+	public   float prixDessert;
 	File monimage = new File("chemin");
 	// FileOutputStream ostreamImage = new FileOutputStream(monimage);
 	
-	private Dessert(String nomDessert,String descrptionDessert, float prixDessert){
+	public Dessert(String nomDessert,String descrptionDessert, float prixDessert){
 		this.nomDessert = nomDessert;
 		this.prixDessert = prixDessert;
 		this.descriptionDessert = descrptionDessert;
 	}	
 	
-	public static ArrayList<Dessert> GetAllDessert() throws SQLException{
+	public Dessert(){}
+	
+	public   ArrayList<Dessert> GetAllDessert() throws SQLException{
         Connection cn = null;
         Statement st = null;
         ArrayList<Dessert> listDesserts = new ArrayList<Dessert>();
@@ -54,28 +56,28 @@ public class Dessert {
 	}
 	
 	
-	public static String getNom() {
+	public   String getNom() {
 		return nomDessert;
 	}
 
-	public static void setNom(String nomDessert) {
-		Dessert.nomDessert = nomDessert;
+	public   void setNom(String nomDessert) {
+		this.nomDessert = nomDessert;
 	}
 
-	public static String getDescription() {
+	public   String getDescription() {
 		return descriptionDessert;
 	}
 
-	public static void setDescription(String descriptionDessert) {
-		Dessert.descriptionDessert = descriptionDessert;
+	public   void setDescription(String descriptionDessert) {
+		this.descriptionDessert = descriptionDessert;
 	}
 
-	public static float getPrix() {
+	public   float getPrix() {
 		return prixDessert;
 	}
 
-	public static void setPrix(float prixDessert) {
-		Dessert.prixDessert = prixDessert;
+	public   void setPrix(float prixDessert) {
+		this.prixDessert = prixDessert;
 	}
 
 }
