@@ -11,9 +11,7 @@ import android.widget.EditText;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-
-import org.json.JSONObject;
+import com.android.volley.toolbox.StringRequest;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Button connect = (Button) findViewById(R.id.btnConnection);
-
         connect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -54,10 +51,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void postRequest() {
-        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, URL_POST, null,
-                new Response.Listener<JSONObject>() {
+        StringRequest req = new StringRequest(Request.Method.POST, URL_POST,
+                new Response.Listener<String>() {
                     @Override
-                    public void onResponse(JSONObject response) {
+                    public void onResponse(String response) {
                         startActivity(new Intent(MainActivity.this, MenuActivity.class));
                         finish();
                     }
