@@ -8,20 +8,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-
 import java.util.HashMap;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = "MainActivity";
-    private static final String URL_POST = "";
-
-    RequestVolley queue = RequestVolley.getInstance();
+    private static final String TAG = "Main Activity";
     EditText login;
     EditText password;
 
@@ -45,35 +37,8 @@ public class MainActivity extends AppCompatActivity {
                     password.setError(getResources().getString(R.string.errPassword));
                     return;
                 }
-                postRequest();
+                Log.i(TAG, "Retrofit");
             }
         });
-    }
-
-    public void postRequest() {
-        StringRequest req = new StringRequest(Request.Method.POST, URL_POST,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        startActivity(new Intent(MainActivity.this, MenuActivity.class));
-                        finish();
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e(TAG, error.toString());
-                    }
-                }
-        ) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String>  params = new HashMap<>();
-                params.put("id", login.getText().toString());
-                params.put("pw", password.getText().toString());
-                return params;
-            }
-        };
-        queue.add(req);
     }
 }

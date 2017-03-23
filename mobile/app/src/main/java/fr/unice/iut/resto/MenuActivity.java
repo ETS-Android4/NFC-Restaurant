@@ -8,7 +8,7 @@ import android.widget.Button;
 
 public class MenuActivity extends AppCompatActivity {
 
-    private static final String TAG = "MenuActivity";
+    private static final String TAG = "Menu Activity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
