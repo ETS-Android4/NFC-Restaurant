@@ -13,7 +13,8 @@
 
     <modules>
 		<module>restaurant-ws</module>
-        <!-- add your modules here -->
+        <module>authentication</module>
+		<!-- add your modules here -->
     </modules>
     
 	<dependencies>
