@@ -30,6 +30,11 @@ public interface MenuService {
 	@Path("/boisson")
 	@Produces(MediaType.APPLICATION_JSON)
 	Response sendBoisson() throws SQLException;
+
+	@GET
+	@Path("/{target}")
+	Response getChoice(@PathParam("target") String target) throws SQLException;
+
 	/*
 	@POST
 	@Path("/")

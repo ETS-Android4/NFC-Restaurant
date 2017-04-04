@@ -3,6 +3,7 @@ package fr.unice.iut.restaurant.services;
 
 import javax.ws.rs.Path;
 import java.util.ArrayList;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
 import java.sql.*;
 import java.sql.SQLException;
@@ -20,6 +21,28 @@ import fr.unice.iut.restaurant.provider.*;
 @Path("/menu")
 public class MenuImpl implements MenuService{
 	@Override
+	public Response getChoice(String target){
+		String choix = target;
+		try{
+			if (choix.equals("entree")) {
+				sendEntree();
+			} else if (choix.equals("plat")) {
+				sendPlat();
+			} else if (choix.equals("dessert")) {
+				sendDessert();
+			} else if (choix.equals("boisson")) {
+				sendBoisson();
+			} else {
+				System.out.println("Erreur envoie");
+				return Response.status(500).build();
+			}
+		}catch (SQLException e){
+			e.printStackTrace();
+		}
+		return Response.status(200).build();
+	}
+
+	@Override
  public Response sendPlat() throws SQLException{
 		try {
 		System.out.println("à table");
@@ -28,13 +51,13 @@ public class MenuImpl implements MenuService{
 		Plats objPlat = new Plats();
 		for(int i = 0; i < objPlat.GetAllPlats().size(); i++){
 			if(i == objPlat.GetAllPlats().size()-1){
-				json += "{\"Nom\":\"" + objPlat.GetAllPlats().get(i).getNom() + "\",\"Description\":\""+objPlat.GetAllPlats().get(i).getDescription()+"\", \"Prix\":\""+objPlat.GetAllPlats().get(i).getPrix()+"\"}";	
+				json += "{\"Nom\":\"" + objPlat.GetAllPlats().get(i).getNom() + "\",\"Description\":\""+objPlat.GetAllPlats().get(i).getDescription()+"\", \"Prix\":\""+objPlat.GetAllPlats().get(i).getPrix()+"\",\"Id\":\""+objPlat.GetAllPlats().get(i).getId()+"\"}";
 				break;
 			}
-			json +="{\"Nom\":\"" + objPlat.GetAllPlats().get(i).getNom() + "\",\"Description\":\""+objPlat.GetAllPlats().get(i).getDescription()+"\", \"Prix\":\""+objPlat.GetAllPlats().get(i).getPrix()+"\"},";			
+			json +="{\"Nom\":\"" + objPlat.GetAllPlats().get(i).getNom() + "\",\"Description\":\""+objPlat.GetAllPlats().get(i).getDescription()+"\", \"Prix\":\""+objPlat.GetAllPlats().get(i).getPrix()+"\",\"Id\":\""+objPlat.GetAllPlats().get(i).getId()+"\"},";
 		}
 		// Plat.GetAllPlats().size()<
-		return Response.ok("{\"Plat\":["+json+"]}").build();
+		return Response.ok("["+json+"]").build();
         } catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -52,13 +75,13 @@ public class MenuImpl implements MenuService{
 		Entree objEntree = new Entree();
 		for(int i = 0; i < objEntree.GetAllEntree().size(); i++){
 			if(i == objEntree.GetAllEntree().size()-1){
-				json += "{\"Nom\":\"" + objEntree.GetAllEntree().get(i).getNom() + "\",\"Description\":\""+objEntree.GetAllEntree().get(i).getDescription()+"\", \"Prix\":\""+objEntree.GetAllEntree().get(i).getPrix()+"\"}";	
+				json += "{\"Nom\":\"" + objEntree.GetAllEntree().get(i).getNom() + "\",\"Description\":\""+objEntree.GetAllEntree().get(i).getDescription()+"\", \"Prix\":\""+objEntree.GetAllEntree().get(i).getPrix()+"\",\"Id\":\""+objEntree.GetAllEntree().get(i).getId()+"\"}";
 				break;
 			}
-			json +="{\"Nom\":\"" + objEntree.GetAllEntree().get(i).getNom() + "\",\"Description\":\""+objEntree.GetAllEntree().get(i).getDescription()+"\", \"Prix\":\""+objEntree.GetAllEntree().get(i).getPrix()+"\"},";			
+			json +="{\"Nom\":\"" + objEntree.GetAllEntree().get(i).getNom() + "\",\"Description\":\""+objEntree.GetAllEntree().get(i).getDescription()+"\", \"Prix\":\""+objEntree.GetAllEntree().get(i).getPrix()+"\",\"Id\":\""+objEntree.GetAllEntree().get(i).getId()+"\"}";
 		}
 		// Entree.GetAllEntree().size()<
-		return Response.ok("{\"Entree\":["+json+"]}").build();
+		return Response.ok("["+json+"]").build();
         } catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -76,13 +99,13 @@ public class MenuImpl implements MenuService{
 		Dessert objDessert = new Dessert();
 		for(int i = 0; i < objDessert.GetAllDessert().size(); i++){
 			if(i == objDessert.GetAllDessert().size()-1){
-				json += "{\"Nom\":\"" + objDessert.GetAllDessert().get(i).getNom() + "\",\"Description\":\""+objDessert.GetAllDessert().get(i).getDescription()+"\", \"Prix\":\""+objDessert.GetAllDessert().get(i).getPrix()+"\"}";	
+				json += "{\"Nom\":\"" + objDessert.GetAllDessert().get(i).getNom() + "\",\"Description\":\""+objDessert.GetAllDessert().get(i).getDescription()+"\", \"Prix\":\""+objDessert.GetAllDessert().get(i).getPrix()+objDessert.GetAllDessert().get(i).getId()+"\"}";
 				break;
 			}
-			json +="{\"Nom\":\"" + objDessert.GetAllDessert().get(i).getNom() + "\",\"Description\":\""+objDessert.GetAllDessert().get(i).getDescription()+"\", \"Prix\":\""+objDessert.GetAllDessert().get(i).getPrix()+"\"},";			
+			json +="{\"Nom\":\"" + objDessert.GetAllDessert().get(i).getNom() + "\",\"Description\":\""+objDessert.GetAllDessert().get(i).getDescription()+"\", \"Prix\":\""+objDessert.GetAllDessert().get(i).getPrix()+objDessert.GetAllDessert().get(i).getId()+"\"}";
 		}
 		// Dessert.GetAllDessert().size()<
-		return Response.ok("{\"Dessert\":["+json+"]}").build();
+		return Response.ok("["+json+"]").build();
         } catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -98,18 +121,16 @@ public class MenuImpl implements MenuService{
 		// Boucle 
 		String json="";
 		Boisson objBoisson = new Boisson();
-		// Boisson.GetAllBoisson().size();
-		// JSONObject jo = new JSONObject();
 		for(int i = 0; i < objBoisson.GetAllBoisson().size(); i++){
 			if(i == objBoisson.GetAllBoisson().size()-1){
-				json += "{\"Nom\":\"" + objBoisson.GetAllBoisson().get(i).getNom() + "\",\"Description\":\""+objBoisson.GetAllBoisson().get(i).getDescription()+"\", \"Prix\":\""+objBoisson.GetAllBoisson().get(i).getPrix()+"\"}";	
+				json += "{\"Nom\":\"" + objBoisson.GetAllBoisson().get(i).getNom() + "\",\"Description\":\""+objBoisson.GetAllBoisson().get(i).getDescription()+"\", \"Prix\":\""+objBoisson.GetAllBoisson().get(i).getPrix()+objBoisson.GetAllBoisson().get(i).getId()+"\"}";
 				break;
 			}
-			json +="{\"Nom\":\"" + objBoisson.GetAllBoisson().get(i).getNom() + "\",\"Description\":\""+objBoisson.GetAllBoisson().get(i).getDescription()+"\", \"Prix\":\""+objBoisson.GetAllBoisson().get(i).getPrix()+"\"},";
-			
+			json +="{\"Nom\":\"" + objBoisson.GetAllBoisson().get(i).getNom() + "\",\"Description\":\""+objBoisson.GetAllBoisson().get(i).getDescription()+"\", \"Prix\":\""+objBoisson.GetAllBoisson().get(i).getPrix()+objBoisson.GetAllBoisson().get(i).getId()+"\"}";
+
 		}
 		// Boisson.GetAllBoisson().size()<
-		return Response.ok("{\"Boisson\":["+json+"]}").build();
+		return Response.ok("["+json+"]").build();
         } catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

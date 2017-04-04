@@ -22,11 +22,13 @@ public class Boisson {
 	private String nom;
 	private String description;
 	private float prix;
+	private int id;
 
-	public Boisson(String nom,String description,float prix){
+	public Boisson(String nom, String description, float prix, int id){
 		this.nom = nom;
 		this.description = description;
 		this.prix = prix;
+		this.id = id;
 	}
 
 	public Boisson(){}
@@ -55,7 +57,11 @@ public class Boisson {
 	public void setPrix(float prix) {
 		this.prix = prix;
 	}
-		
+
+	public int getId() {
+		return id;
+	}
+
 	public ArrayList<Boisson> GetAllBoisson() throws SQLException{
         Connection cn = null;
         Statement st = null;
@@ -63,9 +69,9 @@ public class Boisson {
 		try {
         	cn = BddConnexion.getConnection();
         	st = (Statement) cn.createStatement();
-			ResultSet result = st.executeQuery("SELECT nom,description,prix FROM nfc_resto.plats,nfc_resto.tarif WHERE idType_Plat ='4' and T_idTarif = idtarif;");
+			ResultSet result = st.executeQuery("SELECT nom,description,prix,idPlat FROM nfc_resto.plats,nfc_resto.tarif WHERE idType_Plat ='4' and T_idTarif = idtarif;");
 			while (result.next()) {
-				Boisson boisson = new Boisson(result.getString("nom"),result.getString("description"),result.getFloat("prix"));
+				Boisson boisson = new Boisson(result.getString("nom"),result.getString("description"),result.getFloat("prix"), result.getInt("idPlat"));
 				listBoissons.add(boisson);
 			} 
 		}catch (ClassNotFoundException e) {

@@ -17,13 +17,20 @@ public class Dessert {
 	public   String nomDessert;
 	public   String descriptionDessert;
 	public   float prixDessert;
+
+	public int getId() {
+		return id;
+	}
+
+	public   int id;
 	File monimage = new File("chemin");
 	// FileOutputStream ostreamImage = new FileOutputStream(monimage);
 	
-	public Dessert(String nomDessert,String descrptionDessert, float prixDessert){
+	public Dessert(String nomDessert,String descrptionDessert, float prixDessert, int id){
 		this.nomDessert = nomDessert;
 		this.prixDessert = prixDessert;
 		this.descriptionDessert = descrptionDessert;
+		this.id = id;
 	}	
 	
 	public Dessert(){}
@@ -38,9 +45,9 @@ public class Dessert {
         	st = (Statement) cn.createStatement();
 	
 			ResultSet result = cn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
-	                ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT nom,description,prix FROM nfc_resto.plats,nfc_resto.tarif WHERE idType_Plat ='3' and T_idTarif = idtarif;");
+	                ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT nom,description,prix,idPlat FROM nfc_resto.plats,nfc_resto.tarif WHERE idType_Plat ='3' and T_idTarif = idtarif;");
 			while (result.next()) {
-				Dessert desserts = new Dessert(result.getString("nom"),result.getString("description"),result.getFloat("prix"));
+				Dessert desserts = new Dessert(result.getString("nom"),result.getString("description"),result.getFloat("prix"),result.getInt("idPlat"));
 				listDesserts.add(desserts);
 				System.out.println(desserts.getNom());
 				System.out.println(desserts.getDescription());

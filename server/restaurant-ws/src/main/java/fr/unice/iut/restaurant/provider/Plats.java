@@ -18,13 +18,15 @@ public class Plats {
 	private   String nom;
 	private   String description;
 	private   float prix;
+	private   int id;
 	private   File monimage = new File("chemin");
 	// FileOutputStream ostreamImage = new FileOutputStream(monimage);
 	
-	public Plats(String nom,String description,float prix) throws ClassNotFoundException {
+	public Plats(String nom,String description,float prix,int id) throws ClassNotFoundException {
 		this.nom = nom;
 		this.description = description;
 		this.prix = prix;
+		this.id = id;
 	}
 	
 	public Plats(){}
@@ -40,9 +42,9 @@ public class Plats {
 			// La requete pour recuperer le nom , description , prix des plats
 			// SELECT nom,description,prix FROM nfc_resto.plats,nfc_resto.tarif WHERE idType_Plat ='2' and T_idTarif = idtarif;		
 			ResultSet result = cn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
-	                ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT nom,description,prix FROM nfc_resto.plats,nfc_resto.tarif WHERE idType_Plat ='2' and T_idTarif = idtarif");
+	                ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT nom,description,prix,idPlat FROM nfc_resto.plats,nfc_resto.tarif WHERE idType_Plat ='2' and T_idTarif = idtarif");
 			while (result.next()) {
-				Plats plats = new Plats(result.getString("nom"),result.getString("description"),result.getFloat("prix"));
+				Plats plats = new Plats(result.getString("nom"),result.getString("description"),result.getFloat("prix"), result.getInt("idPlat"));
 				listPlats.add(plats);
 			}
         } catch (ClassNotFoundException e) {
@@ -85,7 +87,11 @@ public class Plats {
 	public   void setPrix(float prix) {
 		this.prix = prix;
 	}
-	
+
+	public int getId() {
+		return id;
+	}
+
 	public   void main(String[] args){
 	try {
 		GetAllPlats();
