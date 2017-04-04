@@ -4,6 +4,8 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import fr.unice.iut.restaurant.provider.*;
+import org.codehaus.jettison.json.JSONException;
+
 import java.sql.SQLException;
 
 /**
@@ -19,7 +21,7 @@ public interface MenuService {
 	@GET
 	@Path("/entree")
 	@Produces(MediaType.APPLICATION_JSON)
-	Response sendEntree() throws SQLException;
+	Response sendEntree() throws SQLException, JSONException;
 	
 	@GET
 	@Path("/dessert")

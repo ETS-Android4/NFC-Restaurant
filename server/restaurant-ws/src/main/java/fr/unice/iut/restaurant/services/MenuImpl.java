@@ -25,7 +25,7 @@ public class MenuImpl implements MenuService{
 		String choix = target;
 		try{
 			if (choix.equals("entree")) {
-				sendEntree();
+				// sendEntree();
 			} else if (choix.equals("plat")) {
 				sendPlat();
 			} else if (choix.equals("dessert")) {
@@ -49,39 +49,45 @@ public class MenuImpl implements MenuService{
 		// Boucle 
 		String json="";
 		Plats objPlat = new Plats();
+		JSONObject objJson = new JSONObject();
+		JSONArray objJsonArray = new JSONArray();
 		for(int i = 0; i < objPlat.GetAllPlats().size(); i++){
-			if(i == objPlat.GetAllPlats().size()-1){
-				json += "{\"Nom\":\"" + objPlat.GetAllPlats().get(i).getNom() + "\",\"Description\":\""+objPlat.GetAllPlats().get(i).getDescription()+"\", \"Prix\":\""+objPlat.GetAllPlats().get(i).getPrix()+"\",\"Id\":\""+objPlat.GetAllPlats().get(i).getId()+"\"}";
-				break;
-			}
-			json +="{\"Nom\":\"" + objPlat.GetAllPlats().get(i).getNom() + "\",\"Description\":\""+objPlat.GetAllPlats().get(i).getDescription()+"\", \"Prix\":\""+objPlat.GetAllPlats().get(i).getPrix()+"\",\"Id\":\""+objPlat.GetAllPlats().get(i).getId()+"\"},";
+			objJson.put("Id",objPlat.GetAllPlats().get(i).getId());
+			objJson.put("Nom",objPlat.GetAllPlats().get(i).getNom());
+			objJson.put("Description",objPlat.GetAllPlats().get(i).getDescription());
+			objJson.put("Prix",objPlat.GetAllPlats().get(i).getPrix());
+			objJsonArray.put(objJson);
 		}
 		// Plat.GetAllPlats().size()<
-		return Response.ok("["+json+"]").build();
+		return Response.ok(objJsonArray).build();
         } catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return Response.status(500).build();
+		} catch (JSONException e) {
+			e.printStackTrace();
+			return Response.status(500).build();
 		}
-		
 	}
 	
 	@Override
- public Response sendEntree() throws SQLException{
+ public Response sendEntree() throws SQLException, JSONException{
 		try {
 		System.out.println("à table");
-		// Boucle 
-		String json="";
 		Entree objEntree = new Entree();
+		String json ="";
+		JSONObject obj = new JSONObject();
+		JSONArray arrayJson = new JSONArray();
+		// Boucle
 		for(int i = 0; i < objEntree.GetAllEntree().size(); i++){
-			if(i == objEntree.GetAllEntree().size()-1){
-				json += "{\"Nom\":\"" + objEntree.GetAllEntree().get(i).getNom() + "\",\"Description\":\""+objEntree.GetAllEntree().get(i).getDescription()+"\", \"Prix\":\""+objEntree.GetAllEntree().get(i).getPrix()+"\",\"Id\":\""+objEntree.GetAllEntree().get(i).getId()+"\"}";
-				break;
-			}
-			json +="{\"Nom\":\"" + objEntree.GetAllEntree().get(i).getNom() + "\",\"Description\":\""+objEntree.GetAllEntree().get(i).getDescription()+"\", \"Prix\":\""+objEntree.GetAllEntree().get(i).getPrix()+"\",\"Id\":\""+objEntree.GetAllEntree().get(i).getId()+"\"}";
+			obj.put("Id",objEntree.GetAllEntree().get(i).getId());
+			obj.put("Nom",objEntree.GetAllEntree().get(i).getNom());
+			obj.put("Description",objEntree.GetAllEntree().get(i).getDescription());
+			obj.put("Prix",objEntree.GetAllEntree().get(i).getPrix());
+			arrayJson.put(obj);
+			// json +="{\"Id\":\""+objEntree.GetAllEntree().get(i).getId()+"\",\"Nom\":\"" + objEntree.GetAllEntree().get(i).getNom() + "\",\"Description\":\""+objEntree.GetAllEntree().get(i).getDescription()+"\", \"Prix\":\""+objEntree.GetAllEntree().get(i).getPrix()+"\"},";
 		}
-		// Entree.GetAllEntree().size()<
-		return Response.ok("["+json+"]").build();
+		return Response.ok(arrayJson).build();
         } catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -93,50 +99,58 @@ public class MenuImpl implements MenuService{
 	@Override
  public Response sendDessert() throws SQLException{
 		try {
-		System.out.println("à table");
-		// Boucle 
-		String json="";
-		Dessert objDessert = new Dessert();
-		for(int i = 0; i < objDessert.GetAllDessert().size(); i++){
-			if(i == objDessert.GetAllDessert().size()-1){
-				json += "{\"Nom\":\"" + objDessert.GetAllDessert().get(i).getNom() + "\",\"Description\":\""+objDessert.GetAllDessert().get(i).getDescription()+"\", \"Prix\":\""+objDessert.GetAllDessert().get(i).getPrix()+objDessert.GetAllDessert().get(i).getId()+"\"}";
-				break;
+			System.out.println("à table");
+			// Boucle
+			String json="";
+			Dessert objDessert = new Dessert();
+			JSONObject objJson = new JSONObject();
+			JSONArray objJsonArray = new JSONArray();
+			for(int i = 0; i < objDessert.GetAllDessert().size(); i++){
+				objJson.put("Id",objDessert.GetAllDessert().get(i).getId());
+				objJson.put("Nom",objDessert.GetAllDessert().get(i).getNom());
+				objJson.put("Description",objDessert.GetAllDessert().get(i).getDescription());
+				objJson.put("Prix",objDessert.GetAllDessert().get(i).getPrix());
+				objJsonArray.put(objJson);
 			}
-			json +="{\"Nom\":\"" + objDessert.GetAllDessert().get(i).getNom() + "\",\"Description\":\""+objDessert.GetAllDessert().get(i).getDescription()+"\", \"Prix\":\""+objDessert.GetAllDessert().get(i).getPrix()+objDessert.GetAllDessert().get(i).getId()+"\"}";
-		}
-		// Dessert.GetAllDessert().size()<
-		return Response.ok("["+json+"]").build();
-        } catch (SQLException e) {
+			// Plat.GetAllPlats().size()<
+			return Response.ok(objJsonArray).build();
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return Response.status(500).build();
+		} catch (JSONException e) {
+			e.printStackTrace();
+			return Response.status(500).build();
 		}
-		
-}
+
+	}
 	
 	@Override
  public Response sendBoisson() throws SQLException{
 		try {
-		System.out.println("à table");
-		// Boucle 
-		String json="";
-		Boisson objBoisson = new Boisson();
-		for(int i = 0; i < objBoisson.GetAllBoisson().size(); i++){
-			if(i == objBoisson.GetAllBoisson().size()-1){
-				json += "{\"Nom\":\"" + objBoisson.GetAllBoisson().get(i).getNom() + "\",\"Description\":\""+objBoisson.GetAllBoisson().get(i).getDescription()+"\", \"Prix\":\""+objBoisson.GetAllBoisson().get(i).getPrix()+objBoisson.GetAllBoisson().get(i).getId()+"\"}";
-				break;
+			System.out.println("à table");
+			// Boucle
+			String json="";
+			Boisson objBoisson = new Boisson();
+			JSONObject objJson = new JSONObject();
+			JSONArray objJsonArray = new JSONArray();
+			for(int i = 0; i < objBoisson.GetAllBoisson().size(); i++){
+				objJson.put("Id",objBoisson.GetAllBoisson().get(i).getId());
+				objJson.put("Nom",objBoisson.GetAllBoisson().get(i).getNom());
+				objJson.put("Description",objBoisson.GetAllBoisson().get(i).getDescription());
+				objJson.put("Prix",objBoisson.GetAllBoisson().get(i).getPrix());
+				objJsonArray.put(objJson);
 			}
-			json +="{\"Nom\":\"" + objBoisson.GetAllBoisson().get(i).getNom() + "\",\"Description\":\""+objBoisson.GetAllBoisson().get(i).getDescription()+"\", \"Prix\":\""+objBoisson.GetAllBoisson().get(i).getPrix()+objBoisson.GetAllBoisson().get(i).getId()+"\"}";
-
-		}
-		// Boisson.GetAllBoisson().size()<
-		return Response.ok("["+json+"]").build();
-        } catch (SQLException e) {
+			// Plat.GetAllPlats().size()<
+			return Response.ok(objJsonArray).build();
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return Response.status(500).build();
+		} catch (JSONException e) {
 			e.printStackTrace();
 			return Response.status(500).build();
 		}
 		
 	}
-
 }
