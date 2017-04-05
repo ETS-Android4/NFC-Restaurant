@@ -49,9 +49,9 @@ public class MenuImpl implements MenuService{
 		// Boucle 
 		String json="";
 		Plats objPlat = new Plats();
-		JSONObject objJson = new JSONObject();
 		JSONArray objJsonArray = new JSONArray();
 		for(int i = 0; i < objPlat.GetAllPlats().size(); i++){
+			JSONObject objJson = new JSONObject();
 			objJson.put("Id",objPlat.GetAllPlats().get(i).getId());
 			objJson.put("Nom",objPlat.GetAllPlats().get(i).getNom());
 			objJson.put("Description",objPlat.GetAllPlats().get(i).getDescription());
@@ -76,10 +76,10 @@ public class MenuImpl implements MenuService{
 		System.out.println("à table");
 		Entree objEntree = new Entree();
 		String json ="";
-		JSONObject obj = new JSONObject();
+		//  JSONObject obj = new JSONObject();
 		JSONArray arrayJson = new JSONArray();
-		// Boucle
 		for(int i = 0; i < objEntree.GetAllEntree().size(); i++){
+			JSONObject obj = new JSONObject();
 			obj.put("Id",objEntree.GetAllEntree().get(i).getId());
 			obj.put("Nom",objEntree.GetAllEntree().get(i).getNom());
 			obj.put("Description",objEntree.GetAllEntree().get(i).getDescription());
@@ -103,9 +103,10 @@ public class MenuImpl implements MenuService{
 			// Boucle
 			String json="";
 			Dessert objDessert = new Dessert();
-			JSONObject objJson = new JSONObject();
+
 			JSONArray objJsonArray = new JSONArray();
 			for(int i = 0; i < objDessert.GetAllDessert().size(); i++){
+				JSONObject objJson = new JSONObject();
 				objJson.put("Id",objDessert.GetAllDessert().get(i).getId());
 				objJson.put("Nom",objDessert.GetAllDessert().get(i).getNom());
 				objJson.put("Description",objDessert.GetAllDessert().get(i).getDescription());
@@ -132,9 +133,9 @@ public class MenuImpl implements MenuService{
 			// Boucle
 			String json="";
 			Boisson objBoisson = new Boisson();
-			JSONObject objJson = new JSONObject();
 			JSONArray objJsonArray = new JSONArray();
 			for(int i = 0; i < objBoisson.GetAllBoisson().size(); i++){
+				JSONObject objJson = new JSONObject();
 				objJson.put("Id",objBoisson.GetAllBoisson().get(i).getId());
 				objJson.put("Nom",objBoisson.GetAllBoisson().get(i).getNom());
 				objJson.put("Description",objBoisson.GetAllBoisson().get(i).getDescription());
