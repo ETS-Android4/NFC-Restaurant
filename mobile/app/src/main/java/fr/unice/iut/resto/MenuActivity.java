@@ -36,6 +36,7 @@ public class MenuActivity extends AppCompatActivity {
         Button dessert = (Button) findViewById(R.id.btnDessert);
         Button drink = (Button) findViewById(R.id.btnDrink);
         Button validate = (Button) findViewById(R.id.btnValidate);
+        Button back = (Button) findViewById(R.id.btnBack);
 
         entry.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,6 +85,13 @@ public class MenuActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),
                             getResources().getString(R.string.errSelect), Toast.LENGTH_LONG).show();
                 }
+            }
+        });
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MenuActivity.this, MainActivity.class));
             }
         });
     }

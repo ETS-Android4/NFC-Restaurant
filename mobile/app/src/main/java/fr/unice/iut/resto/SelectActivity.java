@@ -33,6 +33,7 @@ public class SelectActivity extends AppCompatActivity {
     ListView menu;
     String target;
     ArrayList<Food> command;
+    ArrayList<Food> record;
     User user;
 
     @Override
@@ -52,8 +53,10 @@ public class SelectActivity extends AppCompatActivity {
         }
 
         Button validate = (Button) findViewById(R.id.btnValidate);
+        Button back = (Button) findViewById(R.id.btnBack);
         menu = (ListView) findViewById(R.id.listFood);
         adapter = new ArrayAdapter<>(SelectActivity.this, android.R.layout.simple_list_item_multiple_choice, list);
+        record = command;
 
         menu.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         menu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -78,6 +81,17 @@ public class SelectActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(SelectActivity.this, MenuActivity.class);
+                i.putExtra("command", record);
+                i.putExtra("user", user);
+                startActivity(i);
+                finish();
+            }
+        });
     }
 
     public void get() {
@@ -94,10 +108,10 @@ public class SelectActivity extends AppCompatActivity {
                         json = new JSONArray(response.body().toString());
                         for(int i=0; i<json.length(); i++) {
                             Food food = new Food(
-                                    json.getJSONObject(i).getInt("id"),
-                                    json.getJSONObject(i).getString("nom"),
-                                    json.getJSONObject(i).getString("description"),
-                                    json.getJSONObject(i).getDouble("prix")
+                                    json.getJSONObject(i).getInt("Id"),
+                                    json.getJSONObject(i).getString("Nom"),
+                                    json.getJSONObject(i).getString("Description"),
+                                    json.getJSONObject(i).getDouble("Prix")
                             );
                             list.add(food);
                         }
@@ -110,7 +124,6 @@ public class SelectActivity extends AppCompatActivity {
                 else {
                     Toast.makeText(getApplicationContext(),
                             String.valueOf(response.code()), Toast.LENGTH_LONG).show();
-                    startActivity(getIntent());
                 }
             }
             @Override

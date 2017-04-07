@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         connect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                /*
                 if (login.getText().toString().isEmpty()) {
                     login.setError(getResources().getString(R.string.errLogin));
                     return;
@@ -45,6 +46,14 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
                 send();
+                */
+                ArrayList<Food> command = new ArrayList<>();
+                User user = new User("00", "00");
+                Intent i = new Intent(MainActivity.this, MenuActivity.class);
+                i.putExtra("command", command);
+                i.putExtra("user", user);
+                startActivity(i);
+                finish();
             }
         });
     }
@@ -70,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
                 else {
                     Toast.makeText(getApplicationContext(),
                             String.valueOf(response.code()), Toast.LENGTH_LONG).show();
-                    startActivity(getIntent());
                 }
             }
             @Override

@@ -34,6 +34,7 @@ public class OrderActivity extends AppCompatActivity {
 
         ListView menu = (ListView) findViewById(R.id.listFood);
         Button validate = (Button) findViewById(R.id.btnValidate);
+        Button back = (Button) findViewById(R.id.btnBack);
         ArrayAdapter<Food> adapter = new ArrayAdapter<>(OrderActivity.this,
                 android.R.layout.simple_list_item_1, command);
         menu.setAdapter(adapter);
@@ -42,6 +43,17 @@ public class OrderActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(OrderActivity.this, NfcActivity.class);
+                i.putExtra("command", command);
+                i.putExtra("user", user);
+                startActivity(i);
+                finish();
+            }
+        });
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(OrderActivity.this, MenuActivity.class);
                 i.putExtra("command", command);
                 i.putExtra("user", user);
                 startActivity(i);

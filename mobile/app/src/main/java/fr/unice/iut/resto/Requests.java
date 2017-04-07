@@ -9,13 +9,13 @@ import retrofit2.http.Query;
 
 interface Requests {
 
-    String URL = "";
+    String URL = "http://:8080/restaurant-ws/rest/";
 
     /* MainActivity */
     @GET("")
     Call<String> sendUser(@Query("login") String login, @Query("password") String password);
 
     /* SelectActivity */
-    @GET("")
-    Call<JsonArray> getMenu(@Path("") String target);
+    @GET("menu/{target}")
+    Call<JsonArray> getMenu(@Path("target") String target);
 }
