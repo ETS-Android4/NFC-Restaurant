@@ -8,12 +8,13 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
 public class OrderActivity extends AppCompatActivity {
 
-    private static final String TAG = "Order Activity";
+    private static final String TAG = "OrderActivity";
     ArrayList<Food> command;
     User user;
 
@@ -34,19 +35,17 @@ public class OrderActivity extends AppCompatActivity {
 
         ListView menu = (ListView) findViewById(R.id.listFood);
         Button validate = (Button) findViewById(R.id.btnValidate);
-        Button back = (Button) findViewById(R.id.btnBack);
+        TextView back = (TextView) findViewById(R.id.lblBack);
         ArrayAdapter<Food> adapter = new ArrayAdapter<>(OrderActivity.this,
                 android.R.layout.simple_list_item_1, command);
+
         menu.setAdapter(adapter);
 
         validate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(OrderActivity.this, NfcActivity.class);
-                i.putExtra("command", command);
-                i.putExtra("user", user);
-                startActivity(i);
-                finish();
+                start(i);
             }
         });
 
@@ -54,11 +53,15 @@ public class OrderActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(OrderActivity.this, MenuActivity.class);
-                i.putExtra("command", command);
-                i.putExtra("user", user);
-                startActivity(i);
-                finish();
+                start(i);
             }
         });
+    }
+
+    void start(Intent i) {
+        i.putExtra("command", command);
+        i.putExtra("user", user);
+        startActivity(i);
+        finish();
     }
 }

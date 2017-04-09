@@ -10,15 +10,32 @@ import android.nfc.tech.Ndef;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+
+import java.util.ArrayList;
 
 public class NfcActivity extends AppCompatActivity {
 
+    private static final String TAG = "NfcActivity";
+    ArrayList<Food> command;
+    User user;
     NfcAdapter nfcAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nfc);
+
+        try {
+            command = getIntent().getExtras().getParcelableArrayList("command");
+            user = getIntent().getExtras().getParcelable("user");
+        }
+        catch(Exception e) {
+            Log.e(TAG, e.toString());
+            System.exit(0);
+        }
+
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
     }
 

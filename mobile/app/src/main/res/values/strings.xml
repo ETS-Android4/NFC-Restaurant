@@ -1,15 +1,20 @@
 <resources>
     <string name="app">Resto</string>
-    <string name="login">Identifiant</string>
+    <string name="validate">Valider</string>
+    <string name="back">Retour</string>
+    <string name="firstName">Prénom</string>
+    <string name="lastName">Nom</string>
+    <string name="phone">Téléphone</string>
     <string name="password">Mot de passe</string>
-    <string name="connection">Se connecter</string>
+    <string name="sign">S\'inscrire</string>
+    <string name="login">Se connecter</string>
     <string name="entry">Entrée</string>
     <string name="dish">Plats</string>
     <string name="dessert">Desserts</string>
     <string name="drink">Boissons</string>
-    <string name="validate">Valider</string>
-    <string name="back">Retour</string>
-    <string name="errLogin">Veuillez rentrer un identifiant</string>
+    <string name="errFirstName">Veuillez rentrer un prénom</string>
+    <string name="errLastName">Veuillez rentrer un nom</string>
+    <string name="errPhone">Veuillez rentrer un numèro de téléphone</string>
     <string name="errPassword">Veuillez rentrer un mot de passe</string>
     <string name="errSelect">Veuillez sélectionner un menu</string>
 </resources>

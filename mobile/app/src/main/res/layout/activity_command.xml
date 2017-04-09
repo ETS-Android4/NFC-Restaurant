@@ -11,35 +11,27 @@
         android:id="@+id/listFood"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="6" />
+        android:layout_weight="5" />
 
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="horizontal"
+    <Button
+        android:id="@+id/btnValidate"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/validate"
+        android:textSize="@dimen/textSize2"
+        android:textColor="@color/colorPrimary"
+        android:textAllCaps="false" />
 
-        <Button
-            android:id="@+id/btnValidate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/validate"
-            android:textSize="@dimen/textSize2"
-            android:textColor="@color/colorPrimary"
-            android:textAllCaps="false" />
-
-        <Button
-            android:id="@+id/btnBack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/back"
-            android:textSize="@dimen/textSize2"
-            android:textColor="@color/colorPrimary"
-            android:textAllCaps="false" />
-
-    </LinearLayout>
+    <TextView
+        android:id="@+id/lblBack"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
+        android:gravity="center"
+        android:text="@string/back"
+        android:textSize="@dimen/textSize1"
+        android:textColor="@color/colorPrimary" />
 
 </LinearLayout>

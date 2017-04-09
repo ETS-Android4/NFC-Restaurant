@@ -9,28 +9,18 @@ class Food implements Parcelable {
     private String name;
     private String detail;
     private double price;
+    private String type;
 
-    Food(int id, String name, String detail, double price) {
+    Food(int id, String name, String detail, double price, String type) {
         this.id = id;
         this.name = name;
         this.detail = detail;
         this.price = price;
+        this.type = type;
     }
 
-    int getId() {
-        return id;
-    }
-
-    String getName() {
-        return name;
-    }
-
-    String getDetail() {
-        return detail;
-    }
-
-    double getPrice() {
-        return price;
+    String getType() {
+        return type;
     }
 
     @Override
@@ -49,6 +39,7 @@ class Food implements Parcelable {
         out.writeString(name);
         out.writeString(detail);
         out.writeString(String.valueOf(price));
+        out.writeString(type);
     }
 
     public static final Parcelable.Creator<Food> CREATOR = new Parcelable.Creator<Food>() {
@@ -67,5 +58,6 @@ class Food implements Parcelable {
         this.name = in.readString();
         this.detail = in.readString();
         this.price = Double.valueOf(in.readString());
+        this.type = in.readString();
     }
 }

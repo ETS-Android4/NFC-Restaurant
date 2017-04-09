@@ -6,13 +6,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
 public class MenuActivity extends AppCompatActivity {
 
-    private static final String TAG = "Menu Activity";
+    private static final String TAG = "MenuActivity";
     ArrayList<Food> command;
     User user;
 
@@ -36,7 +37,7 @@ public class MenuActivity extends AppCompatActivity {
         Button dessert = (Button) findViewById(R.id.btnDessert);
         Button drink = (Button) findViewById(R.id.btnDrink);
         Button validate = (Button) findViewById(R.id.btnValidate);
-        Button back = (Button) findViewById(R.id.btnBack);
+        TextView back = (TextView) findViewById(R.id.lblBack);
 
         entry.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,7 +92,8 @@ public class MenuActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MenuActivity.this, MainActivity.class));
+                startActivity(new Intent(MenuActivity.this, LoginActivity.class));
+                finish();
             }
         });
     }

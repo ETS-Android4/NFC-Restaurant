@@ -11,9 +11,16 @@ interface Requests {
 
     String URL = "http://:8080/restaurant-ws/rest/";
 
-    /* MainActivity */
+    /* LoginActivity */
     @GET("")
-    Call<String> sendUser(@Query("login") String login, @Query("password") String password);
+    Call<String> sendUser(@Query("phone") String phone, @Query("password") String password);
+
+    /* SignActivity */
+    @GET("")
+    Call<String> sendData(@Query("firstName") String firstName,
+                          @Query("lastName") String lastName,
+                          @Query("phone") String phone,
+                          @Query("password") String password);
 
     /* SelectActivity */
     @GET("menu/{target}")

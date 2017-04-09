@@ -12,20 +12,20 @@
         android:id="@+id/imgApp"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="1.5"
         android:contentDescription="@string/app"
         app:srcCompat="@drawable/app" />
 
     <EditText
-        android:id="@+id/txtLogin"
+        android:id="@+id/txtPhone"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:gravity="center"
-        android:inputType="textPersonName"
+        android:inputType="phone"
         android:textSize="@dimen/textSize1"
         android:textColor="@color/colorPrimary"
-        android:hint="@string/login" />
+        android:hint="@string/phone" />
 
     <EditText
         android:id="@+id/txtPassword"
@@ -39,14 +39,24 @@
         android:hint="@string/password" />
 
     <Button
-        android:id="@+id/btnConnection"
+        android:id="@+id/btnLogin"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="@string/connection"
+        android:text="@string/login"
         android:textSize="@dimen/textSize2"
         android:textColor="@color/colorPrimary"
         android:textAllCaps="false" />
+
+    <TextView
+        android:id="@+id/lblSign"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
+        android:gravity="center"
+        android:text="@string/sign"
+        android:textSize="@dimen/textSize1"
+        android:textColor="@color/colorPrimary" />
 
 </LinearLayout>

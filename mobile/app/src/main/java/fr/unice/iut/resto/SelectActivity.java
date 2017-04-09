@@ -4,11 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.JsonArray;
@@ -26,14 +27,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SelectActivity extends AppCompatActivity {
 
-    private static final String TAG = "Select Activity";
+    private static final String TAG = "SelectActivity";
     JSONArray json = new JSONArray();
     ArrayList<Food> list = new ArrayList<>();
     ArrayAdapter<Food> adapter;
     ListView menu;
     String target;
     ArrayList<Food> command;
-    ArrayList<Food> record;
     User user;
 
     @Override
@@ -53,48 +53,38 @@ public class SelectActivity extends AppCompatActivity {
         }
 
         Button validate = (Button) findViewById(R.id.btnValidate);
-        Button back = (Button) findViewById(R.id.btnBack);
+        TextView back = (TextView) findViewById(R.id.lblBack);
         menu = (ListView) findViewById(R.id.listFood);
         adapter = new ArrayAdapter<>(SelectActivity.this, android.R.layout.simple_list_item_multiple_choice, list);
-        record = command;
 
         menu.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-        menu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
-                if (command.contains(list.get(position)))
-                    command.remove(list.get(position).getId());
-                else
-                    command.add(list.get(position));
-            }
-        });
-
         get();
 
         validate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(SelectActivity.this, MenuActivity.class);
-                i.putExtra("command", command);
-                i.putExtra("user", user);
-                startActivity(i);
-                finish();
+                int size = command.size()-1;
+                for (int i=size; i>=0; i--)
+                    if (command.get(i).getType().equals(target))
+                        command.remove(i);
+                SparseBooleanArray checked = menu.getCheckedItemPositions();
+                for (int i=0; i<menu.getAdapter().getCount(); i++)
+                    if (checked.get(i))
+                        command.add((Food)menu.getAdapter().getItem(i));
+                start();
             }
         });
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(SelectActivity.this, MenuActivity.class);
-                i.putExtra("command", record);
-                i.putExtra("user", user);
-                startActivity(i);
-                finish();
+                start();
             }
         });
     }
 
     public void get() {
+
         Retrofit retrofit = new Retrofit.Builder().baseUrl(Requests.URL)
                 .addConverterFactory(GsonConverterFactory.create()).build();
         Requests get = retrofit.create(Requests.class);
@@ -111,7 +101,8 @@ public class SelectActivity extends AppCompatActivity {
                                     json.getJSONObject(i).getInt("Id"),
                                     json.getJSONObject(i).getString("Nom"),
                                     json.getJSONObject(i).getString("Description"),
-                                    json.getJSONObject(i).getDouble("Prix")
+                                    json.getJSONObject(i).getDouble("Prix"),
+                                    target
                             );
                             list.add(food);
                         }
@@ -131,5 +122,13 @@ public class SelectActivity extends AppCompatActivity {
                 Log.e(TAG, t.toString());
             }
         });
+    }
+
+    void start() {
+        Intent i = new Intent(SelectActivity.this, MenuActivity.class);
+        i.putExtra("command", command);
+        i.putExtra("user", user);
+        startActivity(i);
+        finish();
     }
 }

@@ -7,57 +7,57 @@
     android:layout_height="fill_parent"
     android:gravity="center">
 
-    <Button
-        android:id="@+id/btnEntry"
+    <EditText
+        android:id="@+id/txtFirstName"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1.5"
+        android:layout_weight="1"
         android:gravity="center"
-        android:text="@string/entry"
+        android:inputType="textPersonName"
         android:textSize="@dimen/textSize1"
         android:textColor="@color/colorPrimary"
-        android:textAllCaps="false" />
+        android:hint="@string/firstName" />
 
-    <Button
-        android:id="@+id/btnDish"
+    <EditText
+        android:id="@+id/txtLastName"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1.5"
+        android:layout_weight="1"
         android:gravity="center"
-        android:text="@string/dish"
+        android:inputType="textPersonName"
         android:textSize="@dimen/textSize1"
         android:textColor="@color/colorPrimary"
-        android:textAllCaps="false" />
+        android:hint="@string/lastName" />
 
-    <Button
-        android:id="@+id/btnDessert"
+    <EditText
+        android:id="@+id/txtPhone"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1.5"
+        android:layout_weight="1"
         android:gravity="center"
-        android:text="@string/dessert"
+        android:inputType="phone"
         android:textSize="@dimen/textSize1"
         android:textColor="@color/colorPrimary"
-        android:textAllCaps="false" />
+        android:hint="@string/phone" />
 
-    <Button
-        android:id="@+id/btnDrink"
+    <EditText
+        android:id="@+id/txtPassword"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1.5"
+        android:layout_weight="1"
         android:gravity="center"
-        android:text="@string/drink"
+        android:inputType="textPassword"
         android:textSize="@dimen/textSize1"
         android:textColor="@color/colorPrimary"
-        android:textAllCaps="false" />
+        android:hint="@string/password" />
 
     <Button
-        android:id="@+id/btnValidate"
+        android:id="@+id/btnSign"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="@string/validate"
+        android:text="@string/sign"
         android:textSize="@dimen/textSize2"
         android:textColor="@color/colorPrimary"
         android:textAllCaps="false" />
