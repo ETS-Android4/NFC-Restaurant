@@ -57,16 +57,16 @@ public class Commande {
         Connection cn = null;
         Statement st = null;
         ResultSet resultSet = null;
-
+        int ret=0;
         try {
             cn = BddConnexion.getConnection();
-            String sql = "INSERT INTO `commande` (`Horodatage`,`T_idTables`,`U_idUsers`,`details`) VALUES ('"+obj.getHorodatage()+"'," +
+            String sql = "INSERT INTO commande (Horodatage,T_idTables,U_idUsers,details) VALUES ('"+obj.getHorodatage()+"'," +
                     "'"+obj.getT_idTables()+"','"+obj.getU_idUsers()+"','"+obj.getDetails()+"') returning idCommande;";
             // st = (Statement) cn.createStatement();
             st = cn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
             resultSet = st.executeQuery(sql);
-            int ret;
+
             if (resultSet.first()){
                 ret = resultSet.getInt(1);
             }
@@ -74,11 +74,12 @@ public class Commande {
             //liberer la memoire
             cn.close();
             st.close();
-            return ret;
         }catch (ClassNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+
+        return ret;
     }
 
 }

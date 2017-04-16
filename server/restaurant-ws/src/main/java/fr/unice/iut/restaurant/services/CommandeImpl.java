@@ -6,7 +6,7 @@ import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
 import javax.ws.rs.Path;
-import javax.xml.ws.Response;
+import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 
 /**
@@ -18,7 +18,7 @@ public class CommandeImpl implements CommandeService {
 // Json de la commande -> {"U_idUsers":"","T_idTables":,"Horodatage":"","details":["Entree":"","Plats":"","Dessert":"","Boisson":""]}
 
     @Override
-    public Response insertCommande(String commande){
+    public javax.ws.rs.core.Response insertCommande(String commande){
         String U_idUsers, Horodatage;
         int T_idTables;
         String details;
@@ -33,8 +33,8 @@ public class CommandeImpl implements CommandeService {
             arrJson = json.getJSONArray("details");
             details = arrJson.getString(1)+" "+arrJson.getString(2)+" "+arrJson.getString(3)+" "+arrJson.getString(4);
             // if(true){
-            Commande.create(new Commande(U_idUsers,Horodatage,T_idTables,details));
-            return Response.status(201).entity(idCommande).build();;
+            int idCommande = Commande.create(new Commande(U_idUsers,Horodatage,T_idTables,details));
+            return Response.status(201).entity(idCommande).build();
         } catch (JSONException e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         } catch (Exception e) {
