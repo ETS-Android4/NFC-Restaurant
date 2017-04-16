@@ -19,6 +19,10 @@ class Food implements Parcelable {
         this.type = type;
     }
 
+    int getCode() {
+        return id;
+    }
+
     String getType() {
         return type;
     }

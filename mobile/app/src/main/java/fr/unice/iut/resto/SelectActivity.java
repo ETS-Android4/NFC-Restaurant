@@ -1,5 +1,6 @@
 package fr.unice.iut.resto;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -29,6 +30,7 @@ public class SelectActivity extends AppCompatActivity {
     private static final String TAG = "SelectActivity";
     JSONArray json = new JSONArray();
     ArrayList<Food> list = new ArrayList<>();
+    ProgressDialog load;
     ArrayAdapter<Food> adapter;
     ListView menu;
     String target;
@@ -49,6 +51,11 @@ public class SelectActivity extends AppCompatActivity {
         catch(Exception e) {
             Log.e(TAG, e.toString());
         }
+
+        load = new ProgressDialog(this);
+        load.setIndeterminate(true);
+        load.setMessage("Loading...");
+        load.show();
 
         Button validate = (Button) findViewById(R.id.btnValidate);
         TextView back = (TextView) findViewById(R.id.lblBack);
@@ -89,6 +96,9 @@ public class SelectActivity extends AppCompatActivity {
         call.enqueue(new Callback<JsonArray>() {
             @Override
             public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
+                if (load.isShowing()) {
+                    load.dismiss();
+                }
                 if (response.code()>199 && response.code()<206) {
                     try {
                         json = new JSONArray(response.body().toString());
@@ -103,6 +113,7 @@ public class SelectActivity extends AppCompatActivity {
                             list.add(food);
                         }
                         menu.setAdapter(adapter);
+                        record();
                     }
                     catch (JSONException e) {
                         e.printStackTrace();
@@ -114,9 +125,23 @@ public class SelectActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<JsonArray> call, Throwable t) {
+                if (load.isShowing()) {
+                    load.dismiss();
+                }
                 Log.e(TAG, t.toString());
             }
         });
+    }
+
+    void record() {
+        for (int i=0; i<list.size(); i++) {
+            for (int j=0; j<command.size(); j++) {
+                if (command.get(j).getCode() == list.get(i).getCode()) {
+                    menu.performItemClick(menu.getAdapter().getView(i, null, null), i,
+                            menu.getAdapter().getItemId(i));
+                }
+            }
+        }
     }
 
     void start() {
