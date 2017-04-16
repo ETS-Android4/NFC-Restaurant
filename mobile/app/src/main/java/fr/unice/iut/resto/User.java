@@ -12,15 +12,11 @@ class User implements Parcelable {
         this.login = login;
         this.token = token;
     }
-/*
+
     String getLogin() {
         return login;
     }
 
-    String getToken() {
-        return token;
-    }
-*/
     @Override
     public int describeContents() {
         return 0;

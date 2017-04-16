@@ -29,7 +29,6 @@ public class MenuActivity extends AppCompatActivity {
         }
         catch(Exception e) {
             Log.e(TAG, e.toString());
-            System.exit(0);
         }
 
         Button entry = (Button) findViewById(R.id.btnEntry);

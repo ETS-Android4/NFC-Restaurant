@@ -10,9 +10,20 @@
 
     <ImageView
         android:id="@+id/imgApp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="9"
         android:contentDescription="@string/app"
         app:srcCompat="@drawable/nfc" />
+
+    <TextView
+        android:id="@+id/lblBack"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/back"
+        android:textSize="@dimen/textSize1"
+        android:textColor="@color/colorPrimary" />
 
 </LinearLayout>

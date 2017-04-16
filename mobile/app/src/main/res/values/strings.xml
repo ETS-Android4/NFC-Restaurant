@@ -17,4 +17,5 @@
     <string name="errPhone">Veuillez rentrer un numèro de téléphone</string>
     <string name="errPassword">Veuillez rentrer un mot de passe</string>
     <string name="errSelect">Veuillez sélectionner un menu</string>
+    <string name="errNfc">NFC n\'est pas disponible dans cet appareil</string>
 </resources>

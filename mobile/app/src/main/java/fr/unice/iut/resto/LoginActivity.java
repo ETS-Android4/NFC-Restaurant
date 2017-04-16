@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -59,16 +58,11 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    public void send() {
-
-        String number = phone.getText().toString();
-        String pass = password.getText().toString();
-
+    void send() {
         Retrofit retrofit = new Retrofit.Builder().baseUrl(Requests.URL)
                 .addConverterFactory(GsonConverterFactory.create()).build();
         Requests send = retrofit.create(Requests.class);
-        Call<String> call = send.sendUser(number, pass);
-
+        Call<String> call = send.sendUser(phone.getText().toString(), password.getText().toString());
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
@@ -82,8 +76,7 @@ public class LoginActivity extends AppCompatActivity {
                     finish();
                 }
                 else {
-                    Toast.makeText(getApplicationContext(),
-                            String.valueOf(response.code()), Toast.LENGTH_LONG).show();
+                    Log.e(TAG, String.valueOf(response.code()));
                 }
             }
             @Override

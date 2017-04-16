@@ -10,7 +10,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.JsonArray;
 
@@ -49,7 +48,6 @@ public class SelectActivity extends AppCompatActivity {
         }
         catch(Exception e) {
             Log.e(TAG, e.toString());
-            System.exit(0);
         }
 
         Button validate = (Button) findViewById(R.id.btnValidate);
@@ -83,13 +81,11 @@ public class SelectActivity extends AppCompatActivity {
         });
     }
 
-    public void get() {
-
+    void get() {
         Retrofit retrofit = new Retrofit.Builder().baseUrl(Requests.URL)
                 .addConverterFactory(GsonConverterFactory.create()).build();
         Requests get = retrofit.create(Requests.class);
         Call<JsonArray> call = get.getMenu(target);
-
         call.enqueue(new Callback<JsonArray>() {
             @Override
             public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
@@ -113,8 +109,7 @@ public class SelectActivity extends AppCompatActivity {
                     }
                 }
                 else {
-                    Toast.makeText(getApplicationContext(),
-                            String.valueOf(response.code()), Toast.LENGTH_LONG).show();
+                    Log.e(TAG, String.valueOf(response.code()));
                 }
             }
             @Override

@@ -30,12 +30,11 @@ public class OrderActivity extends AppCompatActivity {
         }
         catch(Exception e) {
             Log.e(TAG, e.toString());
-            System.exit(0);
         }
 
-        ListView menu = (ListView) findViewById(R.id.listFood);
         Button validate = (Button) findViewById(R.id.btnValidate);
         TextView back = (TextView) findViewById(R.id.lblBack);
+        ListView menu = (ListView) findViewById(R.id.listFood);
         ArrayAdapter<Food> adapter = new ArrayAdapter<>(OrderActivity.this,
                 android.R.layout.simple_list_item_1, command);
 
