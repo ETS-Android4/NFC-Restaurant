@@ -11,10 +11,9 @@ import java.sql.Statement;
  * Created by Utilisateur on 17/04/2017.
  */
 public class Inscription {
-    private String nom,prenom,password;
-    private int noTel;
+    private String nom,prenom,password, noTel;
 
-    public Inscription(String nom,String prenom, String password, int noTel){
+    public Inscription(String nom,String prenom, String password, String noTel){
         this.nom = nom;
         this.prenom = prenom;
         this.noTel = noTel;
@@ -74,11 +73,11 @@ public class Inscription {
         this.password = password;
     }
 
-    public int getNoTel() {
+    public String getNoTel() {
         return noTel;
     }
 
-    public void setNoTel(int noTel) {
+    public void setNoTel(String noTel) {
         this.noTel = noTel;
     }
 

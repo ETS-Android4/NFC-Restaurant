@@ -14,15 +14,13 @@ import javax.ws.rs.core.Response;
 
 @Path("/inscription")
 public class InscriptionImpl implements InscriptionService{
-    String nom,prenom,password;
-    int noTel;
-    public Response insertClient(String inscription){
+    String nom,prenom,password, noTel;
+    public Response insertClient(String nom, String prenom, String tel, String mdp){
         try{
-            JSONObject json = new JSONObject(inscription);
-            nom = json.getString("nom");
-            prenom = json.getString("prenom");
-            password = json.getString("password");
-            noTel = json.getInt("noTel");
+            nom = nom;
+            prenom = prenom;
+            password = mdp;
+            noTel = tel;
             int idUsers = Inscription.InsertUser(new Inscription(nom, prenom, password, noTel));
             return Response.status(201).entity(idUsers).build();
         }catch (Exception e){
