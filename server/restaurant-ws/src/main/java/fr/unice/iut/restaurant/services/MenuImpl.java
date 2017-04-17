@@ -42,7 +42,7 @@ public class MenuImpl implements MenuService{
 	}
 
 	@Override
- public Response sendPlat() throws SQLException{
+ 	public Response sendPlat() throws SQLException{
 		try {
 		System.out.println("à table");
 		// Boucle 
@@ -70,7 +70,7 @@ public class MenuImpl implements MenuService{
 	}
 	
 	@Override
- public Response sendEntree() throws SQLException, JSONException{
+ 	public Response sendEntree() throws SQLException, JSONException{
 		try {
 		System.out.println("à table");
 		Entree objEntree = new Entree();
@@ -96,7 +96,7 @@ public class MenuImpl implements MenuService{
 	}
 	
 	@Override
- public Response sendDessert() throws SQLException{
+ 	public Response sendDessert() throws SQLException{
 		try {
 			System.out.println("à table");
 			// Boucle
@@ -126,7 +126,7 @@ public class MenuImpl implements MenuService{
 	}
 	
 	@Override
- public Response sendBoisson() throws SQLException{
+ 	public Response sendBoisson() throws SQLException{
 		try {
 			System.out.println("à table");
 			// Boucle
