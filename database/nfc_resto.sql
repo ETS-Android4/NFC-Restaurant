@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `nfc_resto` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `nfc_resto`;
 -- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: nfc_resto
@@ -21,14 +19,18 @@ USE `nfc_resto`;
 -- Table structure for table `commandes`
 --
 
+USE nfc_resto;
+
 DROP TABLE IF EXISTS `commandes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `commandes` (
-  `idClient` int(11) NOT NULL,
   `Horodatage` varchar(45) DEFAULT NULL,
   `T_idTables` int(11) NOT NULL,
   `U_idUsers` int(11) NOT NULL,
+  `detail` varchar(125) NOT NULL,
+  `idCommande` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`idCommande`),
   KEY `fk_Commandes_Tables_idx` (`T_idTables`),
   KEY `fk_Commandes_Users1_idx` (`U_idUsers`),
   CONSTRAINT `fk_Commandes_Tables` FOREIGN KEY (`T_idTables`) REFERENCES `tables` (`idTables`) ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -62,7 +64,7 @@ CREATE TABLE `plats` (
   KEY `fk_Plats_Tarif1_idx` (`T_idTarif`),
   KEY `idType_Plat_idx` (`idType_Plat`),
   CONSTRAINT `fk_Plats_Tarif1` FOREIGN KEY (`T_idTarif`) REFERENCES `tarif` (`idTarif`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -71,7 +73,7 @@ CREATE TABLE `plats` (
 
 LOCK TABLES `plats` WRITE;
 /*!40000 ALTER TABLE `plats` DISABLE KEYS */;
-INSERT INTO `plats` VALUES ('Salade Niçoise','Tomates,thon,comcombres',1,2,1),('Hamburger','Boeuf,fromage,frites',2,3,2),('Tarte aux citron','Confis de citron, crème légère',1,4,3),('Jus de citrons','Verre de 20 cl , glaçon,rondelle de citron',6,5,4),('Penne à la bolognaise','Viande haché,poivron,carotte,piment',4,6,2),('Crêpes Nutella','Crêpes chaudes nappé de sauce au choco Nutella',1,7,3),('Omlette aux fromages',' Fromage fondue,persil,noix de muscade',1,8,1),('CocaCola','Verre de 20 cl , glaçon ',6,9,4);
+INSERT INTO `plats` VALUES ('Salade Niçoise','Tomates thon comcombres',1,2,1),('Hamburger','Boeuf fromage frites',2,3,2),('Tarte aux citron','Confis de citron crème légère',1,4,3),('Jus de citrons','Verre de 20 cl glaçon,rondelle de citron',6,5,4),('Penne à la bolognaise','Viande haché poivron carotte piment',4,6,2),('Crêpes Nutella','Crêpes chaudes nappé de sauce au choco Nutella',1,7,3),('Omlette aux fromages',' Fromage fondue persil noix de muscade',1,8,1),('CocaCola','Verre de 20 cl glaçon ',6,9,4),('Booga','Verre de 20 cl glaçon',6,10,4),('Caviare','Oeuf de poisson d\'hiver à l\'huile de tournesol',4,11,1);
 /*!40000 ALTER TABLE `plats` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -158,11 +160,12 @@ DROP TABLE IF EXISTS `users`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `users` (
   `idUsers` int(11) NOT NULL AUTO_INCREMENT,
-  `login` varchar(45) NOT NULL,
+  `nom` varchar(45) NOT NULL,
+  `prenom` varchar(45) NOT NULL,
   `password` varchar(45) NOT NULL,
-  `type` tinytext NOT NULL,
+  `noTel` int(11) NOT NULL,
   PRIMARY KEY (`idUsers`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -171,6 +174,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (1,'Mkenini','Ismael','passe',695284834);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -183,4 +187,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-03-11 23:44:34
+-- Dump completed on 2017-04-17 23:50:04

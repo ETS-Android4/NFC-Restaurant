@@ -6,11 +6,9 @@ import android.os.Parcelable;
 class User implements Parcelable {
 
     private String login;
-    private String token;
 
-    User(String login, String token) {
+    User(String login) {
         this.login = login;
-        this.token = token;
     }
 
     String getLogin() {
@@ -25,7 +23,6 @@ class User implements Parcelable {
     @Override
     public void writeToParcel(Parcel out, int flags) {
         out.writeString(login);
-        out.writeString(token);
     }
 
     public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
@@ -41,6 +38,5 @@ class User implements Parcelable {
 
     private User(Parcel in) {
         this.login = in.readString();
-        this.token = in.readString();
     }
 }

@@ -20,22 +20,17 @@ public class Inscription {
         this.password = password;
     }
 
-    public static int InsertUser(Inscription obj){
+    public static void InsertUser(Inscription obj){
         Connection cn = null;
         Statement st = null;
-        ResultSet resultSet = null;
-        int ret=0;
+        int result;
         try {
             cn = BddConnexion.getConnection();
             String sql = "INSERT INTO users (nom, prenom, password, noTel) VALUES ('"+obj.getNom()+"','"+obj.getPrenom()+"', '"
-                    +obj.getPassword()+"', '"+obj.getNoTel()+"') returning idUsers;";
+                    +obj.getPassword()+"', '"+obj.getNoTel()+"');";
             st = cn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
-            resultSet = st.executeQuery(sql);
-
-            if (resultSet.first()){
-                ret = resultSet.getInt(1);
-            }
+            result = st.executeUpdate(sql);
             //deconnexion avec la db
             //liberer la memoire
             cn.close();
@@ -45,7 +40,6 @@ public class Inscription {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    return ret;
     }
 
 

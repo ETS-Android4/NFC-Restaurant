@@ -74,14 +74,14 @@ public class SignActivity extends AppCompatActivity {
         Retrofit retrofit = new Retrofit.Builder().baseUrl(Requests.URL)
                 .addConverterFactory(GsonConverterFactory.create()).build();
         Requests send = retrofit.create(Requests.class);
-        Call<String> call = send.sendData(firstName.getText().toString(), lastName.getText().toString(),
+        Call<Void> call = send.sendData(firstName.getText().toString(), lastName.getText().toString(),
                 phone.getText().toString(), password.getText().toString());
-        call.enqueue(new Callback<String>() {
+        call.enqueue(new Callback<Void>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
+            public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.code()>199 && response.code()<206) {
                     ArrayList<Food> command = new ArrayList<>();
-                    User user = new User(phone.getText().toString(), response.body());
+                    User user = new User(phone.getText().toString());
                     Intent i = new Intent(SignActivity.this, MenuActivity.class);
                     i.putExtra("command", command);
                     i.putExtra("user", user);
@@ -93,7 +93,7 @@ public class SignActivity extends AppCompatActivity {
                 }
             }
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(Call<Void> call, Throwable t) {
                 Log.e(TAG, t.toString());
             }
         });

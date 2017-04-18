@@ -5,32 +5,38 @@ import com.google.gson.JsonArray;
 import java.util.ArrayList;
 
 import retrofit2.Call;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
-import retrofit2.http.Query;
 
 interface Requests {
 
     String URL = "http://????:8080/restaurant-ws/rest/";
 
     /* LoginActivity */
-    @GET("????")
-    Call<String> sendUser(@Query("phone") String phone, @Query("password") String password);
+    @FormUrlEncoded
+    @POST("connexion")
+    Call<Void> sendUser(@Field("phone") String phone,
+                        @Field("password") String password);
 
     /* SignActivity */
-    @GET("????")
-    Call<String> sendData(@Query("firstName") String firstName,
-                          @Query("lastName") String lastName,
-                          @Query("phone") String phone,
-                          @Query("password") String password);
+    @FormUrlEncoded
+    @POST("inscription")
+    Call<Void> sendData(@Field("firstName") String firstName,
+                        @Field("lastName") String lastName,
+                        @Field("phone") String phone,
+                        @Field("password") String password);
 
     /* SelectActivity */
     @GET("menu/{target}")
     Call<JsonArray> getMenu(@Path("target") String target);
 
     /* NfcActivity */
-    @GET("????")
-    Call<Void> sendCommand(@Query("table") String table,
-                           @Query("user") String user,
-                           @Query("command") ArrayList<Food> command);
+    @FormUrlEncoded
+    @POST("????")
+    Call<Void> sendCommand(@Field("table") String table,
+                           @Field("user") String user,
+                           @Field("command") ArrayList<Food> command);
 }

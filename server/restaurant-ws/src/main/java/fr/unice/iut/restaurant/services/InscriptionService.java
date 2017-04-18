@@ -10,7 +10,7 @@ import java.sql.SQLException;
  */
 public interface InscriptionService {
 @POST
-@Path("/inscription")
-    Response insertClient(@FormParam("nom") String nom, @FormParam("prenom") String prenom,
-                          @FormParam("tel") String tel, @FormParam("mdp") String mdp);
+@Path("/")
+    Response insertClient(@FormParam("firstName") String nom, @FormParam("lastName") String prenom,
+                          @FormParam("phone") String tel, @FormParam("password") String mdp);
 }
