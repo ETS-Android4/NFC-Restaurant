@@ -20,6 +20,11 @@ public class Inscription {
         this.password = password;
     }
 
+    public Inscription(String password, String noTel){
+        this.noTel = noTel;
+        this.password = password;
+    }
+
     public static void InsertUser(Inscription obj){
         Connection cn = null;
         Statement st = null;
@@ -42,6 +47,26 @@ public class Inscription {
         }
     }
 
+    public static void checkConnexion(Inscription obj){
+        Connection cn = null;
+        Statement st = null;
+        int result;
+        try {
+        obj.getNoTel();
+        cn = BddConnexion.getConnection();
+        String sql = "SELECT idUsers FROM users WHERE noTel ='"+obj.getNoTel()+"' AND password='"+obj.getPassword()+"';";
+        ResultSet res = st.executeQuery(sql);
+            while(res.next()){
+                result = res.getInt(1);
+            }
+        // return resultat
+        }catch (ClassNotFoundException e) {
+        e.printStackTrace();
+        } catch (SQLException e) {
+        e.printStackTrace();
+        }
+
+    }
 
     public String getNom() {
         return nom;
