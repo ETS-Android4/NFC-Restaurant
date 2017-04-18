@@ -59,13 +59,11 @@ public class Inscription {
             while(res.next()){
                 result = res.getInt(1);
             }
-        // return resultat
         }catch (ClassNotFoundException e) {
         e.printStackTrace();
         } catch (SQLException e) {
         e.printStackTrace();
         }
-
     }
 
     public String getNom() {
