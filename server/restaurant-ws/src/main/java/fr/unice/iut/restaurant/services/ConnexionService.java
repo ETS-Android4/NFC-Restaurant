@@ -15,6 +15,6 @@ import java.sql.SQLException;
 public interface ConnexionService {
 	@POST
 	@Path("/")
-	Response Connexion(@FormParam("password") String password, @FormParam("noTel") String noTel) throws SQLException;
+	Response Connexion(@FormParam("phone") String noTel, @FormParam("password") String password) throws SQLException;
 	
 }

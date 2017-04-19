@@ -13,14 +13,14 @@ import java.sql.Statement;
 public class Inscription {
     private String nom,prenom,password, noTel;
 
-    public Inscription(String nom,String prenom, String password, String noTel){
+    public Inscription(String nom,String prenom, String noTel, String password){
         this.nom = nom;
         this.prenom = prenom;
         this.noTel = noTel;
         this.password = password;
     }
 
-    public Inscription(String password, String noTel){
+    public Inscription(String noTel, String password){
         this.noTel = noTel;
         this.password = password;
     }
@@ -31,15 +31,16 @@ public class Inscription {
         int result;
         try {
             cn = BddConnexion.getConnection();
-            String sql = "INSERT INTO users (nom, prenom, password, noTel) VALUES ('"+obj.getNom()+"','"+obj.getPrenom()+"', '"
-                    +obj.getPassword()+"', '"+obj.getNoTel()+"');";
-            st = cn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
-                    ResultSet.CONCUR_READ_ONLY);
+            String sql = "INSERT INTO users (nom, prenom, noTel, password) VALUES ('"+obj.getNom()+"','"+obj.getPrenom()+"', '"
+                    +obj.getNoTel()+"', '"+obj.getPassword()+"');";
+            st = cn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
             result = st.executeUpdate(sql);
             //deconnexion avec la db
             //liberer la memoire
-            cn.close();
+            /*
             st.close();
+            cn.close();
+            */
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
@@ -47,23 +48,27 @@ public class Inscription {
         }
     }
 
-    public static void checkConnexion(Inscription obj){
+    public static int checkConnexion(Inscription obj){
         Connection cn = null;
         Statement st = null;
-        int result;
+        ResultSet result;
         try {
-        obj.getNoTel();
-        cn = BddConnexion.getConnection();
-        String sql = "SELECT idUsers FROM users WHERE noTel ='"+obj.getNoTel()+"' AND password='"+obj.getPassword()+"';";
-        ResultSet res = st.executeQuery(sql);
-            while(res.next()){
-                result = res.getInt(1);
-            }
-        }catch (ClassNotFoundException e) {
-        e.printStackTrace();
+            cn = BddConnexion.getConnection();
+            String sql = "SELECT COUNT(idUsers) FROM users WHERE noTel ='"+obj.getNoTel()+"' AND password='"+obj.getPassword()+"';";
+            st = cn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            result = st.executeQuery(sql);
+            result.next();
+            if(result.getInt(1)>0) return 1;
+            /*
+            st.close();
+            cn.close();
+            */
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         } catch (SQLException e) {
-        e.printStackTrace();
+            e.printStackTrace();
         }
+        return 0;
     }
 
     public String getNom() {

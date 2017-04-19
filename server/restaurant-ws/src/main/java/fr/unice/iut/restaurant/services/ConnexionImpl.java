@@ -20,9 +20,11 @@ import fr.unice.iut.restaurant.provider.*;
 @Path("/connexion")
 public class ConnexionImpl implements ConnexionService{
 	@Override
-	public Response Connexion(String password, String noTel)throws SQLException{
+	public Response Connexion(String noTel, String password)throws SQLException{
 		try{
-			return Response.status(201).entity("connexion success").build();
+			if (Inscription.checkConnexion(new Inscription(noTel, password)) == 1)
+				return Response.status(200).build();
+			return Response.status(404).build();
 		}catch (Exception e){
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 		}
