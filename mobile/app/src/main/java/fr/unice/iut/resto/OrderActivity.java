@@ -3,7 +3,6 @@ package fr.unice.iut.resto;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -14,7 +13,6 @@ import java.util.ArrayList;
 
 public class OrderActivity extends AppCompatActivity {
 
-    private static final String TAG = "OrderActivity";
     ArrayList<Food> command;
     User user;
 
@@ -24,12 +22,15 @@ public class OrderActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_command);
 
+        user = new User(OrderActivity.this);
+        user.checkSession();
+
         try {
             command = getIntent().getExtras().getParcelableArrayList("command");
-            user = getIntent().getExtras().getParcelable("user");
         }
         catch(Exception e) {
-            Log.e(TAG, e.toString());
+            e.printStackTrace();
+            finish();
         }
 
         Button validate = (Button) findViewById(R.id.btnValidate);
@@ -59,7 +60,6 @@ public class OrderActivity extends AppCompatActivity {
 
     void start(Intent i) {
         i.putExtra("command", command);
-        i.putExtra("user", user);
         startActivity(i);
         finish();
     }

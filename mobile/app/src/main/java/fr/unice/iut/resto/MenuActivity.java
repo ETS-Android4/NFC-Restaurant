@@ -3,7 +3,6 @@ package fr.unice.iut.resto;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -13,7 +12,6 @@ import java.util.ArrayList;
 
 public class MenuActivity extends AppCompatActivity {
 
-    private static final String TAG = "MenuActivity";
     ArrayList<Food> command;
     User user;
 
@@ -23,12 +21,15 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
+        user = new User(MenuActivity.this);
+        user.checkSession();
+
         try {
             command = getIntent().getExtras().getParcelableArrayList("command");
-            user = getIntent().getExtras().getParcelable("user");
         }
         catch(Exception e) {
-            Log.e(TAG, e.toString());
+            e.printStackTrace();
+            finish();
         }
 
         Button entry = (Button) findViewById(R.id.btnEntry);
@@ -77,7 +78,7 @@ public class MenuActivity extends AppCompatActivity {
         validate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (command.size()!=0) {
+                if (command.size() != 0) {
                     Intent i = new Intent(MenuActivity.this, OrderActivity.class);
                     start(i);
                 }
@@ -99,7 +100,6 @@ public class MenuActivity extends AppCompatActivity {
 
     void start(Intent i) {
         i.putExtra("command", command);
-        i.putExtra("user", user);
         startActivity(i);
         finish();
     }

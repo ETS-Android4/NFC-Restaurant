@@ -3,7 +3,6 @@ package fr.unice.iut.resto;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,15 +18,18 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private static final String TAG = "LoginActivity";
     EditText phone;
     EditText password;
+    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        user = new User(LoginActivity.this);
+        user.isLogged();
 
         Button login = (Button) findViewById(R.id.btnLogin);
         TextView sign = (TextView) findViewById(R.id.lblSign);
@@ -66,22 +68,27 @@ public class LoginActivity extends AppCompatActivity {
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                if (response.code()>199 && response.code()<206) {
+                if (response.code() == 200) {
                     ArrayList<Food> command = new ArrayList<>();
-                    User user = new User(phone.getText().toString());
+                    user.createSession(phone.getText().toString());
                     Intent i = new Intent(LoginActivity.this, MenuActivity.class);
                     i.putExtra("command", command);
-                    i.putExtra("user", user);
                     startActivity(i);
                     finish();
                 }
                 else {
-                    Log.e(TAG, String.valueOf(response.code()));
+                    Intent i = new Intent(LoginActivity.this, ErrorActivity.class);
+                    i.putExtra("error", String.valueOf(response.code()));
+                    startActivity(i);
+                    finish();
                 }
             }
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                Log.e(TAG, t.toString());
+                Intent i = new Intent(LoginActivity.this, ErrorActivity.class);
+                i.putExtra("error", t.toString());
+                startActivity(i);
+                finish();
             }
         });
     }

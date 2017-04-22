@@ -1,42 +1,49 @@
 package fr.unice.iut.resto;
 
-import android.os.Parcel;
-import android.os.Parcelable;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 
-class User implements Parcelable {
+class User {
 
-    private String login;
+    private static final String SESSION = "session";
+    private static final String LOGIN = "login";
+    private static final String CHECK = "check";
+    private SharedPreferences pref;
+    private SharedPreferences.Editor editor;
+    private Context context;
 
-    User(String login) {
-        this.login = login;
+    User(Context context) {
+        this.context = context;
+        pref = context.getSharedPreferences(SESSION, 0);
+        editor = pref.edit();
+    }
+
+    void createSession(String login) {
+        editor.putBoolean(CHECK, true);
+        editor.putString(LOGIN, login);
+        editor.commit();
     }
 
     String getLogin() {
-        return login;
+        return pref.getString(LOGIN, null);
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel out, int flags) {
-        out.writeString(login);
-    }
-
-    public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
-        @Override
-        public User createFromParcel(Parcel in) {
-            return new User(in);
+    void checkSession() {
+        if(!pref.getBoolean(CHECK, false)) {
+            context.startActivity(new Intent(context, LoginActivity.class));
         }
-        @Override
-        public User[] newArray(int size) {
-            return new User[size];
-        }
-    };
+    }
 
-    private User(Parcel in) {
-        this.login = in.readString();
+    void isLogged() {
+        if(pref.getBoolean(CHECK, false)) {
+            context.startActivity(new Intent(context, MenuActivity.class));
+        }
+    }
+
+    void exitSession() {
+        editor.clear();
+        editor.commit();
+        System.exit(0);
     }
 }

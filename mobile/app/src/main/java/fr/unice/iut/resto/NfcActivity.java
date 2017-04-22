@@ -7,7 +7,6 @@ import android.nfc.Tag;
 import android.nfc.tech.MifareUltralight;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,7 +23,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class NfcActivity extends AppCompatActivity {
 
-    private static final String TAG = "NfcActivity";
     private static final String DATA = "A-01";
     private static final int PAGE = 4;
     NfcAdapter nfc;
@@ -37,12 +35,15 @@ public class NfcActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nfc);
 
+        user = new User(NfcActivity.this);
+        user.checkSession();
+
         try {
             command = getIntent().getExtras().getParcelableArrayList("command");
-            user = getIntent().getExtras().getParcelable("user");
         }
         catch(Exception e) {
-            Log.e(TAG, e.toString());
+            e.printStackTrace();
+            finish();
         }
 
         nfc = NfcAdapter.getDefaultAdapter(this);
@@ -58,7 +59,6 @@ public class NfcActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(NfcActivity.this, OrderActivity.class);
                 i.putExtra("command", command);
-                i.putExtra("user", user);
                 startActivity(i);
                 finish();
             }
@@ -97,7 +97,6 @@ public class NfcActivity extends AppCompatActivity {
             ultra.writePage(page, data.getBytes("US-ASCII"));
         }
         catch (IOException e) {
-            Log.e(TAG, e.toString());
             e.printStackTrace();
         }
         finally {
@@ -106,7 +105,6 @@ public class NfcActivity extends AppCompatActivity {
                     ultra.close();
                 }
                 catch (IOException e) {
-                    Log.e(TAG, e.toString());
                     e.printStackTrace();
                 }
             }
@@ -120,7 +118,6 @@ public class NfcActivity extends AppCompatActivity {
             return new String(ultra.readPages(4), Charset.forName("US-ASCII"));
         }
         catch (IOException e) {
-            Log.e(TAG, e.toString());
             e.printStackTrace();
         }
         finally {
@@ -129,7 +126,6 @@ public class NfcActivity extends AppCompatActivity {
                     ultra.close();
                 }
                 catch (IOException e) {
-                    Log.e(TAG, e.toString());
                     e.printStackTrace();
                 }
             }
@@ -145,20 +141,25 @@ public class NfcActivity extends AppCompatActivity {
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                if (response.code()>199 && response.code()<206) {
+                if (response.code() == 201) {
                     Intent i = new Intent(NfcActivity.this, MenuActivity.class);
                     i.putExtra("command", new ArrayList<>());
-                    i.putExtra("user", user);
                     startActivity(i);
                     finish();
                 }
                 else {
-                    Log.e(TAG, String.valueOf(response.code()));
+                    Intent i = new Intent(NfcActivity.this, ErrorActivity.class);
+                    i.putExtra("error", String.valueOf(response.code()));
+                    startActivity(i);
+                    finish();
                 }
             }
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                Log.e(TAG, t.toString());
+                Intent i = new Intent(NfcActivity.this, ErrorActivity.class);
+                i.putExtra("error", t.toString());
+                startActivity(i);
+                finish();
             }
         });
     }

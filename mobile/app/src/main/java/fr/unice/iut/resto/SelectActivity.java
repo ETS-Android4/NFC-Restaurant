@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -27,7 +26,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SelectActivity extends AppCompatActivity {
 
-    private static final String TAG = "SelectActivity";
     JSONArray json = new JSONArray();
     ArrayList<Food> list = new ArrayList<>();
     ProgressDialog load;
@@ -43,13 +41,16 @@ public class SelectActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_command);
 
+        user = new User(SelectActivity.this);
+        user.checkSession();
+
         try {
             target = getIntent().getExtras().getString("target");
             command = getIntent().getExtras().getParcelableArrayList("command");
-            user = getIntent().getExtras().getParcelable("user");
         }
         catch(Exception e) {
-            Log.e(TAG, e.toString());
+            e.printStackTrace();
+            finish();
         }
 
         load = new ProgressDialog(this);
@@ -99,7 +100,7 @@ public class SelectActivity extends AppCompatActivity {
                 if (load.isShowing()) {
                     load.dismiss();
                 }
-                if (response.code()>199 && response.code()<206) {
+                if (response.code() == 200) {
                     try {
                         json = new JSONArray(response.body().toString());
                         for(int i=0; i<json.length(); i++) {
@@ -117,10 +118,14 @@ public class SelectActivity extends AppCompatActivity {
                     }
                     catch (JSONException e) {
                         e.printStackTrace();
+                        finish();
                     }
                 }
                 else {
-                    Log.e(TAG, String.valueOf(response.code()));
+                    Intent i = new Intent(SelectActivity.this, ErrorActivity.class);
+                    i.putExtra("error", String.valueOf(response.code()));
+                    startActivity(i);
+                    finish();
                 }
             }
             @Override
@@ -128,7 +133,10 @@ public class SelectActivity extends AppCompatActivity {
                 if (load.isShowing()) {
                     load.dismiss();
                 }
-                Log.e(TAG, t.toString());
+                Intent i = new Intent(SelectActivity.this, ErrorActivity.class);
+                i.putExtra("error", t.toString());
+                startActivity(i);
+                finish();
             }
         });
     }
@@ -147,7 +155,6 @@ public class SelectActivity extends AppCompatActivity {
     void start() {
         Intent i = new Intent(SelectActivity.this, MenuActivity.class);
         i.putExtra("command", command);
-        i.putExtra("user", user);
         startActivity(i);
         finish();
     }
