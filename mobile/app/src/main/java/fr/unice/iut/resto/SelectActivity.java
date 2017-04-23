@@ -44,14 +44,8 @@ public class SelectActivity extends AppCompatActivity {
         user = new User(SelectActivity.this);
         user.checkSession();
 
-        try {
-            target = getIntent().getExtras().getString("target");
-            command = getIntent().getExtras().getParcelableArrayList("command");
-        }
-        catch(Exception e) {
-            e.printStackTrace();
-            finish();
-        }
+        target = getIntent().getExtras().getString("target");
+        command = getIntent().getExtras().getParcelableArrayList("command");
 
         load = new ProgressDialog(this);
         load.setIndeterminate(true);
@@ -70,13 +64,17 @@ public class SelectActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 int size = command.size()-1;
-                for (int i=size; i>=0; i--)
-                    if (command.get(i).getType().equals(target))
+                for (int i=size; i>=0; i--) {
+                    if (command.get(i).getType().equals(target)) {
                         command.remove(i);
+                    }
+                }
                 SparseBooleanArray checked = menu.getCheckedItemPositions();
-                for (int i=0; i<menu.getAdapter().getCount(); i++)
-                    if (checked.get(i))
-                        command.add((Food)menu.getAdapter().getItem(i));
+                for (int i=0; i<menu.getAdapter().getCount(); i++) {
+                    if (checked.get(i)) {
+                        command.add((Food) menu.getAdapter().getItem(i));
+                    }
+                }
                 start();
             }
         });
@@ -103,7 +101,7 @@ public class SelectActivity extends AppCompatActivity {
                 if (response.code() == 200) {
                     try {
                         json = new JSONArray(response.body().toString());
-                        for(int i=0; i<json.length(); i++) {
+                        for (int i=0; i<json.length(); i++) {
                             Food food = new Food(
                                     json.getJSONObject(i).getInt("Id"),
                                     json.getJSONObject(i).getString("Nom"),
@@ -118,14 +116,10 @@ public class SelectActivity extends AppCompatActivity {
                     }
                     catch (JSONException e) {
                         e.printStackTrace();
-                        finish();
                     }
                 }
                 else {
-                    Intent i = new Intent(SelectActivity.this, ErrorActivity.class);
-                    i.putExtra("error", String.valueOf(response.code()));
-                    startActivity(i);
-                    finish();
+                    error(String.valueOf(response.code()));
                 }
             }
             @Override
@@ -133,10 +127,7 @@ public class SelectActivity extends AppCompatActivity {
                 if (load.isShowing()) {
                     load.dismiss();
                 }
-                Intent i = new Intent(SelectActivity.this, ErrorActivity.class);
-                i.putExtra("error", t.toString());
-                startActivity(i);
-                finish();
+                error(t.toString());
             }
         });
     }
@@ -155,6 +146,13 @@ public class SelectActivity extends AppCompatActivity {
     void start() {
         Intent i = new Intent(SelectActivity.this, MenuActivity.class);
         i.putExtra("command", command);
+        startActivity(i);
+        finish();
+    }
+
+    void error(String error) {
+        Intent i = new Intent(SelectActivity.this, ErrorActivity.class);
+        i.putExtra("error", error);
         startActivity(i);
         finish();
     }

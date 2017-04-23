@@ -14,6 +14,6 @@ public interface CommandeService {
     @POST
     @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
-    Response insertCommande(String commande);
+    Response insertCommande(@FormParam("command") String commande);
 
 }

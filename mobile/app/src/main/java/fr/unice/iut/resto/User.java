@@ -44,6 +44,6 @@ class User {
     void exitSession() {
         editor.clear();
         editor.commit();
-        System.exit(0);
+        context.startActivity(new Intent(context, LoginActivity.class));
     }
 }

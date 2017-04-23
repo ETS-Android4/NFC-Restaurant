@@ -2,7 +2,7 @@ package fr.unice.iut.resto;
 
 import com.google.gson.JsonArray;
 
-import java.util.ArrayList;
+import org.json.JSONObject;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -35,8 +35,6 @@ interface Requests {
 
     /* NfcActivity */
     @FormUrlEncoded
-    @POST("????")
-    Call<Void> sendCommand(@Field("table") String table,
-                           @Field("user") String user,
-                           @Field("command") ArrayList<Food> command);
+    @POST("commande")
+    Call<Void> sendCommand(@Field("command") JSONObject command);
 }

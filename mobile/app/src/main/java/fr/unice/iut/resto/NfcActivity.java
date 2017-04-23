@@ -7,13 +7,18 @@ import android.nfc.Tag;
 import android.nfc.tech.MifareUltralight;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -38,18 +43,11 @@ public class NfcActivity extends AppCompatActivity {
         user = new User(NfcActivity.this);
         user.checkSession();
 
-        try {
-            command = getIntent().getExtras().getParcelableArrayList("command");
-        }
-        catch(Exception e) {
-            e.printStackTrace();
-            finish();
-        }
+        command = getIntent().getExtras().getParcelableArrayList("command");
 
         nfc = NfcAdapter.getDefaultAdapter(this);
         if (nfc == null) {
-            Toast.makeText(getApplicationContext(),
-                    getResources().getString(R.string.errNfc), Toast.LENGTH_LONG).show();
+            Toast.makeText(NfcActivity.this, getResources().getString(R.string.errNfc), Toast.LENGTH_LONG).show();
             finish();
         }
 
@@ -134,10 +132,20 @@ public class NfcActivity extends AppCompatActivity {
     }
 
     void send(String table) {
+        JSONObject order = new JSONObject();
+        try {
+            order.put("U_idUsers", user.getLogin());
+            order.put("T_idTables", table);
+            order.put("Horodatage", Calendar.getInstance().getTime());
+            order.put("details", command);
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
         Retrofit retrofit = new Retrofit.Builder().baseUrl(Requests.URL)
                 .addConverterFactory(GsonConverterFactory.create()).build();
         Requests send = retrofit.create(Requests.class);
-        Call<Void> call = send.sendCommand(table, user.getLogin(), command);
+        Call<Void> call = send.sendCommand(order);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
@@ -148,19 +156,20 @@ public class NfcActivity extends AppCompatActivity {
                     finish();
                 }
                 else {
-                    Intent i = new Intent(NfcActivity.this, ErrorActivity.class);
-                    i.putExtra("error", String.valueOf(response.code()));
-                    startActivity(i);
-                    finish();
+                    error(String.valueOf(response.code()));
                 }
             }
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                Intent i = new Intent(NfcActivity.this, ErrorActivity.class);
-                i.putExtra("error", t.toString());
-                startActivity(i);
-                finish();
+                error(t.toString());
             }
         });
+    }
+
+    void error(String error) {
+        Intent i = new Intent(NfcActivity.this, ErrorActivity.class);
+        i.putExtra("error", error);
+        startActivity(i);
+        finish();
     }
 }

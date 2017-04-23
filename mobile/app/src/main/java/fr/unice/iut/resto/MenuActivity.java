@@ -27,9 +27,8 @@ public class MenuActivity extends AppCompatActivity {
         try {
             command = getIntent().getExtras().getParcelableArrayList("command");
         }
-        catch(Exception e) {
-            e.printStackTrace();
-            finish();
+        catch (Exception e) {
+            command = new ArrayList<>();
         }
 
         Button entry = (Button) findViewById(R.id.btnEntry);
@@ -37,7 +36,7 @@ public class MenuActivity extends AppCompatActivity {
         Button dessert = (Button) findViewById(R.id.btnDessert);
         Button drink = (Button) findViewById(R.id.btnDrink);
         Button validate = (Button) findViewById(R.id.btnValidate);
-        TextView back = (TextView) findViewById(R.id.lblBack);
+        TextView exit = (TextView) findViewById(R.id.lblExit);
 
         entry.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,17 +82,15 @@ public class MenuActivity extends AppCompatActivity {
                     start(i);
                 }
                 else {
-                    Toast.makeText(getApplicationContext(),
-                            getResources().getString(R.string.errSelect), Toast.LENGTH_LONG).show();
+                    Toast.makeText(MenuActivity.this, getResources().getString(R.string.errSelect), Toast.LENGTH_LONG).show();
                 }
             }
         });
 
-        back.setOnClickListener(new View.OnClickListener() {
+        exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MenuActivity.this, LoginActivity.class));
-                finish();
+                user.exitSession();
             }
         });
     }

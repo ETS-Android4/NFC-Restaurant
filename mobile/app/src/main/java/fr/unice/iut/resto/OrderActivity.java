@@ -25,13 +25,7 @@ public class OrderActivity extends AppCompatActivity {
         user = new User(OrderActivity.this);
         user.checkSession();
 
-        try {
-            command = getIntent().getExtras().getParcelableArrayList("command");
-        }
-        catch(Exception e) {
-            e.printStackTrace();
-            finish();
-        }
+        command = getIntent().getExtras().getParcelableArrayList("command");
 
         Button validate = (Button) findViewById(R.id.btnValidate);
         TextView back = (TextView) findViewById(R.id.lblBack);

@@ -7,8 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import java.util.ArrayList;
+import android.widget.Toast;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -82,26 +81,17 @@ public class SignActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.code() == 201) {
-                    ArrayList<Food> command = new ArrayList<>();
                     user.createSession(phone.getText().toString());
-                    Intent i = new Intent(SignActivity.this, MenuActivity.class);
-                    i.putExtra("command", command);
-                    startActivity(i);
+                    startActivity(new Intent(SignActivity.this, MenuActivity.class));
                     finish();
                 }
                 else {
-                    Intent i = new Intent(SignActivity.this, ErrorActivity.class);
-                    i.putExtra("error", String.valueOf(response.code()));
-                    startActivity(i);
-                    finish();
+                    Toast.makeText(SignActivity.this, String.valueOf(response.code()), Toast.LENGTH_LONG).show();
                 }
             }
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                Intent i = new Intent(SignActivity.this, ErrorActivity.class);
-                i.putExtra("error", t.toString());
-                startActivity(i);
-                finish();
+                Toast.makeText(SignActivity.this, t.toString(), Toast.LENGTH_LONG).show();
             }
         });
     }

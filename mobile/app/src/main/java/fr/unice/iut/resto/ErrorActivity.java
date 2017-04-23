@@ -9,8 +9,7 @@ import android.widget.TextView;
 
 public class ErrorActivity extends AppCompatActivity {
 
-    String err;
-    User user;
+    String error;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,24 +17,15 @@ public class ErrorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_error);
 
-        user = new User(ErrorActivity.this);
-        user.checkSession();
-
-        try {
-            err = getIntent().getExtras().getString("error");
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            finish();
-        }
+        error = getIntent().getExtras().getString("error");
 
         TextView errCode = (TextView) findViewById(R.id.lblErrorCode);
         TextView errText = (TextView) findViewById(R.id.lblErrorText);
 
-        if (err.length()<11)
-            errCode.setText(err);
+        if (error.length()<11)
+            errCode.setText(error);
         else
-            errText.setText(err);
+            errText.setText(error);
 
         Button home = (Button) findViewById(R.id.btnHome);
         home.setOnClickListener(new View.OnClickListener() {
