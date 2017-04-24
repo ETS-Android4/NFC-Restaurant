@@ -19,14 +19,16 @@ public class Plats {
 	private   String description;
 	private   float prix;
 	private   int id;
+	private   String url;
 	private   File monimage = new File("chemin");
 	// FileOutputStream ostreamImage = new FileOutputStream(monimage);
 	
-	public Plats(String nom,String description,float prix,int id) throws ClassNotFoundException {
+	public Plats(String nom,String description,String url,float prix,int id) throws ClassNotFoundException {
 		this.nom = nom;
 		this.description = description;
 		this.prix = prix;
 		this.id = id;
+		this.url = url;
 	}
 	
 	public Plats(){}
@@ -42,9 +44,9 @@ public class Plats {
 			// La requete pour recuperer le nom , description , prix des plats
 			// SELECT nom,description,prix FROM nfc_resto.plats,nfc_resto.tarif WHERE idType_Plat ='2' and T_idTarif = idtarif;		
 			ResultSet result = cn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
-	                ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT nom,description,prix,idPlat FROM nfc_resto.plats,nfc_resto.tarif WHERE idType_Plat ='2' and T_idTarif = idtarif");
+	                ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT nom,description,url,prix,idPlat FROM nfc_resto.plats,nfc_resto.tarif WHERE idType_Plat ='2' and T_idTarif = idtarif");
 			while (result.next()) {
-				Plats plats = new Plats(result.getString("nom"),result.getString("description"),result.getFloat("prix"), result.getInt("idPlat"));
+				Plats plats = new Plats(result.getString("nom"),result.getString("description"),result.getString("url"),result.getFloat("prix"), result.getInt("idPlat"));
 				listPlats.add(plats);
 			}
         } catch (ClassNotFoundException e) {
@@ -76,15 +78,15 @@ public class Plats {
 		return description;
 	}
 
-	public   void setDescription(String description) {
+	public void setDescription(String description) {
 		this.description = description;
 	}
 
-	public   float getPrix() {
+	public float getPrix() {
 		return prix;
 	}
 
-	public   void setPrix(float prix) {
+	public void setPrix(float prix) {
 		this.prix = prix;
 	}
 
@@ -92,6 +94,14 @@ public class Plats {
 		return id;
 	}
 
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+	
 	public   void main(String[] args){
 	try {
 		GetAllPlats();

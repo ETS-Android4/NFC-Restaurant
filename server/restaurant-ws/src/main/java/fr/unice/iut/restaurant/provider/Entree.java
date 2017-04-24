@@ -19,10 +19,12 @@ public class Entree {
 	private   String description;
 	private   float prix;
 	private   int id;
+	private   String url;
 	private   File monimage = new File("chemin");
 	// FileOutputStream ostreamImage = new FileOutputStream(monimage);
 	
-	public Entree(String nom,String description,float prix,int id){
+	public Entree(String nom,String description,String url,float prix,int id){
+		this.url = url;
 		this.nom = nom;
 		this.description = description;
 		this.prix = prix;
@@ -42,9 +44,9 @@ public class Entree {
 			// La requete pour recuperer le nom , description , prix des plats
 			// SELECT nom,description,prix FROM nfc_resto.plats,nfc_resto.tarif WHERE idType_Plat ='2' and T_idTarif = idtarif;		
 			ResultSet result = cn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
-	                ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT nom,description,prix,idPlat FROM nfc_resto.plats,nfc_resto.tarif WHERE idType_Plat='1' and T_idTarif = idtarif");
+	                ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT nom,description,url,prix,idPlat FROM nfc_resto.plats,nfc_resto.tarif WHERE idType_Plat='1' and T_idTarif = idtarif");
 			while (result.next()) {
-				Entree entree = new Entree(result.getString("nom"),result.getString("description"),result.getFloat("prix"),result.getInt("idPlat"));
+				Entree entree = new Entree(result.getString("nom"),result.getString("description"),result.getString("url"),result.getFloat("prix"),result.getInt("idPlat"));
 				listEntree.add(entree);
 				System.out.println(entree.getNom());
 				System.out.println(entree.getDescription());
@@ -66,6 +68,14 @@ public class Entree {
 		this.nom = nom;
 	}
 
+	public   String getUrl() {
+		return url;
+	}
+
+	public   void setUrl(String url) {
+		this.url = url;
+	}
+	
 	public   String getDescription() {
 		return description;
 	}

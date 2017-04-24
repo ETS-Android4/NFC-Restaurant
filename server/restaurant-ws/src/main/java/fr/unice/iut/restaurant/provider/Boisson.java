@@ -23,12 +23,14 @@ public class Boisson {
 	private String description;
 	private float prix;
 	private int id;
-
-	public Boisson(String nom, String description, float prix, int id){
+	private String url;
+	
+	public Boisson(String nom, String description, String url, float prix, int id){
 		this.nom = nom;
 		this.description = description;
 		this.prix = prix;
 		this.id = id;
+		this.url = url;
 	}
 
 	public Boisson(){}
@@ -61,6 +63,14 @@ public class Boisson {
 	public int getId() {
 		return id;
 	}
+	
+	public   String getUrl() {
+		return url;
+	}
+
+	public   void setUrl(String url) {
+		this.url = url;
+	}
 
 	public ArrayList<Boisson> GetAllBoisson() throws SQLException{
         Connection cn = null;
@@ -69,9 +79,9 @@ public class Boisson {
 		try {
         	cn = BddConnexion.getConnection();
         	st = (Statement) cn.createStatement();
-			ResultSet result = st.executeQuery("SELECT nom,description,prix,idPlat FROM nfc_resto.plats,nfc_resto.tarif WHERE idType_Plat ='4' and T_idTarif = idtarif;");
+			ResultSet result = st.executeQuery("SELECT nom,description,url,prix,idPlat FROM nfc_resto.plats,nfc_resto.tarif WHERE idType_Plat ='4' and T_idTarif = idtarif;");
 			while (result.next()) {
-				Boisson boisson = new Boisson(result.getString("nom"),result.getString("description"),result.getFloat("prix"), result.getInt("idPlat"));
+				Boisson boisson = new Boisson(result.getString("nom"),result.getString("description"),result.getString("url"),result.getFloat("prix"), result.getInt("idPlat"));
 				listBoissons.add(boisson);
 			} 
 		}catch (ClassNotFoundException e) {
@@ -80,6 +90,7 @@ public class Boisson {
 		}
 		return listBoissons;
 	}
+		
 		
 	
 }

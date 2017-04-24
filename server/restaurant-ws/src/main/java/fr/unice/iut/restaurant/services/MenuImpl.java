@@ -55,6 +55,7 @@ public class MenuImpl implements MenuService{
 			objJson.put("Nom",objPlat.GetAllPlats().get(i).getNom());
 			objJson.put("Description",objPlat.GetAllPlats().get(i).getDescription());
 			objJson.put("Prix",objPlat.GetAllPlats().get(i).getPrix());
+			objJson.put("Url",objPlat.GetAllPlats().get(i).getUrl());
 			objJsonArray.put(objJson);
 		}
 		// Plat.GetAllPlats().size()<
@@ -83,6 +84,7 @@ public class MenuImpl implements MenuService{
 			obj.put("Nom",objEntree.GetAllEntree().get(i).getNom());
 			obj.put("Description",objEntree.GetAllEntree().get(i).getDescription());
 			obj.put("Prix",objEntree.GetAllEntree().get(i).getPrix());
+			obj.put("Url",objEntree.GetAllEntree().get(i).getUrl());
 			arrayJson.put(obj);
 			// json +="{\"Id\":\""+objEntree.GetAllEntree().get(i).getId()+"\",\"Nom\":\"" + objEntree.GetAllEntree().get(i).getNom() + "\",\"Description\":\""+objEntree.GetAllEntree().get(i).getDescription()+"\", \"Prix\":\""+objEntree.GetAllEntree().get(i).getPrix()+"\"},";
 		}
@@ -110,6 +112,7 @@ public class MenuImpl implements MenuService{
 				objJson.put("Nom",objDessert.GetAllDessert().get(i).getNom());
 				objJson.put("Description",objDessert.GetAllDessert().get(i).getDescription());
 				objJson.put("Prix",objDessert.GetAllDessert().get(i).getPrix());
+				objJson.put("Url",objDessert.GetAllDessert().get(i).getUrl());
 				objJsonArray.put(objJson);
 			}
 			// Plat.GetAllPlats().size()<
@@ -139,6 +142,7 @@ public class MenuImpl implements MenuService{
 				objJson.put("Nom",objBoisson.GetAllBoisson().get(i).getNom());
 				objJson.put("Description",objBoisson.GetAllBoisson().get(i).getDescription());
 				objJson.put("Prix",objBoisson.GetAllBoisson().get(i).getPrix());
+				objJson.put("Url",objBoisson.GetAllBoisson().get(i).getUrl());
 				objJsonArray.put(objJson);
 			}
 			// Plat.GetAllPlats().size()<
