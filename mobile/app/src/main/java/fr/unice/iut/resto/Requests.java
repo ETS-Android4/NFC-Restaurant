@@ -36,5 +36,5 @@ interface Requests {
     /* NfcActivity */
     @FormUrlEncoded
     @POST("commande")
-    Call<Void> sendCommand(@Field("command") JSONObject command);
+    Call<Void> sendCommand(@Field("order") JSONObject order);
 }

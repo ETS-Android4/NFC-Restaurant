@@ -9,18 +9,36 @@ class Food implements Parcelable {
     private String name;
     private String detail;
     private double price;
+    private String picture;
     private String type;
 
-    Food(int id, String name, String detail, double price, String type) {
+    Food(int id, String name, String detail, double price, String picture, String type) {
         this.id = id;
         this.name = name;
         this.detail = detail;
         this.price = price;
+        this.picture = picture;
         this.type = type;
     }
 
     int getCode() {
         return id;
+    }
+
+    String getName() {
+        return name;
+    }
+
+    String getDetail() {
+        return detail;
+    }
+
+    double getPrice() {
+        return price;
+    }
+
+    String getPicture() {
+        return picture;
     }
 
     String getType() {
@@ -43,6 +61,7 @@ class Food implements Parcelable {
         out.writeString(name);
         out.writeString(detail);
         out.writeString(String.valueOf(price));
+        out.writeString(picture);
         out.writeString(type);
     }
 
@@ -62,6 +81,7 @@ class Food implements Parcelable {
         this.name = in.readString();
         this.detail = in.readString();
         this.price = Double.valueOf(in.readString());
+        this.picture = in.readString();
         this.type = in.readString();
     }
 }

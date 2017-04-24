@@ -3,7 +3,7 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="nav_header_vertical_spacing">16dp</dimen>
     <dimen name="nav_header_height">160dp</dimen>
-    <dimen name="textSize0">16sp</dimen>
+    <dimen name="textSize0">20sp</dimen>
     <dimen name="textSize1">24sp</dimen>
-    <dimen name="textSize2">40sp</dimen>
+    <dimen name="textSize2">36sp</dimen>
 </resources>

@@ -19,8 +19,6 @@
 -- Table structure for table `commandes`
 --
 
-USE nfc_resto;
-
 DROP TABLE IF EXISTS `commandes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -57,6 +55,7 @@ DROP TABLE IF EXISTS `plats`;
 CREATE TABLE `plats` (
   `nom` varchar(45) DEFAULT NULL,
   `description` varchar(200) DEFAULT NULL,
+  `url` varchar(250) DEFAULT NULL,
   `T_idTarif` int(11) NOT NULL,
   `idPlat` int(11) NOT NULL AUTO_INCREMENT,
   `idType_Plat` int(11) NOT NULL,
@@ -73,7 +72,7 @@ CREATE TABLE `plats` (
 
 LOCK TABLES `plats` WRITE;
 /*!40000 ALTER TABLE `plats` DISABLE KEYS */;
-INSERT INTO `plats` VALUES ('Salade Niçoise','Tomates thon comcombres',1,2,1),('Hamburger','Boeuf fromage frites',2,3,2),('Tarte aux citron','Confis de citron crème légère',1,4,3),('Jus de citrons','Verre de 20 cl glaçon,rondelle de citron',6,5,4),('Penne à la bolognaise','Viande haché poivron carotte piment',4,6,2),('Crêpes Nutella','Crêpes chaudes nappé de sauce au choco Nutella',1,7,3),('Omlette aux fromages',' Fromage fondue persil noix de muscade',1,8,1),('CocaCola','Verre de 20 cl glaçon ',6,9,4),('Booga','Verre de 20 cl glaçon',6,10,4),('Caviare','Oeuf de poisson d\'hiver à l\'huile de tournesol',4,11,1);
+INSERT INTO `plats` VALUES ('Salade Niçoise','Tomates thon comcombres olives','https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Salade_ni%C3%A7oise_001.jpg/280px-Salade_ni%C3%A7oise_001.jpg',1,2,1),('Hamburger','Boeuf fromage frites','https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Cheeseburger_maison_2.jpg/220px-Cheeseburger_maison_2.jpg',2,3,2),('Tarte aux citron','Confis de citron crème légère','https://fr.wikipedia.org/wiki/Tarte_au_citron#/media/File:Tarte_au_citron_05.jpg',1,4,3),('Jus de citrons','Verre de 20 cl glaçon,rondelle de citron','https://files.meilleurduchef.com/mdc/photo/produit/met/jus-citron-vert/jus-citron-vert-1-400.jpg',6,5,4),('Penne à la bolognaise','Viande haché poivron carotte piment','http://vignette4.wikia.nocookie.net/recipes/images/e/ef/Penne_Arabiatta_(Pasta_with_a_Spicy_Sauce).jpg/revision/latest?cb=20080516004731',4,6,2),('Crêpes Nutella','Crêpes chaudes nappé de sauce au choco Nutella','http://recipegeek.com/sites/default/files/styles/large/public/cover_photos/recipe_crepes_with_chocolate_ganache.jpg?itok=ABEnqtRF',1,7,3),('Omlette aux fromages',' Fromage fondue persil noix de muscade','https://fr.wikipedia.org/wiki/Omelette#/media/File:FoodOmelete.jpg',1,8,1),('CocaCola','Verre de 20 cl glaçon ','http://pharmaciehoteldeville.fr/wp-content/uploads/2015/11/coca-cola.jpg',6,9,4),('Boga','Verre de 20 cl glaçon','http://i2.cdscdn.com/pdt2/0/2/2/1/700x700/mo646447022/rw/boga-cidre-soda-1-5l.jpg',6,10,4),('Caviare','Oeuf de poisson d\'hiver à l\'huile de tournesol','https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Caviar_and_spoon.jpg/220px-Caviar_and_spoon.jpg',4,11,1);
 /*!40000 ALTER TABLE `plats` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -163,9 +162,9 @@ CREATE TABLE `users` (
   `nom` varchar(45) NOT NULL,
   `prenom` varchar(45) NOT NULL,
   `password` varchar(45) NOT NULL,
-  `noTel` int(11) NOT NULL,
+  `noTel` varchar(45) NOT NULL,
   PRIMARY KEY (`idUsers`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -174,7 +173,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Mkenini','Ismael','passe',695284834);
+INSERT INTO `users` VALUES (1,'Mkenini','Ismael','passe','695284834'),(2,'Mkenini','Ismael','toto','0695284834');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -187,4 +186,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-04-17 23:50:04
+-- Dump completed on 2017-04-24 19:50:45

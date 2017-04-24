@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -22,7 +21,7 @@ public class OrderActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_command);
 
-        user = new User(OrderActivity.this);
+        user = new User(this);
         user.checkSession();
 
         command = getIntent().getExtras().getParcelableArrayList("command");
@@ -30,15 +29,14 @@ public class OrderActivity extends AppCompatActivity {
         Button validate = (Button) findViewById(R.id.btnValidate);
         TextView back = (TextView) findViewById(R.id.lblBack);
         ListView menu = (ListView) findViewById(R.id.listFood);
-        ArrayAdapter<Food> adapter = new ArrayAdapter<>(OrderActivity.this,
-                android.R.layout.simple_list_item_1, command);
+        FoodAdapter adapter = new FoodAdapter(this, command);
 
         menu.setAdapter(adapter);
 
         validate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(OrderActivity.this, NfcActivity.class);
+                Intent i = new Intent(getApplicationContext(), NfcActivity.class);
                 start(i);
             }
         });
@@ -46,7 +44,7 @@ public class OrderActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(OrderActivity.this, MenuActivity.class);
+                Intent i = new Intent(getApplicationContext(), MenuActivity.class);
                 start(i);
             }
         });

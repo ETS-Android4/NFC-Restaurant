@@ -29,7 +29,7 @@ public class SignActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign);
 
-        user = new User(SignActivity.this);
+        user = new User(this);
         user.isLogged();
 
         Button sign = (Button) findViewById(R.id.btnSign);
@@ -65,7 +65,7 @@ public class SignActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(SignActivity.this, LoginActivity.class));
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                 finish();
             }
         });
@@ -82,16 +82,17 @@ public class SignActivity extends AppCompatActivity {
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.code() == 201) {
                     user.createSession(phone.getText().toString());
-                    startActivity(new Intent(SignActivity.this, MenuActivity.class));
+                    startActivity(new Intent(getApplicationContext(), MenuActivity.class));
                     finish();
                 }
                 else {
-                    Toast.makeText(SignActivity.this, String.valueOf(response.code()), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),
+                            String.valueOf(response.code()), Toast.LENGTH_LONG).show();
                 }
             }
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                Toast.makeText(SignActivity.this, t.toString(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_LONG).show();
             }
         });
     }

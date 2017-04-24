@@ -27,7 +27,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        user = new User(LoginActivity.this);
+        user = new User(this);
         user.isLogged();
 
         Button login = (Button) findViewById(R.id.btnLogin);
@@ -53,7 +53,7 @@ public class LoginActivity extends AppCompatActivity {
         sign.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(LoginActivity.this, SignActivity.class));
+                startActivity(new Intent(getApplicationContext(), SignActivity.class));
                 finish();
             }
         });
@@ -69,16 +69,17 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.code() == 200) {
                     user.createSession(phone.getText().toString());
-                    startActivity(new Intent(LoginActivity.this, MenuActivity.class));
+                    startActivity(new Intent(getApplicationContext(), MenuActivity.class));
                     finish();
                 }
                 else {
-                    Toast.makeText(LoginActivity.this, String.valueOf(response.code()), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),
+                            String.valueOf(response.code()), Toast.LENGTH_LONG).show();
                 }
             }
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                Toast.makeText(LoginActivity.this, t.toString(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_LONG).show();
             }
         });
     }

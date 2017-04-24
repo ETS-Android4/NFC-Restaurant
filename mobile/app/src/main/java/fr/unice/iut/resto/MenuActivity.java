@@ -21,7 +21,7 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        user = new User(MenuActivity.this);
+        user = new User(this);
         user.checkSession();
 
         try {
@@ -31,46 +31,35 @@ public class MenuActivity extends AppCompatActivity {
             command = new ArrayList<>();
         }
 
+        Button validate = (Button) findViewById(R.id.btnValidate);
+        TextView exit = (TextView) findViewById(R.id.lblExit);
         Button entry = (Button) findViewById(R.id.btnEntry);
         Button dish = (Button) findViewById(R.id.btnDish);
         Button dessert = (Button) findViewById(R.id.btnDessert);
         Button drink = (Button) findViewById(R.id.btnDrink);
-        Button validate = (Button) findViewById(R.id.btnValidate);
-        TextView exit = (TextView) findViewById(R.id.lblExit);
 
         entry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(MenuActivity.this, SelectActivity.class);
-                i.putExtra("target", "entree");
-                start(i);
+                start("entree");
             }
         });
-
         dish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(MenuActivity.this, SelectActivity.class);
-                i.putExtra("target", "plat");
-                start(i);
+                start("plat");
             }
         });
-
         dessert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(MenuActivity.this, SelectActivity.class);
-                i.putExtra("target", "dessert");
-                start(i);
+                start("dessert");
             }
         });
-
         drink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(MenuActivity.this, SelectActivity.class);
-                i.putExtra("target", "boisson");
-                start(i);
+                start("boisson");
             }
         });
 
@@ -78,11 +67,14 @@ public class MenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (command.size() != 0) {
-                    Intent i = new Intent(MenuActivity.this, OrderActivity.class);
-                    start(i);
+                    Intent i = new Intent(getApplicationContext(), OrderActivity.class);
+                    i.putExtra("command", command);
+                    startActivity(i);
+                    finish();
                 }
                 else {
-                    Toast.makeText(MenuActivity.this, getResources().getString(R.string.errSelect), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),
+                            getResources().getString(R.string.errSelect), Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -91,11 +83,14 @@ public class MenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 user.exitSession();
+                finish();
             }
         });
     }
 
-    void start(Intent i) {
+    void start(String type) {
+        Intent i = new Intent(getApplicationContext(), SelectActivity.class);
+        i.putExtra("target", type);
         i.putExtra("command", command);
         startActivity(i);
         finish();

@@ -7,7 +7,6 @@ import android.nfc.Tag;
 import android.nfc.tech.MifareUltralight;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,14 +39,15 @@ public class NfcActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nfc);
 
-        user = new User(NfcActivity.this);
+        user = new User(this);
         user.checkSession();
 
         command = getIntent().getExtras().getParcelableArrayList("command");
 
         nfc = NfcAdapter.getDefaultAdapter(this);
         if (nfc == null) {
-            Toast.makeText(NfcActivity.this, getResources().getString(R.string.errNfc), Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),
+                    getResources().getString(R.string.errNfc), Toast.LENGTH_LONG).show();
             finish();
         }
 
@@ -55,7 +55,7 @@ public class NfcActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(NfcActivity.this, OrderActivity.class);
+                Intent i = new Intent(getApplicationContext(), OrderActivity.class);
                 i.putExtra("command", command);
                 startActivity(i);
                 finish();
@@ -150,26 +150,20 @@ public class NfcActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.code() == 201) {
-                    Intent i = new Intent(NfcActivity.this, MenuActivity.class);
+                    Intent i = new Intent(getApplicationContext(), MenuActivity.class);
                     i.putExtra("command", new ArrayList<>());
                     startActivity(i);
                     finish();
                 }
                 else {
-                    error(String.valueOf(response.code()));
+                    Toast.makeText(getApplicationContext(),
+                            String.valueOf(response.code()), Toast.LENGTH_LONG).show();
                 }
             }
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                error(t.toString());
+                Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_LONG).show();
             }
         });
-    }
-
-    void error(String error) {
-        Intent i = new Intent(NfcActivity.this, ErrorActivity.class);
-        i.putExtra("error", error);
-        startActivity(i);
-        finish();
     }
 }

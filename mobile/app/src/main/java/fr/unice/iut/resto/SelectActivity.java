@@ -6,10 +6,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.SparseBooleanArray;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.JsonArray;
 
@@ -29,7 +29,7 @@ public class SelectActivity extends AppCompatActivity {
     JSONArray json = new JSONArray();
     ArrayList<Food> list = new ArrayList<>();
     ProgressDialog load;
-    ArrayAdapter<Food> adapter;
+    FoodAdapter adapter;
     ListView menu;
     String target;
     ArrayList<Food> command;
@@ -41,7 +41,7 @@ public class SelectActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_command);
 
-        user = new User(SelectActivity.this);
+        user = new User(this);
         user.checkSession();
 
         target = getIntent().getExtras().getString("target");
@@ -55,7 +55,7 @@ public class SelectActivity extends AppCompatActivity {
         Button validate = (Button) findViewById(R.id.btnValidate);
         TextView back = (TextView) findViewById(R.id.lblBack);
         menu = (ListView) findViewById(R.id.listFood);
-        adapter = new ArrayAdapter<>(SelectActivity.this, android.R.layout.simple_list_item_multiple_choice, list);
+        adapter = new FoodAdapter(this, list);
 
         menu.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         get();
@@ -95,9 +95,7 @@ public class SelectActivity extends AppCompatActivity {
         call.enqueue(new Callback<JsonArray>() {
             @Override
             public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
-                if (load.isShowing()) {
-                    load.dismiss();
-                }
+                if (load.isShowing()) load.dismiss();
                 if (response.code() == 200) {
                     try {
                         json = new JSONArray(response.body().toString());
@@ -107,6 +105,7 @@ public class SelectActivity extends AppCompatActivity {
                                     json.getJSONObject(i).getString("Nom"),
                                     json.getJSONObject(i).getString("Description"),
                                     json.getJSONObject(i).getDouble("Prix"),
+                                    json.getJSONObject(i).getString("Url"),
                                     target
                             );
                             list.add(food);
@@ -119,15 +118,14 @@ public class SelectActivity extends AppCompatActivity {
                     }
                 }
                 else {
-                    error(String.valueOf(response.code()));
+                    Toast.makeText(getApplicationContext(),
+                            String.valueOf(response.code()), Toast.LENGTH_LONG).show();
                 }
             }
             @Override
             public void onFailure(Call<JsonArray> call, Throwable t) {
-                if (load.isShowing()) {
-                    load.dismiss();
-                }
-                error(t.toString());
+                if (load.isShowing()) load.dismiss();
+                Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -144,15 +142,8 @@ public class SelectActivity extends AppCompatActivity {
     }
 
     void start() {
-        Intent i = new Intent(SelectActivity.this, MenuActivity.class);
+        Intent i = new Intent(getApplicationContext(), MenuActivity.class);
         i.putExtra("command", command);
-        startActivity(i);
-        finish();
-    }
-
-    void error(String error) {
-        Intent i = new Intent(SelectActivity.this, ErrorActivity.class);
-        i.putExtra("error", error);
         startActivity(i);
         finish();
     }
