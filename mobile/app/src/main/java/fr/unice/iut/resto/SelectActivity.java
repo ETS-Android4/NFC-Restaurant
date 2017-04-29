@@ -26,7 +26,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SelectActivity extends AppCompatActivity {
 
-    JSONArray json = new JSONArray();
     ArrayList<Food> list = new ArrayList<>();
     ProgressDialog load;
     FoodAdapter adapter;
@@ -88,8 +87,10 @@ public class SelectActivity extends AppCompatActivity {
     }
 
     void get() {
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(Requests.URL)
-                .addConverterFactory(GsonConverterFactory.create()).build();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Requests.URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
         Requests get = retrofit.create(Requests.class);
         Call<JsonArray> call = get.getMenu(target);
         call.enqueue(new Callback<JsonArray>() {
@@ -98,7 +99,7 @@ public class SelectActivity extends AppCompatActivity {
                 if (load.isShowing()) load.dismiss();
                 if (response.code() == 200) {
                     try {
-                        json = new JSONArray(response.body().toString());
+                        JSONArray json = new JSONArray(response.body().toString());
                         for (int i=0; i<json.length(); i++) {
                             Food food = new Food(
                                     json.getJSONObject(i).getInt("Id"),

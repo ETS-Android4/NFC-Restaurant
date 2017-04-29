@@ -60,8 +60,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     void send() {
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(Requests.URL)
-                .addConverterFactory(GsonConverterFactory.create()).build();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Requests.URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
         Requests send = retrofit.create(Requests.class);
         Call<Void> call = send.sendUser(phone.getText().toString(), password.getText().toString());
         call.enqueue(new Callback<Void>() {

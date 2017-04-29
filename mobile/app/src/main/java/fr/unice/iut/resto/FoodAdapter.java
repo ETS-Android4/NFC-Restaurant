@@ -19,6 +19,11 @@ class FoodAdapter extends BaseAdapter implements AdapterView.OnItemClickListener
     private Context context;
     private ArrayList<Food> list = new ArrayList<>();
 
+    private class CustomViewHolder {
+        TextView txtName, txtPrice, txtDetail;
+        ImageView imgFood;
+    }
+
     FoodAdapter(Context context, ArrayList<Food> list) {
         this.context = context;
         this.list = list;
@@ -44,11 +49,11 @@ class FoodAdapter extends BaseAdapter implements AdapterView.OnItemClickListener
 
     @Override
     public View getView(int position, View view, ViewGroup parent) {
-        MyViewHolder viewHolder;
+        CustomViewHolder viewHolder;
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.food, parent, false);
-            viewHolder = new MyViewHolder();
+            viewHolder = new CustomViewHolder();
             viewHolder.txtName = (TextView) view.findViewById(R.id.txtName);
             viewHolder.txtPrice = (TextView) view.findViewById(R.id.txtPrice);
             viewHolder.txtDetail = (TextView) view.findViewById(R.id.txtDetail);
@@ -56,7 +61,7 @@ class FoodAdapter extends BaseAdapter implements AdapterView.OnItemClickListener
             view.setTag(viewHolder);
         }
         else {
-            viewHolder = (MyViewHolder) view.getTag();
+            viewHolder = (CustomViewHolder) view.getTag();
         }
         Food item = getItem(position);
         viewHolder.txtName.setText(item.getName());
@@ -64,10 +69,5 @@ class FoodAdapter extends BaseAdapter implements AdapterView.OnItemClickListener
         viewHolder.txtDetail.setText(item.getDetail());
         Picasso.with(context).load(item.getPicture()).into(viewHolder.imgFood);
         return view;
-    }
-
-    private class MyViewHolder {
-        TextView txtName, txtPrice, txtDetail;
-        ImageView imgFood;
     }
 }

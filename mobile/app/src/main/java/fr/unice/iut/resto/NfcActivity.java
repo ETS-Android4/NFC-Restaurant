@@ -2,10 +2,13 @@ package fr.unice.iut.resto;
 
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.nfc.NdefMessage;
+import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
-import android.nfc.tech.MifareUltralight;
+import android.nfc.tech.Ndef;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
@@ -14,8 +17,7 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.nio.charset.Charset;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -27,9 +29,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class NfcActivity extends AppCompatActivity {
 
-    private static final String DATA = "A-01";
-    private static final int PAGE = 4;
-    NfcAdapter nfc;
+    NfcAdapter nfcAdapter;
     ArrayList<Food> command;
     User user;
 
@@ -44,8 +44,8 @@ public class NfcActivity extends AppCompatActivity {
 
         command = getIntent().getExtras().getParcelableArrayList("command");
 
-        nfc = NfcAdapter.getDefaultAdapter(this);
-        if (nfc == null) {
+        nfcAdapter = NfcAdapter.getDefaultAdapter(this);
+        if (nfcAdapter == null) {
             Toast.makeText(getApplicationContext(),
                     getResources().getString(R.string.errNfc), Toast.LENGTH_LONG).show();
             finish();
@@ -68,67 +68,56 @@ public class NfcActivity extends AppCompatActivity {
         super.onResume();
         PendingIntent pendInt = PendingIntent.getActivity(this, 0,
                 new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
-        nfc.enableForegroundDispatch(this, pendInt, null, null);
+        nfcAdapter.enableForegroundDispatch(this, pendInt, null, null);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        nfc.disableForegroundDispatch(this);
+        nfcAdapter.disableForegroundDispatch(this);
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction())) {
+        if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction()) ||
+                NfcAdapter.ACTION_NDEF_DISCOVERED.equals(intent.getAction()) ||
+                NfcAdapter.ACTION_TECH_DISCOVERED.equals(intent.getAction())) {
             Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-            write(tag, DATA, PAGE);
-            send(read(tag));
+            byte[] id = tag.getId();
+            String[] tech = tag.getTechList();
+            int content = tag.describeContents();
+            Ndef ndef = Ndef.get(tag);
+            boolean isWritable = ndef.isWritable();
+            boolean canMakeReadOnly = ndef.canMakeReadOnly();
+            Parcelable[] rawMsg = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
+            NdefMessage[] msg;
+            String message = null;
+            if (rawMsg != null) {
+                msg = new NdefMessage[rawMsg.length];
+                for (int i = 0; i < rawMsg.length; i++) {
+                    msg[i] = (NdefMessage) rawMsg[i];
+                    NdefRecord record = msg[i].getRecords()[i];
+                    byte[] idRec = record.getId();
+                    short tnf = record.getTnf();
+                    byte[] type = record.getType();
+                    message = getTextData(record.getPayload());
+                }
+            }
+            send(message);
         }
     }
 
-    void write(Tag tag, String data, int page) {
-        MifareUltralight ultra = null;
+    String getTextData(byte[] payload) {
+        String textCode = ((payload[0] & 0200) == 0) ? "UTF-8" : "UTF-16";
+        int langSize = payload[0] & 0077;
         try {
-            ultra = MifareUltralight.get(tag);
-            ultra.connect();
-            ultra.writePage(page, data.getBytes("US-ASCII"));
+            return new String(payload, langSize + 1, payload.length - langSize - 1, textCode);
         }
-        catch (IOException e) {
+        catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        finally {
-            if (ultra != null) {
-                try {
-                    ultra.close();
-                }
-                catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-
-    String read(Tag tag) {
-        MifareUltralight ultra = MifareUltralight.get(tag);
-        try {
-            ultra.connect();
-            return new String(ultra.readPages(4), Charset.forName("US-ASCII"));
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-        finally {
-            if (ultra != null) {
-                try {
-                    ultra.close();
-                }
-                catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return null;
+        return "";
     }
 
     void send(String table) {

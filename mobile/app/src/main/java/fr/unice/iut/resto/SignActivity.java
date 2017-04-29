@@ -72,8 +72,10 @@ public class SignActivity extends AppCompatActivity {
     }
 
     void send() {
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(Requests.URL)
-                .addConverterFactory(GsonConverterFactory.create()).build();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Requests.URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
         Requests send = retrofit.create(Requests.class);
         Call<Void> call = send.sendData(firstName.getText().toString(), lastName.getText().toString(),
                 phone.getText().toString(), password.getText().toString());

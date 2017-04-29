@@ -1,5 +1,6 @@
 package fr.unice.iut.resto;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -32,12 +33,14 @@ class User {
     void checkSession() {
         if(!pref.getBoolean(CHECK, false)) {
             context.startActivity(new Intent(context, LoginActivity.class));
+            ((Activity) context).finish();
         }
     }
 
     void isLogged() {
         if(pref.getBoolean(CHECK, false)) {
             context.startActivity(new Intent(context, MenuActivity.class));
+            ((Activity) context).finish();
         }
     }
 
@@ -45,5 +48,6 @@ class User {
         editor.clear();
         editor.commit();
         context.startActivity(new Intent(context, LoginActivity.class));
+        ((Activity) context).finish();
     }
 }

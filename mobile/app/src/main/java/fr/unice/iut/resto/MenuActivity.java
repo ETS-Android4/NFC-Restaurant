@@ -83,7 +83,6 @@ public class MenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 user.exitSession();
-                finish();
             }
         });
     }
