@@ -2,13 +2,9 @@ package fr.unice.iut.resto;
 
 import android.app.PendingIntent;
 import android.content.Intent;
-import android.nfc.NdefMessage;
-import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
-import android.nfc.tech.Ndef;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
@@ -17,7 +13,6 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -29,6 +24,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class NfcActivity extends AppCompatActivity {
 
+    private static final char[] hexArray = "0123456789ABCDEF".toCharArray();
     NfcAdapter nfcAdapter;
     ArrayList<Food> command;
     User user;
@@ -80,59 +76,29 @@ public class NfcActivity extends AppCompatActivity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction()) ||
-                NfcAdapter.ACTION_NDEF_DISCOVERED.equals(intent.getAction()) ||
-                NfcAdapter.ACTION_TECH_DISCOVERED.equals(intent.getAction())) {
+        if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction())) {
             Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-            byte[] id = tag.getId();
-            String[] tech = tag.getTechList();
-            int content = tag.describeContents();
-            Ndef ndef = Ndef.get(tag);
-            boolean isWritable = ndef.isWritable();
-            boolean canMakeReadOnly = ndef.canMakeReadOnly();
-            Parcelable[] rawMsg = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
-            NdefMessage[] msg;
-            String message = null;
-            if (rawMsg != null) {
-                msg = new NdefMessage[rawMsg.length];
-                for (int i = 0; i < rawMsg.length; i++) {
-                    msg[i] = (NdefMessage) rawMsg[i];
-                    NdefRecord record = msg[i].getRecords()[i];
-                    byte[] idRec = record.getId();
-                    short tnf = record.getTnf();
-                    byte[] type = record.getType();
-                    message = getTextData(record.getPayload());
-                }
-            }
-            send(message);
+            send(hex(tag.getId()));
         }
-    }
-
-    String getTextData(byte[] payload) {
-        String textCode = ((payload[0] & 0200) == 0) ? "UTF-8" : "UTF-16";
-        int langSize = payload[0] & 0077;
-        try {
-            return new String(payload, langSize + 1, payload.length - langSize - 1, textCode);
-        }
-        catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        return "";
     }
 
     void send(String table) {
+        ArrayList<String> object = new ArrayList<>();
+        for (Food food : command) object.add(food.getName());
         JSONObject order = new JSONObject();
         try {
             order.put("U_idUsers", user.getLogin());
             order.put("T_idTables", table);
-            order.put("Horodatage", Calendar.getInstance().getTime());
-            order.put("details", command);
+            order.put("Horodatage", String.valueOf(Calendar.getInstance().getTime()));
+            order.put("details", object);
         }
         catch (JSONException e) {
             e.printStackTrace();
         }
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(Requests.URL)
-                .addConverterFactory(GsonConverterFactory.create()).build();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Requests.URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
         Requests send = retrofit.create(Requests.class);
         Call<Void> call = send.sendCommand(order);
         call.enqueue(new Callback<Void>() {
@@ -154,5 +120,15 @@ public class NfcActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    String hex(byte[] bytes) {
+        char[] hexChars = new char[bytes.length * 2];
+        for (int j=0; j<bytes.length; j++) {
+            int v = bytes[j] & 0xFF;
+            hexChars[j * 2] = hexArray[v >>> 4];
+            hexChars[j * 2 + 1] = hexArray[v & 0x0F];
+        }
+        return new String(hexChars);
     }
 }

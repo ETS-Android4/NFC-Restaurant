@@ -46,11 +46,6 @@ class Food implements Parcelable {
     }
 
     @Override
-    public String toString() {
-        return name + "\n" + price + "\n" + detail;
-    }
-
-    @Override
     public int describeContents() {
         return 0;
     }

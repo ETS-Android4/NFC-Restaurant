@@ -13,6 +13,7 @@
     <string name="errSelect">Veuillez sélectionner un menu</string>
     <string name="exit">Se déconnecter</string>
     <string name="firstName">Prénom</string>
+    <string name="gold">€</string>
     <string name="lastName">Nom</string>
     <string name="login">Se connecter</string>
     <string name="password">Mot de passe</string>

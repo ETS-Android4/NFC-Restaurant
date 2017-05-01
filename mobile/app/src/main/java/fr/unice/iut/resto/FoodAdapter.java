@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,17 +17,20 @@ import java.util.ArrayList;
 
 class FoodAdapter extends BaseAdapter implements AdapterView.OnItemClickListener {
 
-    private Context context;
+    private static LayoutInflater inflater = null;
     private ArrayList<Food> list = new ArrayList<>();
+    private Context context;
 
     private class CustomViewHolder {
         TextView txtName, txtPrice, txtDetail;
         ImageView imgFood;
+        CheckBox checkBox;
     }
 
     FoodAdapter(Context context, ArrayList<Food> list) {
         this.context = context;
         this.list = list;
+        inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
@@ -51,7 +55,6 @@ class FoodAdapter extends BaseAdapter implements AdapterView.OnItemClickListener
     public View getView(int position, View view, ViewGroup parent) {
         CustomViewHolder viewHolder;
         if (view == null) {
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.food, parent, false);
             viewHolder = new CustomViewHolder();
             viewHolder.txtName = (TextView) view.findViewById(R.id.txtName);
@@ -65,7 +68,7 @@ class FoodAdapter extends BaseAdapter implements AdapterView.OnItemClickListener
         }
         Food item = getItem(position);
         viewHolder.txtName.setText(item.getName());
-        viewHolder.txtPrice.setText(String.valueOf(item.getPrice()));
+        viewHolder.txtPrice.setText(item.getPrice() + "" + context.getResources().getString(R.string.gold));
         viewHolder.txtDetail.setText(item.getDetail());
         Picasso.with(context).load(item.getPicture()).into(viewHolder.imgFood);
         return view;
