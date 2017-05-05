@@ -15,26 +15,23 @@ import java.util.ArrayList;
 
 @Path("/commande")
 public class CommandeImpl implements CommandeService {
-// Json de la commande -> {"U_idUsers":"","T_idTables":,"Horodatage":"","details":["Entree":"","Plats":"","Dessert":"","Boisson":""]}
+// Json de la commande -> {"U_idUsers":"","T_idTables":,"Horodatage":"","details":[e1, e2, e3]}
 
     @Override
     public javax.ws.rs.core.Response insertCommande(String commande){
         String U_idUsers, Horodatage;
-        int T_idTables;
+        String T_idTables;
         String details;
         try {
             JSONObject json = new JSONObject(commande);
             ArrayList<String> detailsCommande = new ArrayList<String>();
             U_idUsers = json.getString("U_idUsers");
             Horodatage = json.getString("Horodatage");
-            T_idTables = json.getInt("T_idTables");
+            T_idTables = json.getString("T_idTables");
+            details = json.getString("details");
             // Je recuperer le tableau avec les details de la commande.
-            JSONArray arrJson = new JSONArray();
-            arrJson = json.getJSONArray("details");
-            details = arrJson.getString(1)+" "+arrJson.getString(2)+" "+arrJson.getString(3)+" "+arrJson.getString(4);
-            // if(true){
-            int idCommande = Commande.create(new Commande(U_idUsers,Horodatage,T_idTables,details));
-            return Response.status(201).entity(idCommande).build();
+            // int idCommande = Commande.create(new Commande(U_idUsers,Horodatage,T_idTables,details));
+            return Response.status(201).build();
         } catch (JSONException e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         } catch (Exception e) {

@@ -60,6 +60,7 @@ public class Commande {
         int ret=0;
         try {
             cn = BddConnexion.getConnection();
+            // INSERT INTO commande (Horodatage,T_idTables,U_idUsers,details) VALUES ("31-08-1982 10:20:56",2,2,"blabla ma commande");
             String sql = "INSERT INTO commande (Horodatage,T_idTables,U_idUsers,details) VALUES ('"+obj.getHorodatage()+"'," +
                     "'"+obj.getT_idTables()+"','"+obj.getU_idUsers()+"','"+obj.getDetails()+"') returning idCommande;";
             // st = (Statement) cn.createStatement();
@@ -81,5 +82,46 @@ public class Commande {
 
         return ret;
     }
+    
+    public static int GetIdTable(String Guid)throws SQLException{
+    	Connection cn = null;
+        Statement st = null;
+        ResultSet resultSet = null;
+    	int idTable=0;
+    	try{
+    		cn = BddConnexion.getConnection();
+    		String sql = "SELECT idTables FROM nfc_resto.tables WHERE guid='"+Guid+";'";
+    		resultSet = cn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+	                ResultSet.CONCUR_READ_ONLY).executeQuery(sql);
+    		while (resultSet.next()) {
+				idTable = resultSet.getInt("idTables");
+				System.out.println(idTable);
+			}
+    	}catch (Exception e) {
+			// TODO: handle exception
+		}
+    	return idTable;
+    }
+    
+    public static int GetIdUser(String username)throws SQLException{
+    	Connection cn = null;
+        Statement st = null;
+        ResultSet resultSet = null;
+    	int idUser=0;
+    	try{
+    		cn = BddConnexion.getConnection();
+    		String sql = "SELECT idUsers FROM nfc_resto.users WHERE noTel='"+username+";'";
+    		resultSet = cn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+	                ResultSet.CONCUR_READ_ONLY).executeQuery(sql);
+    		while (resultSet.next()) {
+    			idUser = resultSet.getInt("idTables");
+				System.out.println(idUser);
+			}
+    	}catch (Exception e) {
+			// TODO: handle exception
+		}
+    	return idUser;
+    }
+    
 
 }
