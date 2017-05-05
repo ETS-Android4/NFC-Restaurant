@@ -2,8 +2,6 @@ package fr.unice.iut.resto;
 
 import com.google.gson.JsonArray;
 
-import org.json.JSONObject;
-
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -36,5 +34,5 @@ interface Requests {
     /* NfcActivity */
     @FormUrlEncoded
     @POST("commande")
-    Call<Void> sendCommand(@Field("order") JSONObject order);
+    Call<Void> sendCommand(@Field("order") String order);
 }

@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,7 +23,6 @@ class FoodAdapter extends BaseAdapter implements AdapterView.OnItemClickListener
     private class CustomViewHolder {
         TextView txtName, txtPrice, txtDetail;
         ImageView imgFood;
-        CheckBox checkBox;
     }
 
     FoodAdapter(Context context, ArrayList<Food> list) {

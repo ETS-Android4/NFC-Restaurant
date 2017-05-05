@@ -19,9 +19,7 @@ public class CommandeImpl implements CommandeService {
 
     @Override
     public javax.ws.rs.core.Response insertCommande(String commande){
-        String U_idUsers, Horodatage;
-        String T_idTables;
-        String details;
+        String U_idUsers, Horodatage, T_idTables, details;
         try {
             JSONObject json = new JSONObject(commande);
             ArrayList<String> detailsCommande = new ArrayList<String>();
@@ -29,6 +27,10 @@ public class CommandeImpl implements CommandeService {
             Horodatage = json.getString("Horodatage");
             T_idTables = json.getString("T_idTables");
             details = json.getString("details");
+            System.out.println("USER " + U_idUsers);
+            System.out.println("HORO " + Horodatage);
+            System.out.println("GUID " + T_idTables);
+            System.out.println("COMMAND " + details);
             // Je recuperer le tableau avec les details de la commande.
             // int idCommande = Commande.create(new Commande(U_idUsers,Horodatage,T_idTables,details));
             return Response.status(201).build();

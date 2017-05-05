@@ -100,7 +100,7 @@ public class NfcActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         Requests send = retrofit.create(Requests.class);
-        Call<Void> call = send.sendCommand(order);
+        Call<Void> call = send.sendCommand(order.toString());
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
