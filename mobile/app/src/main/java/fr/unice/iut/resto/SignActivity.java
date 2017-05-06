@@ -1,5 +1,6 @@
 package fr.unice.iut.resto;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -21,6 +22,7 @@ public class SignActivity extends AppCompatActivity {
     EditText lastName;
     EditText phone;
     EditText password;
+    ProgressDialog load;
     User user;
 
     @Override
@@ -32,12 +34,12 @@ public class SignActivity extends AppCompatActivity {
         user = new User(this);
         user.isLogged();
 
-        Button sign = (Button) findViewById(R.id.btnSign);
-        TextView back = (TextView) findViewById(R.id.lblBack);
         firstName = (EditText) findViewById(R.id.txtFirstName);
         lastName = (EditText) findViewById(R.id.txtLastName);
         phone = (EditText) findViewById(R.id.txtPhone);
         password = (EditText) findViewById(R.id.txtPassword);
+        Button sign = (Button) findViewById(R.id.btnSign);
+        TextView back = (TextView) findViewById(R.id.lblBack);
 
         sign.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,28 +74,35 @@ public class SignActivity extends AppCompatActivity {
     }
 
     void send() {
+        load = new ProgressDialog(this);
+        load.setIndeterminate(true);
+        load.setMessage("Loading...");
+        load.show();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Requests.URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         Requests send = retrofit.create(Requests.class);
-        Call<Void> call = send.sendData(firstName.getText().toString(), lastName.getText().toString(),
-                phone.getText().toString(), password.getText().toString());
+        Call<Void> call = send.sendData(firstName.getText().toString(),
+                lastName.getText().toString(),
+                phone.getText().toString(),
+                password.getText().toString());
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
+                if (load.isShowing()) load.dismiss();
                 if (response.code() == 201) {
                     user.createSession(phone.getText().toString());
                     startActivity(new Intent(getApplicationContext(), MenuActivity.class));
                     finish();
                 }
                 else {
-                    Toast.makeText(getApplicationContext(),
-                            String.valueOf(response.code()), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Error " + response.code(), Toast.LENGTH_LONG).show();
                 }
             }
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
+                if (load.isShowing()) load.dismiss();
                 Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_LONG).show();
             }
         });

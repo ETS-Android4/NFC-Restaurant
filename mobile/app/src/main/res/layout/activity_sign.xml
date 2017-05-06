@@ -2,6 +2,7 @@
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/bg"
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -16,7 +17,8 @@
         android:inputType="textPersonName"
         android:textSize="@dimen/textSize1"
         android:textColor="@color/colorPrimary"
-        android:hint="@string/firstName" />
+        android:hint="@string/firstName"
+        android:textColorHint="@color/colorPrimary" />
 
     <EditText
         android:id="@+id/txtLastName"
@@ -27,7 +29,8 @@
         android:inputType="textPersonName"
         android:textSize="@dimen/textSize1"
         android:textColor="@color/colorPrimary"
-        android:hint="@string/lastName" />
+        android:hint="@string/lastName"
+        android:textColorHint="@color/colorPrimary" />
 
     <EditText
         android:id="@+id/txtPhone"
@@ -38,7 +41,8 @@
         android:inputType="phone"
         android:textSize="@dimen/textSize1"
         android:textColor="@color/colorPrimary"
-        android:hint="@string/phone" />
+        android:hint="@string/phone"
+        android:textColorHint="@color/colorPrimary" />
 
     <EditText
         android:id="@+id/txtPassword"
@@ -49,7 +53,8 @@
         android:inputType="textPassword"
         android:textSize="@dimen/textSize1"
         android:textColor="@color/colorPrimary"
-        android:hint="@string/password" />
+        android:hint="@string/password"
+        android:textColorHint="@color/colorPrimary" />
 
     <Button
         android:id="@+id/btnSign"
@@ -59,7 +64,7 @@
         android:gravity="center"
         android:text="@string/sign"
         android:textSize="@dimen/textSize2"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/colorPrimaryDark"
         android:textAllCaps="false" />
 
     <TextView

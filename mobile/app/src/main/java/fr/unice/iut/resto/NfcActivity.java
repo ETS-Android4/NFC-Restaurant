@@ -1,6 +1,7 @@
 package fr.unice.iut.resto;
 
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
@@ -25,8 +26,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class NfcActivity extends AppCompatActivity {
 
     private static final char[] hexArray = "0123456789ABCDEF".toCharArray();
-    NfcAdapter nfcAdapter;
     ArrayList<Food> command;
+    NfcAdapter nfcAdapter;
+    ProgressDialog load;
     User user;
 
     @Override
@@ -83,9 +85,13 @@ public class NfcActivity extends AppCompatActivity {
     }
 
     void send(String table) {
+        load = new ProgressDialog(this);
+        load.setIndeterminate(true);
+        load.setMessage("Loading...");
+        load.show();
         ArrayList<String> object = new ArrayList<>();
-        for (Food food : command) object.add(food.getName());
         JSONObject order = new JSONObject();
+        for (Food food : command) object.add(food.getName());
         try {
             order.put("U_idUsers", user.getLogin());
             order.put("T_idTables", table);
@@ -104,6 +110,7 @@ public class NfcActivity extends AppCompatActivity {
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
+                if (load.isShowing()) load.dismiss();
                 if (response.code() == 201) {
                     Intent i = new Intent(getApplicationContext(), MenuActivity.class);
                     i.putExtra("command", new ArrayList<>());
@@ -111,12 +118,12 @@ public class NfcActivity extends AppCompatActivity {
                     finish();
                 }
                 else {
-                    Toast.makeText(getApplicationContext(),
-                            String.valueOf(response.code()), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Error " + response.code(), Toast.LENGTH_LONG).show();
                 }
             }
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
+                if (load.isShowing()) load.dismiss();
                 Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_LONG).show();
             }
         });

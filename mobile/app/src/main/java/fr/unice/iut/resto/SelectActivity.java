@@ -2,10 +2,13 @@ package fr.unice.iut.resto;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.SparseBooleanArray;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -57,6 +60,18 @@ public class SelectActivity extends AppCompatActivity {
         adapter = new FoodAdapter(this, list);
 
         menu.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        menu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                int color = ((ColorDrawable) view.getBackground()).getColor();
+                int colorSelect = getResources().getColor(R.color.colorAccent);
+                if (color != colorSelect)
+                    view.setBackgroundColor(colorSelect);
+                else
+                    view.setBackgroundColor(Color.TRANSPARENT);
+            }
+        });
+
         get();
 
         validate.setOnClickListener(new View.OnClickListener() {

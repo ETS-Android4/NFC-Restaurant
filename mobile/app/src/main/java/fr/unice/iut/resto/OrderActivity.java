@@ -26,9 +26,9 @@ public class OrderActivity extends AppCompatActivity {
 
         command = getIntent().getExtras().getParcelableArrayList("command");
 
+        ListView menu = (ListView) findViewById(R.id.listFood);
         Button validate = (Button) findViewById(R.id.btnValidate);
         TextView back = (TextView) findViewById(R.id.lblBack);
-        ListView menu = (ListView) findViewById(R.id.listFood);
         FoodAdapter adapter = new FoodAdapter(this, command);
 
         menu.setAdapter(adapter);

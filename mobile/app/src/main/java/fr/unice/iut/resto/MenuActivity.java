@@ -31,12 +31,12 @@ public class MenuActivity extends AppCompatActivity {
             command = new ArrayList<>();
         }
 
-        Button validate = (Button) findViewById(R.id.btnValidate);
-        TextView exit = (TextView) findViewById(R.id.lblExit);
         Button entry = (Button) findViewById(R.id.btnEntry);
         Button dish = (Button) findViewById(R.id.btnDish);
         Button dessert = (Button) findViewById(R.id.btnDessert);
         Button drink = (Button) findViewById(R.id.btnDrink);
+        Button validate = (Button) findViewById(R.id.btnValidate);
+        TextView exit = (TextView) findViewById(R.id.lblExit);
 
         entry.setOnClickListener(new View.OnClickListener() {
             @Override

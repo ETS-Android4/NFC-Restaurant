@@ -2,6 +2,7 @@
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/bg"
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -21,7 +22,7 @@
         android:gravity="center"
         android:text="@string/validate"
         android:textSize="@dimen/textSize2"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/colorPrimaryDark"
         android:textAllCaps="false" />
 
     <TextView
