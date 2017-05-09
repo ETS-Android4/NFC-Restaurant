@@ -22,29 +22,38 @@ public class CommandeImpl implements CommandeService {
         String U_idUsers, Horodatage, T_idTables, details;
         int idUser,idTable;
         try {
+			System.out.println(commande);
             JSONObject json = new JSONObject(commande);
             ArrayList<String> detailsCommande = new ArrayList<String>();
             U_idUsers = json.getString("U_idUsers");
             Horodatage = json.getString("Horodatage");
             T_idTables = json.getString("T_idTables");
             details = json.getString("details");
-            try{
+            System.out.println(T_idTables);
+			System.out.println(U_idUsers);
+			try{
             	idUser = Commande.GetIdUser(U_idUsers);
-            }catch (Exception e){
-            	return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
-            }
+				System.out.println(idUser);
+			}catch (Exception e){
+            	e.printStackTrace();
+				return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+			}
             try{
             	idTable = Commande.GetIdTable(T_idTables);
+				System.out.println(idTable);
             }catch (Exception e){
-            	return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();  	
-            }
+            	 e.printStackTrace();
+				return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+			}
             // Je recuperer le tableau avec les details de la commande.
             Commande.create(new Commande(idUser,Horodatage,idTable,details));
             return Response.status(201).build();
         } catch (JSONException e) {
-            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+            e.printStackTrace();
+				return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         } catch (Exception e) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+            e.printStackTrace();
+			return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         }
     }
 

@@ -11,21 +11,21 @@ import java.sql.Statement;
  * Created by Utilisateur on 13/04/2017.
  */
 public class Commande {
-    String U_idUsers, Horodatage, details;
-    int T_idTables;
+    String Horodatage, details;
+    int T_idTables, U_idUsers;
 
-    public Commande(String U_idUsers,String Horodatage, int T_idTables, String details){
-        this.U_idUsers = U_idUsers;
+    public Commande(int idUser,String Horodatage, int T_idTables, String details){
+        this.U_idUsers = idUser;
         this.Horodatage = Horodatage;
         this.details = details;
         this.T_idTables = T_idTables;
     }
 
-    public String getU_idUsers() {
+    public int getU_idUsers() {
         return U_idUsers;
     }
 
-    public void setU_idUsers(String u_idUsers) {
+    public void setU_idUsers(int u_idUsers) {
         U_idUsers = u_idUsers;
     }
 
@@ -53,10 +53,31 @@ public class Commande {
         T_idTables = t_idTables;
     }
 
-    public static int create(Commande obj) throws SQLException {
+    public static void create(Commande obj) throws SQLException {
         Connection cn = null;
         Statement st = null;
-        ResultSet resultSet = null;
+        int result;
+        try {
+            cn = BddConnexion.getConnection();
+            String sql = "INSERT INTO commandes (Horodatage,T_idTables,U_idUsers,detail) VALUES ('"+obj.getHorodatage()+"'," +
+                    "'"+obj.getT_idTables()+"','"+obj.getU_idUsers()+"','"+obj.getDetails()+"');";
+            st = cn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            result = st.executeUpdate(sql);
+            //deconnexion avec la db
+            //liberer la memoire
+            /*
+            st.close();
+            cn.close();
+            */
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+		/*
+		Connection cn = null;
+        Statement st = null;
+        int resultSet;
         int ret=0;
         try {
             cn = BddConnexion.getConnection();
@@ -66,21 +87,15 @@ public class Commande {
             // st = (Statement) cn.createStatement();
             st = cn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
-            resultSet = st.executeQuery(sql);
+            resultSet = st.executeUpdate(sql);
 
-            if (resultSet.first()){
-                ret = resultSet.getInt(1);
-            }
             //deconnexion avec la db
             //liberer la memoire
-            cn.close();
-            st.close();
+
         }catch (ClassNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-        }
-
-        return ret;
+        }*/
     }
     
     public static int GetIdTable(String Guid)throws SQLException{
@@ -90,15 +105,18 @@ public class Commande {
     	int idTable=0;
     	try{
     		cn = BddConnexion.getConnection();
-    		String sql = "SELECT idTables FROM nfc_resto.tables WHERE guid='"+Guid+";'";
+    		String sql = "SELECT idTables FROM nfc_resto.tables WHERE guid='"+Guid+"';";
     		resultSet = cn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 	                ResultSet.CONCUR_READ_ONLY).executeQuery(sql);
-    		while (resultSet.next()) {
+    		System.out.println("resulset :"+resultSet);
+			while (resultSet.next()) {
+				System.out.println("RESULT SET " + resultSet.getInt("idTables"));
 				idTable = resultSet.getInt("idTables");
 				System.out.println(idTable);
 			}
     	}catch (Exception e) {
 			// TODO: handle exception
+			e.printStackTrace();
 		}
     	return idTable;
     }
@@ -110,15 +128,18 @@ public class Commande {
     	int idUser=0;
     	try{
     		cn = BddConnexion.getConnection();
-    		String sql = "SELECT idUsers FROM nfc_resto.users WHERE noTel='"+username+";'";
+    		String sql = "SELECT idUsers FROM nfc_resto.users WHERE noTel='"+username+"';";
     		resultSet = cn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 	                ResultSet.CONCUR_READ_ONLY).executeQuery(sql);
-    		while (resultSet.next()) {
-    			idUser = resultSet.getInt("idTables");
+    		System.out.println("resulset :"+resultSet);
+			while (resultSet.next()) {
+    			System.out.println("RESULT SET " + resultSet.getInt("idUsers"));
+				idUser = resultSet.getInt("idUsers");
 				System.out.println(idUser);
 			}
     	}catch (Exception e) {
 			// TODO: handle exception
+			e.printStackTrace();
 		}
     	return idUser;
     }
