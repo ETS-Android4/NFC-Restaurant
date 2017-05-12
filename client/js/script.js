@@ -21,3 +21,24 @@ function GetCommande()
     });
     return Json;
 }// getJson
+
+	
+function Suppresion(idCommande){
+  console.log("lancement");
+  $(document).ready(function(){
+    var res = confirm("Retirer cette commande ?!");
+    if (res == true) {
+        $.ajax({
+          url: 'http://localhost:8080/restaurant-ws/rest/commande/'+idCommande,
+          type: 'DELETE',
+          success: function(result) {
+              alert("Suppresion de la commande");
+              window.location.reload();
+          }
+      });
+    } else {
+      console.log("Erreur groupe non Supprimer");
+    }
+  });
+	
+}
