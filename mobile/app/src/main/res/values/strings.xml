@@ -5,6 +5,7 @@
     <string name="dish">Plats</string>
     <string name="drink">Boissons</string>
     <string name="entry">Entrée</string>
+    <string name="errConnection">Erreur de connexion</string>
     <string name="errFirstName">Veuillez rentrer un prénom</string>
     <string name="errLastName">Veuillez rentrer un nom</string>
     <string name="errNfc">NFC n\'est pas disponible dans cet appareil</string>

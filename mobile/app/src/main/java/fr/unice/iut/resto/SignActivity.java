@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,8 +17,14 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * Classe pour s'inscrire à l'application
+ * @author ER
+ * @version 1.0
+ */
 public class SignActivity extends AppCompatActivity {
 
+    private static final String TAG = "Sign Activity";
     EditText firstName;
     EditText lastName;
     EditText phone;
@@ -33,6 +40,10 @@ public class SignActivity extends AppCompatActivity {
 
         user = new User(this);
         user.isLogged();
+
+        load = new ProgressDialog(this);
+        load.setCancelable(false);
+        load.setMessage("Loading...");
 
         firstName = (EditText) findViewById(R.id.txtFirstName);
         lastName = (EditText) findViewById(R.id.txtLastName);
@@ -60,7 +71,8 @@ public class SignActivity extends AppCompatActivity {
                     password.setError(getResources().getString(R.string.errPassword));
                     return;
                 }
-                send();
+                send(firstName.getText().toString(), lastName.getText().toString(),
+                        phone.getText().toString(), password.getText().toString());
             }
         });
 
@@ -73,26 +85,27 @@ public class SignActivity extends AppCompatActivity {
         });
     }
 
-    void send() {
-        load = new ProgressDialog(this);
-        load.setIndeterminate(true);
-        load.setMessage("Loading...");
+    /**
+     * Envoyer une requête HTTP au serveur pour inscrire un utilisateur
+     * @param n1 Prénom de l'utilisateur
+     * @param n2 Nom de l'utilisateur
+     * @param ph Téléphone de l'utilisateur
+     * @param pw Mot de passe de l'utilisateur
+     */
+    void send(final String n1, final String n2, final String ph, final String pw) {
         load.show();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Requests.URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         Requests send = retrofit.create(Requests.class);
-        Call<Void> call = send.sendData(firstName.getText().toString(),
-                lastName.getText().toString(),
-                phone.getText().toString(),
-                password.getText().toString());
+        Call<Void> call = send.sendData(n1, n2, ph, pw);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                if (load.isShowing()) load.dismiss();
+                load.dismiss();
                 if (response.code() == 201) {
-                    user.createSession(phone.getText().toString());
+                    user.createSession(ph);
                     startActivity(new Intent(getApplicationContext(), MenuActivity.class));
                     finish();
                 }
@@ -102,8 +115,9 @@ public class SignActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                if (load.isShowing()) load.dismiss();
-                Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_LONG).show();
+                load.dismiss();
+                Log.e(TAG, t.toString());
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.errConnection), Toast.LENGTH_LONG).show();
             }
         });
     }

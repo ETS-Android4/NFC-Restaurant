@@ -14,6 +14,11 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+/**
+ * Classe pour créer un adaptateur customiser
+ * @author ER
+ * @version 1.0
+ */
 class FoodAdapter extends BaseAdapter implements AdapterView.OnItemClickListener {
 
     private static LayoutInflater inflater = null;
@@ -25,6 +30,11 @@ class FoodAdapter extends BaseAdapter implements AdapterView.OnItemClickListener
         ImageView imgFood;
     }
 
+    /**
+     * Constructeur de base d'un adaptateur pour une liste
+     * @param context Activité actuelle
+     * @param list Liste à qui on va associer l'adaptateur
+     */
     FoodAdapter(Context context, ArrayList<Food> list) {
         this.context = context;
         this.list = list;

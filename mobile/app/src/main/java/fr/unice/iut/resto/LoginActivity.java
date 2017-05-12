@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,8 +17,14 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * Classe pour se connecter à l'application
+ * @author ER
+ * @version 1.0
+ */
 public class LoginActivity extends AppCompatActivity {
 
+    private static final String TAG = "Login Activity";
     EditText phone;
     EditText password;
     ProgressDialog load;
@@ -31,6 +38,10 @@ public class LoginActivity extends AppCompatActivity {
 
         user = new User(this);
         user.isLogged();
+
+        load = new ProgressDialog(this);
+        load.setCancelable(false);
+        load.setMessage("Loading...");
 
         phone = (EditText) findViewById(R.id.txtPhone);
         password = (EditText) findViewById(R.id.txtPassword);
@@ -48,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
                     password.setError(getResources().getString(R.string.errPassword));
                     return;
                 }
-                send();
+                send(phone.getText().toString(), password.getText().toString());
             }
         });
 
@@ -61,23 +72,25 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    void send() {
-        load = new ProgressDialog(this);
-        load.setIndeterminate(true);
-        load.setMessage("Loading...");
+    /**
+     * Envoyer une requête HTTP au serveur pour connecter un utilisateur
+     * @param ph Téléphone de l'utilisateur
+     * @param pw Mot de passe de l'utilisateur
+     */
+    void send(final String ph, final String pw) {
         load.show();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Requests.URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         Requests send = retrofit.create(Requests.class);
-        Call<Void> call = send.sendUser(phone.getText().toString(), password.getText().toString());
+        Call<Void> call = send.sendUser(ph, pw);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                if (load.isShowing()) load.dismiss();
+                load.dismiss();
                 if (response.code() == 200) {
-                    user.createSession(phone.getText().toString());
+                    user.createSession(ph);
                     startActivity(new Intent(getApplicationContext(), MenuActivity.class));
                     finish();
                 }
@@ -87,8 +100,9 @@ public class LoginActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                if (load.isShowing()) load.dismiss();
-                Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_LONG).show();
+                load.dismiss();
+                Log.e(TAG, t.toString());
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.errConnection), Toast.LENGTH_LONG).show();
             }
         });
     }

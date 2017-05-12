@@ -9,6 +9,9 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
+/**
+ * Interface pour gérer les appels aux web services d'un serveur
+ */
 interface Requests {
 
     String URL = "http://????:8080/restaurant-ws/rest/";

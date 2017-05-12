@@ -7,6 +7,7 @@ import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,8 +24,14 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * Classe pour envoyer la commande
+ * @author ER
+ * @version 1.0
+ */
 public class NfcActivity extends AppCompatActivity {
 
+    private static final String TAG = "Nfc Activity";
     private static final char[] hexArray = "0123456789ABCDEF".toCharArray();
     ArrayList<Food> command;
     NfcAdapter nfcAdapter;
@@ -41,6 +48,10 @@ public class NfcActivity extends AppCompatActivity {
         user.checkSession();
 
         command = getIntent().getExtras().getParcelableArrayList("command");
+
+        load = new ProgressDialog(this);
+        load.setCancelable(false);
+        load.setMessage("Loading...");
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         if (nfcAdapter == null) {
@@ -84,17 +95,18 @@ public class NfcActivity extends AppCompatActivity {
         }
     }
 
-    void send(String table) {
-        load = new ProgressDialog(this);
-        load.setIndeterminate(true);
-        load.setMessage("Loading...");
+    /**
+     * Envoyer une requête HTTP au serveur pour passer la commande de l'utilisateur
+     * @param guid GUID d'un TAG
+     */
+    void send(String guid) {
         load.show();
         ArrayList<String> object = new ArrayList<>();
         JSONObject order = new JSONObject();
         for (Food food : command) object.add(food.getName());
         try {
             order.put("U_idUsers", user.getLogin());
-            order.put("T_idTables", table);
+            order.put("T_idTables", guid);
             order.put("Horodatage", String.valueOf(Calendar.getInstance().getTime()));
             order.put("details", object);
         }
@@ -110,7 +122,7 @@ public class NfcActivity extends AppCompatActivity {
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                if (load.isShowing()) load.dismiss();
+                load.dismiss();
                 if (response.code() == 201) {
                     Intent i = new Intent(getApplicationContext(), MenuActivity.class);
                     i.putExtra("command", new ArrayList<>());
@@ -123,12 +135,18 @@ public class NfcActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                if (load.isShowing()) load.dismiss();
-                Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_LONG).show();
+                load.dismiss();
+                Log.e(TAG, t.toString());
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.errConnection), Toast.LENGTH_LONG).show();
             }
         });
     }
 
+    /**
+     * Convertir un tableau de byte en hexadecimal
+     * @param bytes Tableau de byte à convertir
+     * @return un hexadecimal sous forme d'une chaîne de caractère
+     */
     String hex(byte[] bytes) {
         char[] hexChars = new char[bytes.length * 2];
         for (int j=0; j<bytes.length; j++) {

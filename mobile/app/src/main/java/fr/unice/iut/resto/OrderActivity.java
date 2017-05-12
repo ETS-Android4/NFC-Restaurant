@@ -10,6 +10,11 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+/**
+ * Classe pour afficher les plats choisi par l'utilisateur
+ * @author ER
+ * @version 1.0
+ */
 public class OrderActivity extends AppCompatActivity {
 
     ArrayList<Food> command;
@@ -26,10 +31,10 @@ public class OrderActivity extends AppCompatActivity {
 
         command = getIntent().getExtras().getParcelableArrayList("command");
 
+        FoodAdapter adapter = new FoodAdapter(this, command);
         ListView menu = (ListView) findViewById(R.id.listFood);
         Button validate = (Button) findViewById(R.id.btnValidate);
         TextView back = (TextView) findViewById(R.id.lblBack);
-        FoodAdapter adapter = new FoodAdapter(this, command);
 
         menu.setAdapter(adapter);
 
@@ -50,6 +55,10 @@ public class OrderActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Passer à une autre activité
+     * @param i Motif de l'activité suivante
+     */
     void start(Intent i) {
         i.putExtra("command", command);
         startActivity(i);

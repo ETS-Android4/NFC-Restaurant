@@ -10,6 +10,11 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+/**
+ * Classe pour afficher le menu principal de l'application
+ * @author ER
+ * @version 1.0
+ */
 public class MenuActivity extends AppCompatActivity {
 
     ArrayList<Food> command;
@@ -87,6 +92,10 @@ public class MenuActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Passer à l'activité de sélection du menu
+     * @param type Type du menu (Entrée, Plat, Dessert, Boisson)
+     */
     void start(String type) {
         Intent i = new Intent(getApplicationContext(), SelectActivity.class);
         i.putExtra("target", type);
