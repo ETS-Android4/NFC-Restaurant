@@ -94,7 +94,7 @@ public class Commande {
         }   
     }
     
-    public static int delete(int idCommande) throws Exception {
+    public static void delete(int idCommande) throws Exception {
     	Connection cn = null;
         Statement st = null;
         int result = 0;
@@ -102,13 +102,12 @@ public class Commande {
 	            cn = BddConnexion.getConnection();
 	            String sql = "DELETE FROM nfc_resto.commandes WHERE idCommande = "+idCommande;
 	            st = cn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
-	            result = st.executeUpdate(sql);
+	            st.executeUpdate(sql);
 	        } catch (ClassNotFoundException e) {
 	            e.printStackTrace();
 	        } catch (SQLException e) {
 	            e.printStackTrace();
         }
-		return result;
     }
     
     public ArrayList<Commande> showCommande() throws SQLException{

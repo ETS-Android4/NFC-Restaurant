@@ -92,7 +92,7 @@ public class CommandeImpl implements CommandeService {
 	    try{
 	    	System.out.println("del Commande");
 	    	Commande.delete(idCommande);
-	    	return Response.ok(idCommande).build();
+	    	return Response.ok().build();
 	    }catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
