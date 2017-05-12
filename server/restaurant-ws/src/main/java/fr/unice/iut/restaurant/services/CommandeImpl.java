@@ -1,12 +1,16 @@
 package fr.unice.iut.restaurant.services;
 
 import fr.unice.iut.restaurant.provider.Commande;
+import fr.unice.iut.restaurant.provider.Entree;
+
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
+
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -57,4 +61,44 @@ public class CommandeImpl implements CommandeService {
         }
     }
 
+    @Override
+    public javax.ws.rs.core.Response getCommande() throws JSONException{
+    	try {
+    		System.out.println("get Commande");
+    		String json ="";
+    		Commande objCommande = new Commande();
+    		//  JSONObject obj = new JSONObject();
+    		JSONArray arrayJson = new JSONArray();
+    		for(int i = 0; i < objCommande.showCommande().size(); i++){
+    			objCommande = new Commande(objCommande.showCommande().get(i).getT_idTables(),objCommande.showCommande().get(i).getHorodatage(),objCommande.showCommande().get(i).getDetails(),objCommande.showCommande().get(i).getIdCommande());
+    			JSONObject obj = new JSONObject();
+    			obj.put("Table",objCommande.getT_idTables());
+    			obj.put("Date",objCommande.getHorodatage());
+    			obj.put("Commande",objCommande.getDetails());
+    			obj.put("Id",objCommande.getIdCommande());
+    			arrayJson.put(obj);
+    		}
+    		return Response.ok(arrayJson).build();
+            } catch (SQLException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    			return Response.status(500).build();
+    		}
+    	}
+    
+    
+    @Override
+    public javax.ws.rs.core.Response delCommande(int idCommande) throws Exception{
+	    try{
+	    	System.out.println("del Commande");
+	    	Commande.delete(idCommande);
+	    	return Response.ok(idCommande).build();
+	    }catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return Response.status(500).build();
+	    }	
+    
+    }
+    
 }

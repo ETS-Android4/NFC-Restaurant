@@ -2,8 +2,9 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Menu</title>
+  <title>Order</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <style>
     @import url(http://fonts.googleapis.com/css?family=Open+Sans);
     * { -webkit-box-sizing:border-box; -moz-box-sizing:border-box; -ms-box-sizing:border-box; -o-box-sizing:border-box; box-sizing:border-box; }
@@ -43,16 +44,34 @@
     }
   </style>
   </head>
-<body>
+<script type="text/javascript" src="js/script.js"></script>
+<script>
+function myFunction() {
+    location.reload();
+}
+setTimeout(myFunction, 8000);
+	
+	$(document).ready(function(){
+		var Commande = GetCommande();
+		console.log(GetCommande());
+		var content = "<table><tr><td>Table</td><td>Date</td><td>Commande</td></tr>";
+		for(var j =0; j<Commande.length; j++){
+              content += "<tr><td>"+Commande[j]['Table']+"</td><td>"+Commande[j]['Date']+"</td><td>"+Commande[j]['Commande']+"</td>"
+			  content += "<td><input type='button' style='background-color:red;' value='x' onclick='Del(";
+			  content += '"'+Commande[j]['Id']+'"';
+			  content += ")'>"
+			  content += "</td></tr>";
+        }
+		content += "</table>";
+		$(".order").append(content);
+	
+	
+	});
+</script>
+ <body>
+    
   <div class="order">
-    <h1>Les commandes</h1>
-	<table>
-      <tr>
-        <th>Table</th>
-        <th>Date</th>
-        <th>Commande</th>
-      </tr>
-	</table>
+  <h1>Les commandes</h1>
   </div>
 </body>
 </html>

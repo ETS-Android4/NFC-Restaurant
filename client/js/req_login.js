@@ -15,7 +15,7 @@ function Connexion(username,password){
         error : function(resultat, statut, erreur){
             if(resultat.status==200){
                 alert("Connexion effectuée!");
-                // document.location.href="nouvellepage.html";
+				document.location.href="menu.html?id="+phone;
             }else{
                 console.log(resultat)
                 console.log(statut);

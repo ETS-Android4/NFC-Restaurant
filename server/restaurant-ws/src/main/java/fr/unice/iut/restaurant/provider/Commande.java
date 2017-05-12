@@ -6,21 +6,39 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 /**
  * Created by Utilisateur on 13/04/2017.
  */
 public class Commande {
     String Horodatage, details;
-    int T_idTables, U_idUsers;
+    int T_idTables, U_idUsers, idCommande;
 
-    public Commande(int idUser,String Horodatage, int T_idTables, String details){
+	public Commande(int idUser,String Horodatage, int T_idTables, String details){
         this.U_idUsers = idUser;
         this.Horodatage = Horodatage;
         this.details = details;
         this.T_idTables = T_idTables;
     }
+    
+    public Commande(int T_idTables,String Horodatage,String details,int idCommande){
+        this.idCommande = idCommande;
+        this.Horodatage = Horodatage;
+        this.details = details;
+        this.T_idTables = T_idTables;
+    }
+    
+    public Commande(){}
 
+    public int getIdCommande() {
+		return idCommande;
+	}
+
+	public void setIdCommande(int idCommande) {
+		this.idCommande = idCommande;
+	}
+    
     public int getU_idUsers() {
         return U_idUsers;
     }
@@ -73,30 +91,46 @@ public class Commande {
             e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-		/*
-		Connection cn = null;
-        Statement st = null;
-        int resultSet;
-        int ret=0;
-        try {
-            cn = BddConnexion.getConnection();
-            // INSERT INTO commande (Horodatage,T_idTables,U_idUsers,details) VALUES ("31-08-1982 10:20:56",2,2,"blabla ma commande");
-            String sql = "INSERT INTO commande (Horodatage,T_idTables,U_idUsers,details) VALUES ('"+obj.getHorodatage()+"'," +
-                    "'"+obj.getT_idTables()+"','"+obj.getU_idUsers()+"','"+obj.getDetails()+"') returning idCommande;";
-            // st = (Statement) cn.createStatement();
-            st = cn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
-                    ResultSet.CONCUR_READ_ONLY);
-            resultSet = st.executeUpdate(sql);
-
-            //deconnexion avec la db
-            //liberer la memoire
-
-        }catch (ClassNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }*/
+        }   
     }
+    
+    public static int delete(int idCommande) throws Exception {
+    	Connection cn = null;
+        Statement st = null;
+        int result = 0;
+        try {
+	            cn = BddConnexion.getConnection();
+	            String sql = "DELETE FROM nfc_resto.commandes WHERE idCommande = "+idCommande;
+	            st = cn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+	            result = st.executeUpdate(sql);
+	        } catch (ClassNotFoundException e) {
+	            e.printStackTrace();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+        }
+		return result;
+    }
+    
+    public ArrayList<Commande> showCommande() throws SQLException{
+    	ArrayList<Commande> commandes = new ArrayList<Commande>(); 
+    	Connection cn = null;
+        Statement st = null;
+    	try {
+        	System.out.println( "Connexion à la base de données..." );
+        	cn = BddConnexion.getConnection();
+        	st = (Statement) cn.createStatement();
+			ResultSet result = cn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+	                ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM nfc_resto.commandes;");
+			while (result.next()) {
+				Commande objCommande = new Commande(result.getInt("T_idTables"),result.getString("Horodatage"),result.getString("detail"),result.getInt("idCommande"));
+				 commandes.add(objCommande);
+			}
+        } catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return commandes;
+    } 
     
     public static int GetIdTable(String Guid)throws SQLException{
     	Connection cn = null;

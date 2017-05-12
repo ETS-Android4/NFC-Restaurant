@@ -45,7 +45,6 @@ public class Dessert {
         	System.out.println( "Connexion à la base de données..." );
         	cn = BddConnexion.getConnection();
         	st = (Statement) cn.createStatement();
-	
 			ResultSet result = cn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 	                ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT nom,description,url,prix,idPlat FROM nfc_resto.plats,nfc_resto.tarif WHERE idType_Plat ='3' and T_idTarif = idtarif;");
 			while (result.next()) {
