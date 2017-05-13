@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+  <link rel="stylesheet" type="text/css" href="../css/style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  <script type="text/javascript" src="../js/req_login.js"></script>
+  <script>
+  function connexion() {
+      $(document).ready(function() {
+          try {
+            var username = $("#username").val();
+            var password = $("#password").val();
+            console.log("username:"+username);
+            console.log("password:"+password);
+            Connexion(username,password);
+          } catch(e) {
+            console.log("error:"+e);
+          }
+      });
+  }
+  </script>
+</head>
+<body>
+  <div class="login">
+    <h1>Page de connexion</h1>
+    <input type="text" name="u" placeholder="Username" id="username" required="required" />
+    <input type="password" name="p" placeholder="Password" id="password" required="required" />
+    <button type="submit" class="btn btn-primary btn-block btn-large" onclick="connexion();">Connexion</button>
+  </div>
+</body>
+</html>

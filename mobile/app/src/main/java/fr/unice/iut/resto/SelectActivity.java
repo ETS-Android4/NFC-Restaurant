@@ -162,15 +162,14 @@ public class SelectActivity extends AppCompatActivity {
         for (int i=0; i<list.size(); i++) {
             for (int j=0; j<command.size(); j++) {
                 if (command.get(j).getCode() == list.get(i).getCode()) {
-                    menu.performItemClick(menu.getAdapter().getView(i, null, null), i,
-                            menu.getAdapter().getItemId(i));
+                    menu.performItemClick(menu.getRootView(), i, 1);
                 }
             }
         }
     }
 
     /**
-     * Enregistrer les choix d'un utilisateur
+     * Enregistrer les choix d'un utilisateur et revenir au menu principal
      */
     void start() {
         Intent i = new Intent(getApplicationContext(), MenuActivity.class);

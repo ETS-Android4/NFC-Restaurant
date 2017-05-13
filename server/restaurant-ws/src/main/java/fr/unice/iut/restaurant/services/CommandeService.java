@@ -1,10 +1,9 @@
 package fr.unice.iut.restaurant.services;
 
-import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
-import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -13,7 +12,9 @@ import javax.ws.rs.core.Response;
 import org.codehaus.jettison.json.JSONException;
 
 /**
- * Created by Utilisateur on 13/04/2017.
+ * Interface pour le service des commandes
+ * @author Ismael
+ * @version 1.0
  */
 public interface CommandeService {
     @POST
@@ -27,7 +28,5 @@ public interface CommandeService {
     
     @DELETE
     @Path("/{idCommande}")
-    Response delCommande(@FormParam("idCommande") int idCommande) throws JSONException, Exception;
-    
-    
+    Response delCommande(@FormParam("idCommande") int idCommande) throws Exception;
 }

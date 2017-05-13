@@ -1,6 +1,7 @@
 <resources>
     <string name="app">Resto</string>
     <string name="back">Retour</string>
+    <string name="content">clipartfest.com</string>
     <string name="dessert">Desserts</string>
     <string name="dish">Plats</string>
     <string name="drink">Boissons</string>

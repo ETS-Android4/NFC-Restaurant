@@ -1,7 +1,5 @@
 package fr.unice.iut.restaurant.provider;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,104 +9,133 @@ import java.util.ArrayList;
 import fr.unice.iut.restaurant.database.BddConnexion;
 
 /**
- * Created by Ismael 28/02/2017.
+ * Classe pour gérer les plats
+ * @author Ismael
+ * @version 1.0
  */
 public class Plats {
 
-	private   String nom;
-	private   String description;
-	private   float prix;
-	private   int id;
-	private   String url;
-	private   File monimage = new File("chemin");
-	// FileOutputStream ostreamImage = new FileOutputStream(monimage);
+	private String nom;
+	private String description;
+	private float prix;
+	private int id;
+	private String url;
 	
-	public Plats(String nom,String description,String url,float prix,int id) throws ClassNotFoundException {
+	/**
+     * Constructeur de base d'un objet Plats
+     * @param nom Nom d'un plat
+     * @param description Composants d'un plat
+     * @param url URL de l'image d'un plat
+     * @param prix Prix d'un plat
+     * @param id Identifiant d'un plat
+     */
+	public Plats(String nom, String description, String url, float prix, int id) {
 		this.nom = nom;
 		this.description = description;
+		this.url = url;
 		this.prix = prix;
 		this.id = id;
-		this.url = url;
 	}
 	
-	public Plats(){}
-	
-	public  ArrayList<Plats> GetAllPlats() throws SQLException{
-        Connection cn = null;
-        Statement st = null;
-        ArrayList<Plats> listPlats = new ArrayList<Plats>();
-        try {
-        	System.out.println( "Connexion à la base de données..." );
-        	cn = BddConnexion.getConnection();
-        	st = (Statement) cn.createStatement();
-			// La requete pour recuperer le nom , description , prix des plats
-			// SELECT nom,description,prix FROM nfc_resto.plats,nfc_resto.tarif WHERE idType_Plat ='2' and T_idTarif = idtarif;		
-			ResultSet result = cn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
-	                ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT nom,description,url,prix,idPlat FROM nfc_resto.plats,nfc_resto.tarif WHERE idType_Plat ='2' and T_idTarif = idtarif");
-			while (result.next()) {
-				Plats plats = new Plats(result.getString("nom"),result.getString("description"),result.getString("url"),result.getFloat("prix"), result.getInt("idPlat"));
-				listPlats.add(plats);
-			}
-        } catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	System.out.println(listPlats.size());
-	return listPlats;
-	}
-	
-	// La requete pour recuperer le nom , description , prix des entrée
-	// SELECT nom,description,prix FROM nfc_resto.plats,nfc_resto.tarif WHERE idType_Plat ='1' and T_idTarif = idtarif;
-	
-	// La requete pour recuperer le nom , description , prix des desserts
-	// SELECT nom,description,prix FROM nfc_resto.plats,nfc_resto.tarif WHERE idType_Plat ='3' and T_idTarif = idtarif;
-	
-	// La requete pour recuperer le nom , description , prix des boissons
-	// SELECT nom,description,prix FROM nfc_resto.plats,nfc_resto.tarif WHERE idType_Plat ='4' and T_idTarif = idtarif;
-	
-	public   String getNom() {
+	/**
+     * Constructeur vide d'un objet Plats
+     */
+	public Plats() { }
+
+	/**
+     * Récupérer le nom d'un plat
+     * @return un nom sous forme de chaîne de caractère
+     */
+	public String getNom() {
 		return nom;
 	}
 
-	public   void setNom(String nom) {
-		this.nom = nom;
-	}
-
-	public   String getDescription() {
+	/**
+     * Récupérer les composants d'un plat
+     * @return des composants sous forme de chaîne de caractère
+     */
+	public String getDescription() {
 		return description;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public float getPrix() {
-		return prix;
-	}
-
-	public void setPrix(float prix) {
-		this.prix = prix;
-	}
-
-	public int getId() {
-		return id;
-	}
-
+	/**
+     * Récupérer l'URL de l'image d'un plat
+     * @return un URL sous forme de chaîne de caractère
+     */
 	public String getUrl() {
 		return url;
 	}
 
+	/**
+     * Récupérer le prix d'un plat
+     * @return un prix sous forme de réel
+     */
+	public float getPrix() {
+		return prix;
+	}
+
+	/**
+     * Récupérer l'identifiant d'un plat
+     * @return un identifiant sous forme d'entier
+     */
+	public int getId() {
+		return id;
+	}
+
+	/**
+     * Insérer le nom d'un plat
+     * @param nom Nom d'un plat
+     */
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+	/**
+     * Insérer les composants d'un plat
+     * @param description Les composants d'un plat
+     */
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	/**
+     * Insérer l'URL de l'image d'un plat
+     * @param url URL de l'image d'un plat
+     */
 	public void setUrl(String url) {
 		this.url = url;
 	}
-	
-	public   void main(String[] args){
-	try {
-		GetAllPlats();
-	} catch (SQLException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	};
+
+	/**
+     * Insérer le prix d'un plat
+     * @param prix Prix d'un plat
+     */
+	public void setPrix(float prix) {
+		this.prix = prix;
 	}
 
+	/**
+     * Récupérer la liste des plats à partir de la base de données
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     * @return une liste d'objet Plats
+     */
+	public ArrayList<Plats> GetAllPlats() throws SQLException {
+        Connection cn = null;
+        Statement st = null;
+        String sql = "SELECT nom,description,url,prix,idPlat FROM nfc_resto.plats,nfc_resto.tarif WHERE idType_Plat ='2' and T_idTarif = idtarif";
+        ArrayList<Plats> listPlats = new ArrayList<Plats>();
+        try {
+        	cn = BddConnexion.getConnection();
+        	st = (Statement) cn.createStatement();	
+			ResultSet result = st.executeQuery(sql);
+			while (result.next()) {
+				Plats plats = new Plats(result.getString("nom"),result.getString("description"),result.getString("url"),result.getFloat("prix"),result.getInt("idPlat"));
+				listPlats.add(plats);
+			}
+        } catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return listPlats;
+	}
 }

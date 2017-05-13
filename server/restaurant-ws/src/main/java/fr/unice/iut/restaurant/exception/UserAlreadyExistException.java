@@ -1,11 +1,12 @@
 package fr.unice.iut.restaurant.exception;
 
 /**
- * Created by Utilisateur on 17/04/2017.
+ * Classe d'exception
+ * @author Ismael
+ * @version 1.0
  */
-public class UserAlreadyExistException extends Exception{
-
-    public UserAlreadyExistException(String message){
+public class UserAlreadyExistException extends Exception {
+    public UserAlreadyExistException(String message) {
         super(message);
     }
 }

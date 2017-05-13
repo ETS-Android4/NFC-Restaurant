@@ -1,18 +1,24 @@
 package fr.unice.iut.restaurant.services;
 
-import javax.ws.rs.*;
+import javax.ws.rs.GET;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import fr.unice.iut.restaurant.provider.*;
-import org.codehaus.jettison.json.JSONException;
 
 import java.sql.SQLException;
 
 /**
- * Created by Ismael 28/02/2017.
+ * Interface pour le service des menus
+ * @author Ismael
+ * @version 1.0
  */
-
 public interface MenuService {
+	@GET
+	@Path("/{target}")
+	Response getChoice(@PathParam("target") String target);
+
 	@GET
 	@Path("/plat")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -21,7 +27,7 @@ public interface MenuService {
 	@GET
 	@Path("/entree")
 	@Produces(MediaType.APPLICATION_JSON)
-	Response sendEntree() throws SQLException, JSONException;
+	Response sendEntree() throws SQLException;
 	
 	@GET
 	@Path("/dessert")
@@ -32,14 +38,4 @@ public interface MenuService {
 	@Path("/boisson")
 	@Produces(MediaType.APPLICATION_JSON)
 	Response sendBoisson() throws SQLException;
-
-	@GET
-	@Path("/{target}")
-	Response getChoice(@PathParam("target") String target) throws SQLException;
-
-	/*
-	@POST
-	@Path("/")
-	Plats.GetAllPlats();
-	*/
 }

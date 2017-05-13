@@ -1,8 +1,4 @@
-/**
- * Created by Utilisateur on 09/05/2017.
- */
-function GetCommande()
-{
+function GetCommande(){
   var Json;
     $.ajax({
       type: 'GET',
@@ -20,8 +16,7 @@ function GetCommande()
       }
     });
     return Json;
-}// getJson
-
+}
 	
 function Suppresion(idCommande){
   console.log("lancement");

@@ -13,7 +13,6 @@
 
     <modules>
 		<module>restaurant-ws</module>
-        <module>authentication</module>
 		<!-- add your modules here -->
     </modules>
     
@@ -34,7 +33,6 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.40</version>
 		</dependency>
-		
         <!-- JUnit -->
 		<dependency>
             <groupId>junit</groupId>
@@ -55,7 +53,6 @@
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
-        
             <!-- Jetty plugin -->
 			<plugin>
 				<groupId>org.mortbay.jetty</groupId>
@@ -66,8 +63,6 @@
                     <!-- Run more than one webapp -->
                     <contextHandlers>
                         <!-- Add your other webapps in contextHandler -->
-
-						
                         <contextHandler implementation="org.eclipse.jetty.webapp.WebAppContext">
                             <war>${project.basedir}/restaurant-ws/target/restaurant-ws-0.0.1-SNAPSHOT.war</war>
                             <contextPath>/restaurant-ws</contextPath>
