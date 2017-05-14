@@ -12,17 +12,20 @@
   function order() {
       document.location.href="order.html";
   }
+  function deconnect() {
+      document.location.href="login.html";
+  }
   </script>
 </head>
 <body>
   <div class="menu">
     <h1>Menu</h1>
 	  <br /> <br />
-    <button class="btn btn-primary btn-block btn-large" onclick="scan();">Attribuer un TAG</button>
+    <button class="btn btn-primary btn-block btn-large" onclick="scan();">Attribuer une table à un TAG</button>
 	  <br />
 	  <button class="btn btn-primary btn-block btn-large" onclick="order();">Gérer les commandes</button>
 	  <br />
-	  <button class="btn btn-primary btn-block btn-large" onclick="">Se déconnecter</button>
+	  <button class="btn btn-primary btn-block btn-large" onclick="deconnect();">Se déconnecter</button>
   </div>
 </body>
 </html>

@@ -29,7 +29,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * Classe pour afficher les plats disponibles
+ * Classe pour afficher les menus disponibles
  * @author ER
  * @version 1.0
  */
@@ -55,25 +55,25 @@ public class SelectActivity extends AppCompatActivity {
 
         target = getIntent().getExtras().getString("target");
         command = getIntent().getExtras().getParcelableArrayList("command");
+        adapter = new FoodAdapter(this, list);
+        menu = (ListView) findViewById(R.id.listFood);
+        Button validate = (Button) findViewById(R.id.btnValidate);
+        TextView back = (TextView) findViewById(R.id.lblBack);
 
         load = new ProgressDialog(this);
         load.setCancelable(false);
         load.setMessage("Loading...");
         load.show();
 
-        adapter = new FoodAdapter(this, list);
-        menu = (ListView) findViewById(R.id.listFood);
-        Button validate = (Button) findViewById(R.id.btnValidate);
-        TextView back = (TextView) findViewById(R.id.lblBack);
-
         menu.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         menu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> av, View v, int i, long l) {
-                int color = ((ColorDrawable) v.getBackground()).getColor();
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.e("PASSAGE", "DE GIVRE");
+                int color = ((ColorDrawable) view.getBackground()).getColor();
                 int colorSelect = getResources().getColor(R.color.colorAccent);
-                if (color != colorSelect) v.setBackgroundColor(colorSelect);
-                else v.setBackgroundColor(Color.TRANSPARENT);
+                if (color != colorSelect) view.setBackgroundColor(colorSelect);
+                else view.setBackgroundColor(Color.TRANSPARENT);
             }
         });
 
@@ -108,7 +108,7 @@ public class SelectActivity extends AppCompatActivity {
 
     /**
      * Envoyer une requête HTTP au serveur pour afficher le menu du type demandé
-     * @param tg Type du menu demandé (Entrée, Plat, Dessert, Boisson)
+     * @param tg Type du menu demandé (entrée, plat, dessert, boisson)
      */
     void get(final String tg) {
         Retrofit retrofit = new Retrofit.Builder()
@@ -156,13 +156,13 @@ public class SelectActivity extends AppCompatActivity {
     }
 
     /**
-     * Mettre en surbrillance les choix précédents d'un utilisateur
+     * Mettre en surbrillance les menus déjà choisi par un utilisateur
      */
     void record() {
         for (int i=0; i<list.size(); i++) {
             for (int j=0; j<command.size(); j++) {
                 if (command.get(j).getCode() == list.get(i).getCode()) {
-                    menu.performItemClick(menu.getRootView(), i, 1);
+                    Log.e(TAG, String.valueOf(i));
                 }
             }
         }

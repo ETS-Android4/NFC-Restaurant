@@ -5,17 +5,23 @@
   <title>Scan</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
   <link rel="stylesheet" type="text/css" href="../css/style.css">
+  <script>
+  function back() {
+      document.location.href="menu.html";
+  }
   </script>
 </head>
 <body>
   <div class="scan">
-    <h1>Enregistrer une table</h1>
+    <h1>Enregistrement</h1>
 	  <br /> <br />
     <input type="text" name="tab" placeholder="Table" id="table" required="required" />
     <br />
     <input type="text" name="tag" placeholder="TAG" id="tag" required="required" />
 	  <br />
 	  <button class="btn btn-primary btn-block btn-large" onclick="">Valider</button>
+    <br />
+    <button class="btn btn-primary btn-block btn-large" onclick="back();">Retour</button>
   </div>
 </body>
 </html>

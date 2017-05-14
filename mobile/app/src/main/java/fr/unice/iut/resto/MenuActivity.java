@@ -93,8 +93,8 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     /**
-     * Passer à l'activité de sélection du menu
-     * @param type Type du menu (Entrée, Plat, Dessert, Boisson)
+     * Passer à l'activité de sélection d'un menu
+     * @param type Type du menu (entrée, plat, dessert, boisson)
      */
     void start(String type) {
         Intent i = new Intent(getApplicationContext(), SelectActivity.class);

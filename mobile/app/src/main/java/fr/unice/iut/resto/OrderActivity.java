@@ -11,7 +11,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 /**
- * Classe pour afficher les plats choisi par l'utilisateur
+ * Classe pour afficher les choix d'un utilisateur
  * @author ER
  * @version 1.0
  */
@@ -30,7 +30,6 @@ public class OrderActivity extends AppCompatActivity {
         user.checkSession();
 
         command = getIntent().getExtras().getParcelableArrayList("command");
-
         FoodAdapter adapter = new FoodAdapter(this, command);
         ListView menu = (ListView) findViewById(R.id.listFood);
         Button validate = (Button) findViewById(R.id.btnValidate);
@@ -56,7 +55,7 @@ public class OrderActivity extends AppCompatActivity {
     }
 
     /**
-     * Passer à une autre activité
+     * Passer à l'activité passé en paramètre
      * @param i Motif de l'activité suivante
      */
     void start(Intent i) {

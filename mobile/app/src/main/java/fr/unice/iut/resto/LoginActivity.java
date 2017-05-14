@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +46,7 @@ public class LoginActivity extends AppCompatActivity {
 
         phone = (EditText) findViewById(R.id.txtPhone);
         password = (EditText) findViewById(R.id.txtPassword);
+        ImageView secret = (ImageView) findViewById(R.id.imgApp);
         Button login = (Button) findViewById(R.id.btnLogin);
         TextView sign = (TextView) findViewById(R.id.lblSign);
 
@@ -67,6 +69,14 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(), SignActivity.class));
+                finish();
+            }
+        });
+
+        secret.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), SecretActivity.class));
                 finish();
             }
         });

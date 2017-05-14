@@ -48,19 +48,19 @@ public class NfcActivity extends AppCompatActivity {
         user.checkSession();
 
         command = getIntent().getExtras().getParcelableArrayList("command");
+        nfcAdapter = NfcAdapter.getDefaultAdapter(this);
+        TextView back = (TextView) findViewById(R.id.lblBack);
 
         load = new ProgressDialog(this);
         load.setCancelable(false);
         load.setMessage("Loading...");
 
-        nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         if (nfcAdapter == null) {
             Toast.makeText(getApplicationContext(),
                     getResources().getString(R.string.errNfc), Toast.LENGTH_LONG).show();
             finish();
         }
 
-        TextView back = (TextView) findViewById(R.id.lblBack);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -145,7 +145,7 @@ public class NfcActivity extends AppCompatActivity {
     /**
      * Convertir un tableau de byte en hexadecimal
      * @param bytes Tableau de byte à convertir
-     * @return un hexadecimal sous forme d'une chaîne de caractère
+     * @return un hexadecimal de type chaîne de caractère
      */
     String hex(byte[] bytes) {
         char[] hexChars = new char[bytes.length * 2];

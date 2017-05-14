@@ -5,7 +5,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,12 +18,15 @@ import java.util.ArrayList;
  * @author ER
  * @version 1.0
  */
-class FoodAdapter extends BaseAdapter implements AdapterView.OnItemClickListener {
+class FoodAdapter extends BaseAdapter {
 
     private static LayoutInflater inflater = null;
     private ArrayList<Food> list = new ArrayList<>();
     private Context context;
 
+    /**
+     * Créer une vue customiser
+     */
     private class CustomViewHolder {
         TextView txtName, txtPrice, txtDetail;
         ImageView imgFood;
@@ -33,7 +35,7 @@ class FoodAdapter extends BaseAdapter implements AdapterView.OnItemClickListener
     /**
      * Constructeur de base d'un adaptateur pour une liste
      * @param context Activité actuelle
-     * @param list Liste à qui on va associer l'adaptateur
+     * @param list Une liste qu'on associera à l'adaptateur
      */
     FoodAdapter(Context context, ArrayList<Food> list) {
         this.context = context;
@@ -41,24 +43,42 @@ class FoodAdapter extends BaseAdapter implements AdapterView.OnItemClickListener
         inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
     }
 
+    /**
+     * Calculer la taille de la liste
+     * @return une taille de type entier
+     */
     @Override
     public int getCount() {
         return list.size();
     }
 
+    /**
+     * Récupérer un élément d'une liste
+     * @param position La position de l'élément voulu dans la liste
+     * @return un élément de type Food
+     */
     @Override
     public Food getItem(int position) {
         return list.get(position);
     }
 
+    /**
+     * Récupérer l'identifiant d'un élément d'une liste
+     * @param position La position de l'élément voulu dans la liste
+     * @return un identifiant de type entier long
+     */
     @Override
     public long getItemId(int position) {
         return list.indexOf(getItem(position));
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {}
-
+    /**
+     * Récupérer la vue qui affiche l'élément à la position définie
+     * @param position La Position de l'élément voulu dans la liste
+     * @param view Une vue à utiliser
+     * @param parent Un parent à qui la vue sera attacher
+     * @return une vue qui correspond à l'élément spécifié de type View
+     */
     @Override
     public View getView(int position, View view, ViewGroup parent) {
         CustomViewHolder viewHolder;

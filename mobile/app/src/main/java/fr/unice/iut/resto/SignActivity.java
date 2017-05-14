@@ -41,16 +41,16 @@ public class SignActivity extends AppCompatActivity {
         user = new User(this);
         user.isLogged();
 
-        load = new ProgressDialog(this);
-        load.setCancelable(false);
-        load.setMessage("Loading...");
-
         firstName = (EditText) findViewById(R.id.txtFirstName);
         lastName = (EditText) findViewById(R.id.txtLastName);
         phone = (EditText) findViewById(R.id.txtPhone);
         password = (EditText) findViewById(R.id.txtPassword);
         Button sign = (Button) findViewById(R.id.btnSign);
         TextView back = (TextView) findViewById(R.id.lblBack);
+
+        load = new ProgressDialog(this);
+        load.setCancelable(false);
+        load.setMessage("Loading...");
 
         sign.setOnClickListener(new View.OnClickListener() {
             @Override

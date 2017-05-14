@@ -30,6 +30,7 @@
 
         <activity android:name=".MenuActivity" />
         <activity android:name=".OrderActivity" />
+        <activity android:name=".SecretActivity" />
         <activity android:name=".SelectActivity" />
         <activity android:name=".SignActivity" />
     </application>

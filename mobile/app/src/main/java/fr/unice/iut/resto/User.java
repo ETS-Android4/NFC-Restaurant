@@ -41,7 +41,7 @@ class User {
 
     /**
      * Récupérer le téléphone d'un utilisateur
-     * @return un login sous forme de chaîne de caractère
+     * @return un login de type chaîne de caractère
      */
     String getLogin() {
         return pref.getString(LOGIN, null);

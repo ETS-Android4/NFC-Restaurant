@@ -4,7 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * Classe pour gérer la nourriture d'un restaurant
+ * Classe pour gérer les nourritures d'un restaurant
  * @author ER
  * @version 1.0
  */
@@ -21,7 +21,7 @@ class Food implements Parcelable {
      * Constructeur de base d'un objet Food
      * @param id Identifiant d'une nourriture
      * @param name Nom d'une nourriture
-     * @param detail Composant d'une nourriture
+     * @param detail Composants d'une nourriture
      * @param price Prix d'une nourriture
      * @param picture URL de l'image d'une nourriture
      * @param type Type d'une nourriture (Entrée, Plat, Dessert, Boisson)
@@ -37,7 +37,7 @@ class Food implements Parcelable {
 
     /**
      * Récupérer l'identifiant d'une nourriture
-     * @return un identifiant sous forme d'entier
+     * @return un identifiant de type entier
      */
     int getCode() {
         return id;
@@ -45,7 +45,7 @@ class Food implements Parcelable {
 
     /**
      * Récupérer le nom d'une nourriture
-     * @return un nom sous forme de chaîne de caractère
+     * @return un nom de type chaîne de caractère
      */
     String getName() {
         return name;
@@ -53,7 +53,7 @@ class Food implements Parcelable {
 
     /**
      * Récupérer les composants d'une nourriture
-     * @return un identifiant sous forme d'entier
+     * @return les composants de type chaîne de caractère
      */
     String getDetail() {
         return detail;
@@ -61,7 +61,7 @@ class Food implements Parcelable {
 
     /**
      * Récupérer le prix d'une nourriture
-     * @return un prix sous forme de réel
+     * @return un prix de type réel
      */
     double getPrice() {
         return price;
@@ -69,7 +69,7 @@ class Food implements Parcelable {
 
     /**
      * Récupérer l'URL de l'image d'une nourriture
-     * @return un URL sous forme de chaîne de caractère
+     * @return une URL de type chaîne de caractère
      */
     String getPicture() {
         return picture;
@@ -77,17 +77,27 @@ class Food implements Parcelable {
 
     /**
      * Récupérer le type d'une nourriture
-     * @return un type sous forme de chaîne de caractère
+     * @return entree si la nourriture est une entrée ou plats si la nourriture est un plat
+     * ou dessert si la nourriture est un dessert ou boisson si la nourriture est un boisson
      */
     String getType() {
         return type;
     }
 
+    /**
+     * Calculer le nombre d'objet spécial contenu dans le Parcelable
+     * @return un nombre d'objet spécial de type entier
+     */
     @Override
     public int describeContents() {
         return 0;
     }
 
+    /**
+     * Passer l'objet Food à la prochaine activité
+     * @param out Transporteur de l'objet Food
+     * @param flags "flags" supplémentaire sur l'écriture d'un objet
+     */
     @Override
     public void writeToParcel(Parcel out, int flags) {
         out.writeString(String.valueOf(id));
@@ -98,6 +108,9 @@ class Food implements Parcelable {
         out.writeString(type);
     }
 
+    /**
+     * Générer une instance de l'objet Food à partir d'un Parcel
+     */
     public static final Parcelable.Creator<Food> CREATOR = new Parcelable.Creator<Food>() {
         @Override
         public Food createFromParcel(Parcel in) {
@@ -110,8 +123,8 @@ class Food implements Parcelable {
     };
 
     /**
-     * Passer l'objet Food entre les activités
-     * @param in Données concernant un Food
+     * Récupérer l'objet Food dans la nouvelle activité
+     * @param in Les informations sur l'objet Food
      */
     private Food(Parcel in) {
         this.id = Integer.valueOf(in.readString());

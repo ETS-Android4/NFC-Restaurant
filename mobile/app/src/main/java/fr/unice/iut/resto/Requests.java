@@ -14,13 +14,22 @@ import retrofit2.http.Path;
  */
 interface Requests {
 
-    String URL = "http://????:8080/restaurant-ws/rest/";
+    String URL = "http://XXX.XXX.XXX.XXX:8080/restaurant-ws/rest/";
 
     /* LoginActivity */
     @FormUrlEncoded
     @POST("connexion")
     Call<Void> sendUser(@Field("phone") String phone,
                         @Field("password") String password);
+
+    /* NfcActivity */
+    @FormUrlEncoded
+    @POST("commande")
+    Call<Void> sendCommand(@Field("order") String order);
+
+    /* SelectActivity */
+    @GET("menu/{target}")
+    Call<JsonArray> getMenu(@Path("target") String target);
 
     /* SignActivity */
     @FormUrlEncoded
@@ -29,13 +38,4 @@ interface Requests {
                         @Field("lastName") String lastName,
                         @Field("phone") String phone,
                         @Field("password") String password);
-
-    /* SelectActivity */
-    @GET("menu/{target}")
-    Call<JsonArray> getMenu(@Path("target") String target);
-
-    /* NfcActivity */
-    @FormUrlEncoded
-    @POST("commande")
-    Call<Void> sendCommand(@Field("order") String order);
 }
