@@ -15,4 +15,8 @@ public interface InscriptionService {
 	@Path("/")
     Response insertClient(@FormParam("firstName") String nom, @FormParam("lastName") String prenom,
                           @FormParam("phone") String tel, @FormParam("password") String mdp);
+
+    @POST
+	@Path("/tag")
+    Response insertTag(@FormParam("table") String table, @FormParam("guid") String guid);
 }

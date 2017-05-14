@@ -108,7 +108,7 @@ public class Inscription {
     }
 
     /**
-     * Constructeur d'un objet Inscription
+     * Insérer un utilisateur dans la base de données
      * @param obj Contient toutes les informations dont on a besoin sur un utilisateur
      * @throws SQLException
      * @throws ClassNotFoundException
@@ -130,7 +130,7 @@ public class Inscription {
     }
 
     /**
-     * Constructeur d'un objet Inscription
+     * Vérifier l'existance d'un utilisateur dans la base de données
      * @param obj Contient toutes les informations dont on a besoin sur un utilisateur
      * @throws SQLException
      * @throws ClassNotFoundException
@@ -152,5 +152,27 @@ public class Inscription {
             e.printStackTrace();
         }
         return 0;
+    }
+
+    /**
+     * Insérer un numréro de table avec un GUID d'un TAG dans la base données
+     * @param table Numéro d'une table
+     * @param guid GUID d'un TAG
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
+    public static void InsertTag(String table, String guid) {
+        Connection cn = null;
+        Statement st = null;
+        String sql = "INSERT INTO tables (idTables, guid) VALUES ('"+table+"','"+guid+"');";
+        try {
+            cn = BddConnexion.getConnection();
+            st = cn.createStatement();
+            int result = st.executeUpdate(sql);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

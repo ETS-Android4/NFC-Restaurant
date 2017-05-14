@@ -5,7 +5,21 @@
   <title>Scan</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
   <link rel="stylesheet" type="text/css" href="../css/style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  <script type="text/javascript" src="../js/req_scan.js"></script>
   <script>
+  function scan() {
+      $(document).ready(function() {
+          try {
+              var table = $("#table").val();
+              var guid = $("#guid").val();
+              Scan(table,guid);
+          } catch(e) {
+              console.log("error:"+e);
+          }
+      });
+  }
   function back() {
       document.location.href="menu.html";
   }
@@ -15,11 +29,11 @@
   <div class="scan">
     <h1>Enregistrement</h1>
 	  <br /> <br />
-    <input type="text" name="tab" placeholder="Table" id="table" required="required" />
+    <input type="text" name="table" placeholder="Table" id="table" required="required" />
     <br />
-    <input type="text" name="tag" placeholder="TAG" id="tag" required="required" />
+    <input type="text" name="guid" placeholder="TAG" id="guid" required="required" />
 	  <br />
-	  <button class="btn btn-primary btn-block btn-large" onclick="">Valider</button>
+	  <button class="btn btn-primary btn-block btn-large" onclick="scan();">Valider</button>
     <br />
     <button class="btn btn-primary btn-block btn-large" onclick="back();">Retour</button>
   </div>

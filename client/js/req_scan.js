@@ -1,17 +1,16 @@
-function Connexion(username,password) {
-    var phone = username;
+function Scan(table,guid) {
     $.ajax({
         type: 'POST',
-        url: 'http://localhost:8080/restaurant-ws/rest/connexion',
-        data: 'phone='+phone+'&password='+password,
+        url: 'http://localhost:8080/restaurant-ws/rest/inscription/tag',
+        data: 'table='+table+'&guid='+guid,
         dataType: 'x-www-form-urlencoded',
         success: function(retour) {
             console.log("Données:"+retour);
         },
         error: function(resultat, statut, erreur) {
-            if(resultat.status==200) {
-                alert("Connexion réussite");
-				document.location.href="menu.html?id="+phone;
+            if(resultat.status==201) {
+                alert("Ajout confirmer");
+                document.location.href="scan.html";
             } else {
                 console.log(resultat)
                 console.log(statut);

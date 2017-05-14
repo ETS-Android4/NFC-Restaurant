@@ -6,25 +6,25 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">  
   <link rel="stylesheet" type="text/css" href="../css/style.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script type="text/javascript" src="../js/req_order.js"></script>
 </head>
-<script type="text/javascript" src="../js/req_order.js"></script>
 <script>
-function myFunction() {
+function command() {
     location.reload();
 }
-setTimeout(myFunction, 8000);
-	$(document).ready(function(){
+setTimeout(command, 8000);
+	$(document).ready(function() {
 		var Commande = GetCommande();
 		console.log(GetCommande());
 		var content = "<table><tr><td>Table</td><td>Date</td><td>Commande</td></tr>";
-		for(var j=0; j<Commande.length; j++){
-              content += "<tr><td>"+Commande[j]['Table']+"</td><td>"+Commande[j]['Date']+"</td><td>"+Commande[j]['Commande']+"</td>"
-			  content += '<td><input type="button" style="background-color:red;" value="x" onclick="Suppresion(';
-			  content += "'";
-			  content += Commande[j]['Id'];
-			  content += "'";
-			  content += ');">'
-			  content += "</td></tr>";
+		for(var j=0; j<Commande.length; j++) {
+            content += "<tr><td>"+Commande[j]['Table']+"</td><td>"+Commande[j]['Date']+"</td><td>"+Commande[j]['Commande']+"</td>"
+			content += '<td><input type="button" style="background-color:red;" value="x" onclick="Suppresion(';
+			content += "'";
+			content += Commande[j]['Id'];
+			content += "'";
+			content += ');">'
+			content += "</td></tr>";
         }
 		content += "</table>";
 		$(".order").append(content);
