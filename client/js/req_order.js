@@ -26,7 +26,6 @@ function Suppresion(idCommande) {
         url: 'http://localhost:8080/restaurant-ws/rest/commande/'+idCommande,
         type: 'DELETE',
         success: function(result) {
-          alert("Suppresion de la commande");
           window.location.reload();
         }
       });
